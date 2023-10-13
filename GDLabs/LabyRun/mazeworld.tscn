@@ -1,9 +1,8 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
-[ext_resource path="res://player.png" type="Texture" id=2]
 [ext_resource path="res://princess.png" type="Texture" id=3]
-[ext_resource path="res://circle.png" type="Texture" id=4]
+[ext_resource path="res://scenes/monster.gd" type="Script" id=4]
 [ext_resource path="res://obstacle.png" type="Texture" id=6]
 [ext_resource path="res://long_obstacle.png" type="Texture" id=7]
 [ext_resource path="res://scenes/Pickable.tscn" type="PackedScene" id=8]
@@ -96,9 +95,6 @@ extents = Vector2( 8, 8 )
 [sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 10, 4 )
 
-[sub_resource type="CircleShape2D" id=9]
-radius = 32.0
-
 [sub_resource type="Animation" id=10]
 length = 20.0
 loop = true
@@ -121,8 +117,11 @@ extents = Vector2( 8, 8 )
 [sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 32, 8 )
 
-[sub_resource type="RectangleShape2D" id=13]
-extents = Vector2( 7, 7 )
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="CircleShape2D" id=16]
+radius = 10.2498
 
 [node name="colworld" type="Node2D"]
 script = ExtResource( 1 )
@@ -141,6 +140,15 @@ position = Vector2( 87.9771, 183.955 )
 current = true
 zoom = Vector2( 0.5, 0.5 )
 smoothing_enabled = true
+
+[node name="Label" type="Label" parent="player"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -12.0
+margin_top = -6.0
+margin_right = 12.0
+margin_bottom = 8.0
+text = "0"
+align = 1
 
 [node name="moving_platform1" type="KinematicBody2D" parent="."]
 position = Vector2( 184, 152 )
@@ -242,14 +250,6 @@ one_way_collision = true
 position = Vector2( 143.272, -1.92973 )
 z_index = -1
 
-[node name="sprite" type="Sprite" parent="circle"]
-z_index = -1
-texture = ExtResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="circle"]
-z_index = -1
-shape = SubResource( 9 )
-
 [node name="anim" type="AnimationPlayer" parent="circle"]
 autoplay = "turn"
 anims/turn = SubResource( 10 )
@@ -261,6 +261,26 @@ shape = SubResource( 11 )
 
 [node name="boxsprite" type="Sprite" parent="circle"]
 position = Vector2( 0, -37.4108 )
+z_index = -1
+texture = ExtResource( 6 )
+
+[node name="box3" type="CollisionShape2D" parent="circle"]
+position = Vector2( -40.4401, 1.9096 )
+z_index = -1
+shape = SubResource( 11 )
+
+[node name="boxsprite3" type="Sprite" parent="circle"]
+position = Vector2( -40, 1.5892 )
+z_index = -1
+texture = ExtResource( 6 )
+
+[node name="box4" type="CollisionShape2D" parent="circle"]
+position = Vector2( 39.5599, 1.9096 )
+z_index = -1
+shape = SubResource( 11 )
+
+[node name="boxsprite4" type="Sprite" parent="circle"]
+position = Vector2( 40, 1.5892 )
 z_index = -1
 texture = ExtResource( 6 )
 
@@ -283,16 +303,6 @@ texture = ExtResource( 7 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="platform"]
 shape = SubResource( 12 )
 
-[node name="actor" type="KinematicBody2D" parent="."]
-position = Vector2( -72, 89 )
-
-[node name="sprite" type="Sprite" parent="actor"]
-texture = ExtResource( 2 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="actor"]
-position = Vector2( -0.315559, 0.157784 )
-shape = SubResource( 13 )
-
 [node name="crate" parent="." instance=ExtResource( 10 )]
 position = Vector2( -88, -8 )
 
@@ -307,7 +317,82 @@ position = Vector2( -137, 136 )
 [node name="pickup2" parent="pickups" instance=ExtResource( 8 )]
 position = Vector2( 7, 73 )
 
+[node name="pickup4" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( 103, 73 )
+
+[node name="pickup5" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( 183, 73 )
+
+[node name="pickup6" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( 183, -39 )
+
+[node name="pickup7" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( 151, -87 )
+
+[node name="pickup8" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( 55, -87 )
+
+[node name="pickup9" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( -56, -103 )
+
+[node name="pickup10" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( -152, -120 )
+
+[node name="pickup11" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( -120, 24 )
+
+[node name="pickup12" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( -136, 56 )
+
+[node name="pickup13" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( -56, 56 )
+
+[node name="pickup14" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( 184, 184 )
+
+[node name="monsters" type="Node2D" parent="."]
+
+[node name="monster" type="StaticBody2D" parent="monsters"]
+position = Vector2( -8, 40 )
+script = ExtResource( 4 )
+
+[node name="collision" type="CollisionShape2D" parent="monsters/monster"]
+position = Vector2( 0.498299, 0.123726 )
+shape = SubResource( 15 )
+
+[node name="Sprite" type="Sprite" parent="monsters/monster"]
+modulate = Color( 0.803922, 0.247059, 0.247059, 1 )
+position = Vector2( 0.301765, 0.0728607 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="monsters/monster"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -11.8162
+margin_top = -5.9841
+margin_right = 12.1838
+margin_bottom = 8.0159
+text = "0"
+align = 1
+
+[node name="MonsterArea2D" type="Area2D" parent="monsters/monster"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="monsters/monster/MonsterArea2D"]
+shape = SubResource( 16 )
+
+[connection signal="custom_signal" from="player" to="monsters/monster" method="_on_player_custom_signal"]
 [connection signal="body_entered" from="princess" to="." method="_on_princess_body_enter"]
 [connection signal="body_entered" from="pickups/pickup" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup3" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup2" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup4" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup5" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup6" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup7" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup8" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup9" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup10" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup11" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup12" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup13" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup14" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="monsters/monster/MonsterArea2D" to="player" method="_on_MonsterArea2D_body_entered"]
