@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/andra.mp3-6b5e99e61725b1e472b7c4bf4738bb3f.mp3str"
+
+[deps]
+
+source_file="res://sounds/andra.mp3"
+dest_files=[ "res://.import/andra.mp3-6b5e99e61725b1e472b7c4bf4738bb3f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
