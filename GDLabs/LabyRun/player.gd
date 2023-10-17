@@ -1,5 +1,7 @@
 extends KinematicBody2D
 signal custom_signal
+signal goal_signal
+signal door_signal
 # Member variables
 const GRAVITY = 0.0 # pixels/second/second
 
@@ -78,10 +80,19 @@ func _physics_process(delta):
 			collision.collider.apply_central_impulse(-collision.normal * inertia)
 
 func _on_pickup_body_entered(_body):
+	print("body entered pickup")
 	strength += 1
 	$Label.text = str(strength)
 	print(strength);
 
-
 func _on_MonsterArea2D_body_entered(_body):
 	emit_signal("custom_signal",strength)
+
+func _on_goal_entered(_body):
+	print("body entered goal")
+	emit_signal("goal_signal",strength)
+
+
+func _on_door_body_entered(body):
+	print("body entered door")
+	emit_signal("door_signal",strength,body)

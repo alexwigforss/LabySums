@@ -1,16 +1,16 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Door.gd" type="Script" id=2]
 [ext_resource path="res://princess.png" type="Texture" id=3]
 [ext_resource path="res://scenes/monster.gd" type="Script" id=4]
-[ext_resource path="res://scenes/Door.tscn" type="PackedScene" id=5]
 [ext_resource path="res://obstacle.png" type="Texture" id=6]
 [ext_resource path="res://long_obstacle.png" type="Texture" id=7]
 [ext_resource path="res://scenes/Pickable.tscn" type="PackedScene" id=8]
 [ext_resource path="res://player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/PushBox.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sounds/andra.mp3" type="AudioStream" id=11]
+[ext_resource path="res://doors.gd" type="Script" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -123,6 +123,9 @@ extents = Vector2( 8, 8 )
 [sub_resource type="CircleShape2D" id=16]
 radius = 10.2498
 
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 3.79099, 3.79099 )
+
 [sub_resource type="RectangleShape2D" id=12]
 extents = Vector2( 31.6207, 8 )
 
@@ -200,20 +203,18 @@ margin_left = -27.0
 margin_top = 2.0
 margin_right = 13.0
 margin_bottom = 27.0
-text = "322"
+text = "10"
 align = 1
 
 [node name="youwin" type="Label" parent="."]
-visible = false
-margin_left = -35.2465
-margin_top = 72.9541
-margin_right = 117.753
-margin_bottom = 103.954
+margin_left = 209.0
+margin_top = -110.0
+margin_right = 360.0
+margin_bottom = -51.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
-text = "Thank You Cubio
-You Saved The Princess!"
 align = 1
+valign = 1
 
 [node name="oneway" type="KinematicBody2D" parent="."]
 position = Vector2( 183.063, 115.7 )
@@ -298,7 +299,7 @@ position = Vector2( 183, 73 )
 position = Vector2( 183, -39 )
 
 [node name="pickup7" parent="pickups" instance=ExtResource( 8 )]
-position = Vector2( 151, -87 )
+position = Vector2( 152, -151 )
 
 [node name="pickup8" parent="pickups" instance=ExtResource( 8 )]
 position = Vector2( 55, -87 )
@@ -351,10 +352,29 @@ align = 1
 shape = SubResource( 16 )
 
 [node name="doors" type="Node2D" parent="."]
+script = ExtResource( 12 )
 
-[node name="door" parent="doors" instance=ExtResource( 5 )]
-position = Vector2( 48, 120 )
+[node name="door" type="Area2D" parent="doors" groups=["doors"]]
+modulate = Color( 0.980392, 0.878431, 0.317647, 1 )
+position = Vector2( -7, 104 )
+scale = Vector2( 2, 2 )
 script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="doors/door"]
+modulate = Color( 0.407843, 0.407843, 0.407843, 1 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="doors/door"]
+scale = Vector2( 1.25, 1.25 )
+shape = SubResource( 17 )
+
+[node name="RigidBody2D" type="RigidBody2D" parent="doors/door"]
+mode = 1
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="doors/door/RigidBody2D"]
+visible = false
+shape = SubResource( 17 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 11 )
@@ -377,8 +397,11 @@ shape = SubResource( 12 )
 texture = ExtResource( 7 )
 
 [connection signal="custom_signal" from="player" to="monsters/monster" method="_on_player_custom_signal"]
-[connection signal="body_entered" from="goal" to="." method="_on_princess_body_enter"]
+[connection signal="door_signal" from="player" to="doors/door" method="_on_player_door_signal"]
+[connection signal="goal_signal" from="player" to="." method="_on_player_goal_signal"]
+[connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
 [connection signal="body_entered" from="pickups/pickup" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup" to="pickups/pickup" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup3" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup2" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup4" to="player" method="_on_pickup_body_entered"]
@@ -393,3 +416,4 @@ texture = ExtResource( 7 )
 [connection signal="body_entered" from="pickups/pickup13" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup14" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="monsters/monster/MonsterArea2D" to="player" method="_on_MonsterArea2D_body_entered"]
+[connection signal="body_entered" from="doors/door" to="player" method="_on_door_body_entered"]

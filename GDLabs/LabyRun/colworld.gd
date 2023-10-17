@@ -1,6 +1,5 @@
 extends Node2D
 
-func _on_princess_body_enter(body):
-	# The name of this editor-generated callback is unfortunate
+func _on_goal_body_entered(body):
 	if body.get_name() == "player":
 		$youwin.show()
