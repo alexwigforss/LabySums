@@ -4,11 +4,7 @@ extends Area2D
 func _ready():
 	pass # Replace with function body.
 
-#func _on_Area2D_body_entered(body: Node) -> void:
-#	if body.is_in_group("player"):
-#		queue_free()
-
-
-func _on_Area2d_body_entered(body):
-	if body.is_in_group("player"):
+func _on_player_door_signal(plstr,body):
+	if plstr > 1 && body.get_name() == "player":
 		queue_free()# Replace with function body.
+		
