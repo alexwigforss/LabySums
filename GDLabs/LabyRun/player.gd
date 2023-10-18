@@ -93,6 +93,7 @@ func _on_goal_entered(_body):
 	emit_signal("goal_signal",strength)
 
 
+
 func _on_door_body_entered(body):
 	print("body entered door")
 	emit_signal("door_signal",strength,body)
