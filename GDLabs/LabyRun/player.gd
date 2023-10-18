@@ -1,7 +1,7 @@
 extends KinematicBody2D
 signal custom_signal
 signal goal_signal
-signal door_signal
+#signal door_signal
 # Member variables
 const GRAVITY = 0.0 # pixels/second/second
 
@@ -92,8 +92,6 @@ func _on_goal_entered(_body):
 	print("body entered goal")
 	emit_signal("goal_signal",strength)
 
-
-
-func _on_door_body_entered(body):
+func _on_door_body_entered(_body):
 	print("body entered door")
-	emit_signal("door_signal",strength,body)
+	# emit_signal("door_signal",strength,body)

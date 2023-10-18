@@ -207,10 +207,15 @@ align = 1
 [node name="youwin" type="Label" parent="."]
 margin_left = 209.0
 margin_top = -110.0
-margin_right = 360.0
-margin_bottom = -51.0
+margin_right = 324.0
+margin_bottom = -20.0
 size_flags_horizontal = 2
 size_flags_vertical = 0
+text = "Sorry Nummio
+Your number is
+in another Maze
+...
+"
 align = 1
 valign = 1
 
@@ -290,6 +295,9 @@ position = Vector2( 7, 73 )
 [node name="pickup4" parent="pickups" instance=ExtResource( 8 )]
 position = Vector2( 103, 73 )
 
+[node name="pickup15" parent="pickups" instance=ExtResource( 8 )]
+position = Vector2( 151, 135 )
+
 [node name="pickup5" parent="pickups" instance=ExtResource( 8 )]
 position = Vector2( 183, 73 )
 
@@ -323,8 +331,9 @@ position = Vector2( 184, 184 )
 [node name="monsters" type="Node2D" parent="."]
 
 [node name="monster" type="StaticBody2D" parent="monsters"]
-position = Vector2( -8, 40 )
+position = Vector2( -120, -55 )
 script = ExtResource( 4 )
+strength = 10
 
 [node name="collision" type="CollisionShape2D" parent="monsters/monster"]
 position = Vector2( 0.498299, 0.123726 )
@@ -347,6 +356,62 @@ align = 1
 [node name="MonsterArea2D" type="Area2D" parent="monsters/monster"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="monsters/monster/MonsterArea2D"]
+shape = SubResource( 16 )
+
+[node name="monster2" type="StaticBody2D" parent="monsters"]
+position = Vector2( -8, 8 )
+script = ExtResource( 4 )
+strength = 10
+
+[node name="collision" type="CollisionShape2D" parent="monsters/monster2"]
+position = Vector2( 0.498299, 0.123726 )
+shape = SubResource( 15 )
+
+[node name="Sprite" type="Sprite" parent="monsters/monster2"]
+modulate = Color( 0.803922, 0.247059, 0.247059, 1 )
+position = Vector2( 0.301765, 0.0728607 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="monsters/monster2"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -11.8162
+margin_top = -5.9841
+margin_right = 12.1838
+margin_bottom = 8.0159
+text = "0"
+align = 1
+
+[node name="MonsterArea2D" type="Area2D" parent="monsters/monster2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="monsters/monster2/MonsterArea2D"]
+shape = SubResource( 16 )
+
+[node name="monster3" type="StaticBody2D" parent="monsters"]
+position = Vector2( 183, 25 )
+script = ExtResource( 4 )
+strength = 10
+
+[node name="collision" type="CollisionShape2D" parent="monsters/monster3"]
+position = Vector2( 0.498299, 0.123726 )
+shape = SubResource( 15 )
+
+[node name="Sprite" type="Sprite" parent="monsters/monster3"]
+modulate = Color( 0.803922, 0.247059, 0.247059, 1 )
+position = Vector2( 0.301765, 0.0728607 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="monsters/monster3"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -11.8162
+margin_top = -5.9841
+margin_right = 12.1838
+margin_bottom = 8.0159
+text = "0"
+align = 1
+
+[node name="MonsterArea2D" type="Area2D" parent="monsters/monster3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="monsters/monster3/MonsterArea2D"]
 shape = SubResource( 16 )
 
 [node name="doors" type="Node2D" parent="."]
@@ -390,8 +455,6 @@ position = Vector2( 47, 118 )
 position = Vector2( 65, 131 )
 
 [connection signal="custom_signal" from="player" to="monsters/monster" method="_on_player_custom_signal"]
-[connection signal="door_signal" from="player" to="doors/door" method="_on_player_door_signal"]
-[connection signal="door_signal" from="player" to="doors/door2" method="_on_player_door_signal"]
 [connection signal="goal_signal" from="player" to="." method="_on_player_goal_signal"]
 [connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
 [connection signal="body_entered" from="pickups/pickup" to="player" method="_on_pickup_body_entered"]
@@ -399,6 +462,7 @@ position = Vector2( 65, 131 )
 [connection signal="body_entered" from="pickups/pickup3" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup2" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup4" to="player" method="_on_pickup_body_entered"]
+[connection signal="body_entered" from="pickups/pickup15" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup5" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup6" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup7" to="player" method="_on_pickup_body_entered"]
@@ -410,6 +474,7 @@ position = Vector2( 65, 131 )
 [connection signal="body_entered" from="pickups/pickup13" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="pickups/pickup14" to="player" method="_on_pickup_body_entered"]
 [connection signal="body_entered" from="monsters/monster/MonsterArea2D" to="player" method="_on_MonsterArea2D_body_entered"]
-[connection signal="body_entered" from="doors/door" to="player" method="_on_door_body_entered"]
+[connection signal="body_entered" from="monsters/monster2/MonsterArea2D" to="player" method="_on_MonsterArea2D_body_entered"]
+[connection signal="body_entered" from="monsters/monster3/MonsterArea2D" to="player" method="_on_MonsterArea2D_body_entered"]
 [connection signal="body_entered" from="doors/door2" to="player" method="_on_door_body_entered"]
 [connection signal="body_entered" from="doors/door3" to="player" method="_on_door_body_entered"]
