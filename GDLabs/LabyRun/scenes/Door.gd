@@ -1,10 +1,12 @@
 extends Area2D
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
-func _on_player_door_signal(plstr,body):
-	if plstr > 1 && body.get_name() == "player":
+func _on_door_body_entered(body, _extra_arg_0): 
+	var emitting_scene = get_node("/root/colworld/player")
+	var plpower = emitting_scene.strength
+
+	if body.get_name() == "player" && plpower > 1:
+		print(plpower," ",self,"removed")
 		queue_free()# Replace with function body.
-		

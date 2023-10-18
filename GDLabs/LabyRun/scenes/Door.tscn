@@ -25,4 +25,7 @@ shape = SubResource( 17 )
 mode = 1
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBody2D"]
+visible = false
 shape = SubResource( 17 )
+
+[connection signal="body_entered" from="." to="." method="_on_door_body_entered" binds= [ 0 ]]
