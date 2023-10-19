@@ -1,26 +1,14 @@
-extends StaticBody2D
+extends Area2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 export var strength = 5
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	$Label.text = str(strength)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _on_MonsterArea2D_body_entered(body):
+	var emitting_scene = get_node("/root/colworld/player")
+	var plpower = emitting_scene.strength
 
-
-#func _on_Area2D_body_entered(body,plstr):
-#	if body.is_in_group("player") && strength < plstr:
-#		queue_free()# Replace with function body.
-
-
-func _on_player_custom_signal(plstr):
-	if plstr >= strength:
-		print("hej hej")
-		queue_free()
+	if body.get_name() == "player" && plpower >= strength:
+		print(plpower," ",self,"removed")
+		queue_free()# Replace with function body.
