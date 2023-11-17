@@ -8,6 +8,7 @@ extents = Vector2( 3.53553, 3.53553 )
 
 [node name="Area2d" type="Area2D" groups=["picks"]]
 modulate = Color( 0.980392, 0.878431, 0.317647, 1 )
+scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]

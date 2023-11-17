@@ -23,6 +23,9 @@ var inertia = 100
 
 func _ready():
 	$Label.text = str(strength)
+	$Camera2D/ColorRect/RichTextLabel.ALIGN_CENTER
+	$Camera2D/ColorRect/RichTextLabel.text = 'Här ska det stå grejjor minnsan.'
+	
 
 func _physics_process(delta):
 	# Create forces
