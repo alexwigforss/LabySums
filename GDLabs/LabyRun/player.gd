@@ -23,9 +23,8 @@ var inertia = 100
 
 func _ready():
 	$Label.text = str(strength)
-	$Camera2D/ColorRect/RichTextLabel.ALIGN_CENTER
-	$Camera2D/ColorRect/RichTextLabel.text = 'Här ska det stå grejjor minnsan.'
-	
+#	$Camera2D/ColorRect/RichTextLabel.ALIGN_CENTER
+	$Camera2D/ColorRect/RichTextLabel.text = 'Placeholder.'
 
 func _physics_process(delta):
 	# Create forces
@@ -87,3 +86,9 @@ func _on_pickup_body_entered(body):
 		strength += 1
 		$Label.text = str(strength)
 		print(body," entered pickup ",strength)
+
+func _on_pickup_nr_body_entered(body,nr):
+	if body.is_in_group("player"):
+		strength += 2
+		$Label.text = str(strength)
+		print(body," entered pickup ",strength," ",nr)
