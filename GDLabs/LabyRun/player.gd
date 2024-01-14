@@ -29,7 +29,7 @@ func _ready():
 func _physics_process(delta):
 	# Create forces
 	var force = Vector2(0, 0)
-	
+		
 	var walk_left = Input.is_action_pressed("move_left")
 	var walk_right = Input.is_action_pressed("move_right")
 	var walk_up = Input.is_action_pressed("move_up")
@@ -87,8 +87,13 @@ func _on_pickup_body_entered(body):
 		$Label.text = str(strength)
 		print(body," entered pickup ",strength)
 
-func _on_pickup_nr_body_entered(body,nr):
+func _on_pickup_nr_body_entered(body):
 	if body.is_in_group("player"):
-		strength += 2
+		strength += 0
 		$Label.text = str(strength)
-		print(body," entered pickup ",strength," ",nr)
+		# print(body," entered pickup ",strength," ",nr)
+
+
+func _on_PlayerArea_body_entered(body):
+	print("Player entered", body)
+	#pass # Replace with function body.
