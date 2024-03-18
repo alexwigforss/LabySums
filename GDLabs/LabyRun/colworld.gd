@@ -6,3 +6,7 @@ func _on_goal_body_entered(body):
 
 	if body.get_name() == "player" && plpower == 10:
 		$youwin.show()
+
+
+func _on_ResetButton_pressed():
+	get_tree().reload_current_scene()

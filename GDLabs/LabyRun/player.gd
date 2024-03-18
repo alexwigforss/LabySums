@@ -9,14 +9,14 @@ const GRAVITY = 0.0 # pixels/second/second
 const FLOOR_ANGLE_TOLERANCE = 40
 const WALK_FORCE = 600
 const WALK_MIN_SPEED = 10
-const WALK_MAX_SPEED = 200
+const WALK_MAX_SPEED = 1000
 const STOP_FORCE = 1300
 
 const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second
 const SLIDE_STOP_MIN_TRAVEL = 1.0 # one pixel
 
 var velocity = Vector2()
-var strength = 0
+var strength = -1
 #var on_air_time = 100
 #var jumping = false
 var inertia = 100
@@ -86,13 +86,6 @@ func _on_pickup_body_entered(body):
 		strength += 1
 		$Label.text = str(strength)
 		print(body," entered pickup ",strength)
-
-func _on_pickup_nr_body_entered(body):
-	if body.is_in_group("player"):
-		strength += 0
-		$Label.text = str(strength)
-		# print(body," entered pickup ",strength," ",nr)
-
 
 func _on_PlayerArea_body_entered(body):
 	print("Player entered", body)
