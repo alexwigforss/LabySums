@@ -22,9 +22,11 @@ var strength = 0
 var inertia = 100
 var dir = 0
 var dirs = [true,false,false,false]
+
 func _ready():
 	#$Label.text = str(velocity)
 	pass
+	
 func _next_direction():
 	dir += 1
 	if dir >= 4:
@@ -120,7 +122,7 @@ func _on_pickup_body_entered(body):
 	if body.is_in_group("player"):
 		strength += 1
 		$Label.text = str(strength)
-		print(body," entered pickup ",strength)
+		print(body," entered actor ",strength)
 
 #func _on_MonsterArea2D_body_entered(_body):
 #	emit_signal("custom_signal",strength)

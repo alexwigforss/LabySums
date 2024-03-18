@@ -16,15 +16,19 @@ const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second
 const SLIDE_STOP_MIN_TRAVEL = 1.0 # one pixel
 
 var velocity = Vector2()
-var strength = -1
+var strength = 1
 #var on_air_time = 100
 #var jumping = false
 var inertia = 100
 
+#func on_emit_pick():
+#	print("emit picked")
+
 func _ready():
 	$Label.text = str(strength)
 #	$Camera2D/ColorRect/RichTextLabel.ALIGN_CENTER
-	$Camera2D/ColorRect/RichTextLabel.text = 'Placeholder.'
+	$Camera2D/ColorRect/MainLabel.text = 'Hello'
+	# emit_signal("picked")
 
 func _physics_process(delta):
 	# Create forces
@@ -90,3 +94,9 @@ func _on_pickup_body_entered(body):
 func _on_PlayerArea_body_entered(body):
 	print("Player entered", body)
 	#pass # Replace with function body.
+
+
+func _on_Area2d_picked(nr):
+	strength += nr
+	$Label.text = str(strength)
+	print("Player entered pick ", nr)

@@ -2,6 +2,8 @@ extends Area2D
 
 export var strength = 1
 
+signal nomatch(nr)
+
 func _ready():
 	$Label.text = str(strength)
 
@@ -14,3 +16,5 @@ func _on_door_body_entered(body, _extra_arg_0):
 	if body.get_name() == "player" && plpower == strength:
 		print(plpower," ",self,"removed",_extra_arg_0)
 		queue_free()# Replace with function body.
+	elif body.get_name() == "player" && plpower != strength:
+		emit_signal("nomatch", strength)	
