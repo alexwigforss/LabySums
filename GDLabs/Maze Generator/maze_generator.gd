@@ -4,9 +4,13 @@ export var generate_on_ready = true
 ### funkar bara med udda nummer ###
 export var  MAZE_SIZE = Vector2(10,10)
 export var  MAZE_POS = Vector2(1, 1)
+export var PLAYER_POS = Vector2()
+export var PRE_POS = Vector2()
 export var WALL_ID = 0
 export var PATH_ID = 1
 export var LIMIT_ID = 2
+export var WIZ_ID = 3
+
 const DIRECTIONS = [
 	Vector2.UP * 2,
 	Vector2.DOWN * 2,
@@ -19,6 +23,8 @@ var stack = []
 var cells = []
 
 func _ready():
+	PRE_POS = Vector2(MAZE_POS.x,MAZE_POS.y)
+	PLAYER_POS = Vector2(MAZE_POS.x,MAZE_POS.y)
 	current_cell += MAZE_POS - Vector2.ONE
 	if generate_on_ready:
 		generate_maze()
@@ -26,7 +32,27 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
 		generate_maze()
+	if event.is_action_pressed("ui_left"):
+		PLAYER_POS.x -= 1
+		player_move()
+	if event.is_action_pressed("ui_up"):
+		PLAYER_POS.y -= 1
+		player_move()
+	if event.is_action_pressed("ui_right"):
+		PLAYER_POS.x += 1
+		player_move()
+	if event.is_action_pressed("ui_down"):
+		PLAYER_POS.y += 1
+		player_move()
 
+func player_move():
+	if get_cell(PLAYER_POS.x,PLAYER_POS.y) == PATH_ID:
+		set_cell(PLAYER_POS.x,PLAYER_POS.y,WIZ_ID)
+		set_cell(PRE_POS.x,PRE_POS.y,PATH_ID)
+		PRE_POS = PLAYER_POS
+	else:
+		PLAYER_POS = PRE_POS
+		
 ### MAZE GENERATION ###
 
 func generate_maze():
@@ -69,6 +95,8 @@ func generate_maze():
 		elif stack.size() > 0:
 			current_cell = stack[0]
 			stack.pop_front()
+			
+	set_cell(PLAYER_POS.x,PLAYER_POS.y,WIZ_ID)
 
 func neighbours_have_not_been_visited(cell):
 	var neighbours = []

@@ -10,7 +10,7 @@ const FLOOR_ANGLE_TOLERANCE = 40
 const WALK_FORCE = 600
 const WALK_MIN_SPEED = 10
 const WALK_MAX_SPEED = 1000
-const STOP_FORCE = 1300
+const STOP_FORCE = 13000
 
 const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second
 const SLIDE_STOP_MIN_TRAVEL = 1.0 # one pixel
@@ -20,14 +20,16 @@ var strength = 1
 #var on_air_time = 100
 #var jumping = false
 var inertia = 100
-
+var recent_op = null
 #func on_emit_pick():
 #	print("emit picked")
 
 func _ready():
+	# set_collision_layer_bit ( 0, false )
+	# set_collision_mask_bit ( 0, false )
 	$Label.text = str(strength)
 #	$Camera2D/ColorRect/RichTextLabel.ALIGN_CENTER
-	$Camera2D/ColorRect/MainLabel.text = 'Hello'
+	$Camera2D/ColorRect/MainLabel.text = str(strength)
 	# emit_signal("picked")
 
 func _physics_process(delta):
@@ -85,18 +87,33 @@ func _physics_process(delta):
 		if collision.collider.is_in_group("object"):
 			collision.collider.apply_central_impulse(-collision.normal * inertia)
 
-func _on_pickup_body_entered(body):
-	if body.is_in_group("player"):
-		strength += 1
-		$Label.text = str(strength)
-		print(body," entered pickup ",strength)
-
 func _on_PlayerArea_body_entered(body):
 	print("Player entered", body)
-	#pass # Replace with function body.
-
 
 func _on_Area2d_picked(nr):
-	strength += nr
+	if recent_op == null:
+		return
+	elif recent_op == '+':
+		strength += nr
+	elif recent_op == '-':
+		strength -= nr
+	elif recent_op == '*':
+		strength *= nr
+	elif recent_op == '/':
+		strength /= nr
 	$Label.text = str(strength)
-	print("Player entered pick ", nr)
+	$Camera2D/ColorRect/MainLabel.text = str(strength)
+	recent_op = null
+	set_collision_mask_bit ( 2, true )
+	set_collision_mask_bit ( 1, false )
+	# print("Player entered pick ", nr)
+
+func _on_pickOp_op_picked(op):
+	# print("Player entered op ", op)
+	if recent_op == null:
+		recent_op = op
+	$Camera2D/ColorRect/MainLabel.text += " " + recent_op
+	$Label.text += op
+	set_collision_mask_bit ( 1, true )
+	set_collision_mask_bit ( 2, false )
+

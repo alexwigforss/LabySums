@@ -227,11 +227,9 @@ position = Vector2( -56, 8 )
 
 [node name="pickNum2" parent="picknums" instance=ExtResource( 12 )]
 position = Vector2( -152, 136 )
-number = -2
 
 [node name="pickNum3" parent="picknums" instance=ExtResource( 12 )]
 position = Vector2( -104, 184 )
-number = -1
 
 [node name="moving_platform1" type="KinematicBody2D" parent="."]
 position = Vector2( 88.2, 184.133 )
