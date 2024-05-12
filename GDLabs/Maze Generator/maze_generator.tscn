@@ -4,10 +4,11 @@
 [ext_resource path="res://maze_generator.gd" type="Script" id=2]
 
 [node name="maze_generator" type="TileMap"]
+scale = Vector2( 1.5, 1.5 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
 cell_quadrant_size = 32
 format = 1
 script = ExtResource( 2 )
 MAZE_SIZE = Vector2( 23, 21 )
-MAZE_POS = Vector2( 21, 8 )
+MAZE_POS = Vector2( 10, 2 )
