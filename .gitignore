@@ -23,3 +23,4 @@ GDLabs/LabyRun/data_*/
 GDLabs/LabyRun/mono_crash.*.json
 
 .gitignore
+/.vscode
