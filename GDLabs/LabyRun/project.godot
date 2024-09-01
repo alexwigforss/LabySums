@@ -27,6 +27,7 @@ singletons=[  ]
 [global]
 
 zoom=true
+autoload=false
 
 [input]
 

@@ -232,7 +232,7 @@ position = Vector2( -152, 136 )
 position = Vector2( -104, 184 )
 
 [node name="moving_platform1" type="KinematicBody2D" parent="."]
-position = Vector2( 88.2, 184.133 )
+position = Vector2( 55.75, 120 )
 
 [node name="collision" type="CollisionShape2D" parent="moving_platform1"]
 shape = SubResource( 3 )
