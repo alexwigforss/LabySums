@@ -1,0 +1,28 @@
+# Godot-specific ignores
+GDLabs/LabyRun/.assets/*
+GDLabs/LabyRun/.import/*
+GDLabs/LabyRun/export.cfg
+GDLabs/LabyRun/export_presets.cfg
+
+GDLabs/Maze Generator/.assets/*
+GDLabs/Maze Generator/.import/*
+GDLabs/Maze Generator/export.cfg
+GDLabs/Maze Generator/export_presets.cfg
+
+# Imported translations (automatically generated from CSV files)
+GDLabs/LabyRun/*.translation
+GDLabs/Maze Generator/*.translation
+
+# Mono-specific ignores
+GDLabs/Maze Generator/.mono/
+GDLabs/Maze Generator/data_*/
+GDLabs/Maze Generator/mono_crash.*.json
+
+GDLabs/LabyRun/.mono/
+GDLabs/LabyRun/data_*/
+GDLabs/LabyRun/mono_crash.*.json
+
+.gitignore
+/.vscode
+.vscode/settings.json
+
