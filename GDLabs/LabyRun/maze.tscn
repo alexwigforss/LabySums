@@ -182,14 +182,15 @@ script = ExtResource( 13 )
 position = Vector2( 88, 72 )
 
 [node name="pickOp" parent="Map1/pickOps" instance=ExtResource( 4 )]
-position = Vector2( -32, 112 )
+position = Vector2( -32, 48 )
 
 [node name="pickOp5" parent="Map1/pickOps" instance=ExtResource( 4 )]
 position = Vector2( -1, 15 )
+opnr = 1
 
 [node name="pickOp2" parent="Map1/pickOps" instance=ExtResource( 4 )]
 position = Vector2( 32, 79 )
-opnr = 1
+opnr = 2
 
 [node name="pickOp3" parent="Map1/pickOps" instance=ExtResource( 4 )]
 position = Vector2( 96, 111 )
@@ -198,8 +199,6 @@ opnr = 3
 [node name="pickOp4" parent="Map1/pickOps" instance=ExtResource( 4 )]
 position = Vector2( 95, 16 )
 opnr = 2
-
-[node name="pickOp" parent="Map1" instance=ExtResource( 4 )]
 
 [node name="pickNums" type="Node2D" parent="Map1"]
 modulate = Color( 1, 1, 1, 0.313726 )
@@ -344,7 +343,6 @@ position = Vector2( -64, 16 )
 
 [node name="pickOp2" parent="Map4/pickOps" instance=ExtResource( 4 )]
 position = Vector2( 32, 79 )
-opnr = 1
 
 [node name="pickOp3" parent="Map4/pickOps" instance=ExtResource( 4 )]
 position = Vector2( 96, 111 )
@@ -424,6 +422,7 @@ valign = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
+autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 9 )]
 position = Vector2( 23.9771, 215.955 )

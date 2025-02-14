@@ -109,7 +109,7 @@ func _on_Area2d_picked(nr):
 	# print("Player entered pick ", nr)
 
 func _on_pickOp_op_picked(op):
-	# print("Player entered op ", op)
+	print("Player entered op ", op)
 	if recent_op == null:
 		recent_op = op
 	$Camera2D/ColorRect/MainLabel.text += " " + recent_op

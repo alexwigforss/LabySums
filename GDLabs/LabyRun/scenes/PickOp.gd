@@ -12,7 +12,10 @@ func _ready():
 
 func _on_pickOp_body_entered(body):
 	if body.is_in_group("player"):
-		print("PICKED")
+		
+		var node_path = get_path()
+		print("Objektets plats i nodträdet: ", node_path)
+		
 		var sibling_node = get_parent().get_parent().get_node("pickNums")  # Ersätt "SiblingNodeName" med det faktiska namnet
 		if sibling_node is Node2D:
 			sibling_node.modulate.a = 1  # Ändrar alpha-värdet till 0.5
