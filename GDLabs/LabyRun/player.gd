@@ -24,6 +24,7 @@ var recent_op = null
 #func on_emit_pick():
 #	print("emit picked")
 
+
 func _ready():
 	# set_collision_layer_bit ( 0, false )
 	# set_collision_mask_bit ( 0, false )

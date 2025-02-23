@@ -182,37 +182,11 @@ script = ExtResource( 13 )
 [node name="pickOps" type="Node2D" parent="Map1"]
 position = Vector2( 88, 72 )
 
-[node name="pickOp" parent="Map1/pickOps" instance=ExtResource( 4 )]
-position = Vector2( -32, 48 )
-
-[node name="pickOp5" parent="Map1/pickOps" instance=ExtResource( 4 )]
-position = Vector2( -1, 15 )
-opnr = 1
-
-[node name="pickOp2" parent="Map1/pickOps" instance=ExtResource( 4 )]
-position = Vector2( 32, 79 )
-opnr = 2
-
-[node name="pickOp3" parent="Map1/pickOps" instance=ExtResource( 4 )]
-position = Vector2( 96, 111 )
-opnr = 3
-
-[node name="pickOp4" parent="Map1/pickOps" instance=ExtResource( 4 )]
-position = Vector2( 95, 16 )
-opnr = 2
-
 [node name="pickNums" type="Node2D" parent="Map1"]
 modulate = Color( 1, 1, 1, 0.313726 )
 
-[node name="pickNum" parent="Map1/pickNums" instance=ExtResource( 12 )]
-position = Vector2( 152, 24 )
-
 [node name="pickNum2" parent="Map1/pickNums" instance=ExtResource( 12 )]
 position = Vector2( 24, 56 )
-number = 6
-
-[node name="pickNum3" parent="Map1/pickNums" instance=ExtResource( 12 )]
-position = Vector2( 152, 88 )
 
 [node name="door" parent="Map1" instance=ExtResource( 2 )]
 position = Vector2( 201, 8 )
@@ -269,7 +243,6 @@ position = Vector2( 168, 24 )
 
 [node name="pickNum2" parent="Map2/pickNums" instance=ExtResource( 12 )]
 position = Vector2( 24, 56 )
-number = 6
 
 [node name="pickNum3" parent="Map2/pickNums" instance=ExtResource( 12 )]
 position = Vector2( 152, 88 )
@@ -321,7 +294,6 @@ position = Vector2( 152, 24 )
 
 [node name="pickNum2" parent="Map3/pickNums" instance=ExtResource( 12 )]
 position = Vector2( 24, 56 )
-number = 6
 
 [node name="pickNum3" parent="Map3/pickNums" instance=ExtResource( 12 )]
 position = Vector2( 152, 88 )
@@ -364,13 +336,12 @@ position = Vector2( 152, 24 )
 
 [node name="pickNum2" parent="Map4/pickNums" instance=ExtResource( 12 )]
 position = Vector2( 24, 56 )
-number = 6
 
 [node name="pickNum3" parent="Map4/pickNums" instance=ExtResource( 12 )]
 position = Vector2( 152, 88 )
 
 [node name="door" parent="Map4" instance=ExtResource( 2 )]
-position = Vector2( 232, 184 )
+position = Vector2( 26, 185 )
 strength = 10
 
 [node name="actors" type="Node2D" parent="."]
@@ -484,14 +455,7 @@ texture = SubResource( 18 )
 color = Color( 0.164706, 0.521569, 0.152941, 1 )
 energy = 13.23
 
-[connection signal="op_picked" from="Map1/pickOps/pickOp" to="player" method="_on_pickOp_op_picked"]
-[connection signal="op_picked" from="Map1/pickOps/pickOp5" to="player" method="_on_pickOp_op_picked"]
-[connection signal="op_picked" from="Map1/pickOps/pickOp2" to="player" method="_on_pickOp_op_picked"]
-[connection signal="op_picked" from="Map1/pickOps/pickOp3" to="player" method="_on_pickOp_op_picked"]
-[connection signal="op_picked" from="Map1/pickOps/pickOp4" to="player" method="_on_pickOp_op_picked"]
-[connection signal="picked" from="Map1/pickNums/pickNum" to="player" method="_on_Area2d_picked"]
 [connection signal="picked" from="Map1/pickNums/pickNum2" to="player" method="_on_Area2d_picked"]
-[connection signal="picked" from="Map1/pickNums/pickNum3" to="player" method="_on_Area2d_picked"]
 [connection signal="doormatch" from="Map1/door" to="." method="_on_door_match"]
 [connection signal="nomatch" from="Map1/door" to="." method="_on_door_nomatch"]
 [connection signal="op_picked" from="Map2/pickOps/pickOp" to="player" method="_on_pickOp_op_picked"]

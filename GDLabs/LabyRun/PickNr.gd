@@ -1,13 +1,16 @@
 extends Area2D
-
-# Declare member variables here. Examples:
-export var number = 2
 export var player: NodePath
 
 signal picked(nr)
 
+# In the script of the instantiated scene
+var value: int
+
+func init_value(new_value):
+	value = new_value
+
 func _ready():
-	$Label.text = str(number)
+	$Label.text = str(value)
 
 func _on_pickNum_body_entered(body):
 	if body.is_in_group("player"):
@@ -17,5 +20,5 @@ func _on_pickNum_body_entered(body):
 		var parent_node = get_parent()  # Hämtar föräldranoden
 		if parent_node is Node2D:  # Kontrollerar om föräldranoden är en Node2D
 			parent_node.modulate.a = 0.5  # Ändrar alpha-värdet till 0.5
-		emit_signal("picked", number)
+		emit_signal("picked", value)
 		queue_free()# Replace with function body.

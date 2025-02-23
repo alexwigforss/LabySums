@@ -24,3 +24,6 @@ func _on_pickOp_body_entered(body):
 			parent_node.modulate.a = 0.5  # Ändrar alpha-värdet till 0.5
 		emit_signal("op_picked", ops[opnr])
 		queue_free()# Replace with function body.
+
+func set_opnr(n):
+	opnr = n

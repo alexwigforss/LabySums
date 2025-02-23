@@ -178,7 +178,6 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 script = ExtResource( 13 )
 
 [node name="pickOps" type="Node2D" parent="Map1"]
-position = Vector2( 88, 72 )
 
 [node name="pickNums" type="Node2D" parent="Map1"]
 modulate = Color( 1, 1, 1, 0.313726 )
