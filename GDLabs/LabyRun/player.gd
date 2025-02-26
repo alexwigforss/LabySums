@@ -89,7 +89,8 @@ func _physics_process(delta):
 			collision.collider.apply_central_impulse(-collision.normal * inertia)
 
 func _on_PlayerArea_body_entered(body):
-	print("Player entered", body)
+	#print("Player entered", body)
+	pass
 
 func _on_Area2d_picked(nr):
 	if recent_op == null:

@@ -11,12 +11,13 @@ var goal = Vector2(12,1)
 
 var shift = Vector2(8,8)
 
-var directions = [['up'],['right'],['down'],['left']]
-var possible_steps = [Vector2(0,-1),Vector2(1,0),Vector2(0,1),Vector2(-1,0)]
+var direction_labels = [['up'],['right'],['down'],['left']]
+var directions = [Vector2(0,-1),Vector2(1,0),Vector2(0,1),Vector2(-1,0)]
 var probs = ['s']
 var route = [start]
-var turnpoints = [start]
-var freepoints = [start]
+var routes = [route]
+# var turnpoints = [start]
+# var freepoints = [start]
 
 var nums = [6,2,2]
 var ops = ['+','-','*']
@@ -40,39 +41,90 @@ func _ready():
 	assemble_route()
 
 func assemble_route():
-	var dir = 0
-	var current_direction = possible_steps[dir]
+	var dir = -1
+	var current_direction = directions[dir]
 	var gofrom = start
 	var goto = start + current_direction
 	var cango = false
-	while true:
-		var reversed_direction = Vector2(-current_direction.x, -current_direction.y)
-		for e in possible_steps:
-			if e == reversed_direction:
-				print('wont go back')
-				continue
-			var lookat = gofrom + e
-			if get_cell(lookat.x,lookat.y):
-				cango = true
-				route.append(lookat)
-			else:
-				cango = false
-			print(e , cango)
+	var index = 0
+	var newroute = []
+	print(routes)
+	var assemblin = true
+	print('Start direcction: ', directions[dir] )
+	var start_directions = [directions[dir]]
+	#var turned = false
+	while assemblin:
+
+		# Sedan tittar vi rakt fram och om det inte är en vägg
+		if get_cell(goto.x, goto.y) == 0:
+			dir = (dir + 1) % 4
+			current_direction = directions[dir]
+			#print('Direction is now: ',dir, directions[dir])
+			goto = gofrom + current_direction
+			#turned = true
+			#if get_cell(goto.x, goto.y) != 0:
+				#routes += [[gofrom]]
 		
-		if get_cell(goto.x, goto.y) != 0:
+		# Kan vi gå över
+		elif get_cell(goto.x, goto.y) != 0:
+			#if not turned:
+			# Först så titta vi åt vänster
+			var turnleft = (dir - 1) % 4
+			if get_cell(gofrom.x + directions[turnleft].x, gofrom.y  + directions[turnleft].y) != 0:
+				if not gofrom + directions[turnleft] in routes[0]:
+					routes += [[gofrom + directions[turnleft]]]
+					start_directions.append(directions[turnleft])
+			# Sedan tittar vi åt höger
+			var turnright = (dir + 1) % 4
+			if get_cell(gofrom.x + directions[turnright].x, gofrom.y  + directions[turnright].y) != 0:
+				if not gofrom + directions[turnright] in routes[0]:
+					routes += [[gofrom + directions[turnright]]]
+					start_directions.append(directions[turnright])
+			#turned = false
+
+
+			# UPDATE GOFROM
 			gofrom = goto
 			goto = gofrom + current_direction
-			route.append(gofrom)
-		else:
-			dir = (dir + 1) % possible_steps.size()  # Cycle to the next direction
-			current_direction = possible_steps[dir]
-			goto = gofrom + current_direction
-			print('bam wall, direction is now', directions[dir][0])
-		# Temporary stopping condition to prevent infinite loops
-		if route.size() >= 30:  # Example condition to stop after 10 steps
+			if not gofrom in routes[0]:
+				routes[0].append(gofrom)
+			else:
+				print('Breaking because of hit self!')
+				break
+
+		index += 1
+		if index >= 20:
+			print('Breaking because of index!')
+			#assemblin = false
 			break
-	print(route)
+			
 	
+	print('GOFROM',gofrom,'GOTO',goto,'Direction: ',directions[dir])
+	# dir = (dir + 1) % 4
+	current_direction = directions[dir]
+	print('GOFROM',gofrom,'GOTO',goto,'Direction: ',directions[dir])
+	
+	for route in routes:
+		print(route)
+	print(start_directions)
+	print(len(routes))
+
+
+func _draw():
+	# draw_arc((start * 16) + shift, 8.0, 0, 2 * PI, 64, Color.green, 2.0)
+	var size = 6.0
+	
+	# Define an array of colors to use for different routes
+	var colors = [Color.cyan, Color.magenta, Color.yellow, Color.orange, Color.purple, Color.red, Color.blue]
+	var color_count = colors.size()
+	
+	# Loop through all routes and draw them with different colors
+	for route_index in range(routes.size()):
+	#for route_index in range(0,3):
+		var color = colors[route_index % color_count]
+		for e in routes[route_index]:
+			draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, color, 0.5)
+			
 func next_direction(_dir):
 	if _dir < 3:
 		return _dir + 1
@@ -82,7 +134,7 @@ func next_direction(_dir):
 
 func no_possible_steps(_pos):
 	var nps = 0
-	for step in possible_steps:
+	for step in directions:
 		if get_cell(_pos.x + step.x,_pos.y + step.y) != 0:
 			nps += 1
 	return nps
@@ -132,17 +184,6 @@ func random_maze():
 			set_cell(x+rx,y+ry,0)
 	#erase_cell() 
 	set_cell(goal.x,goal.y,-1)
-
-
-func _draw():
-	draw_arc((start * 16) + shift, 8.0, 0, 2 * PI, 64, Color.green, 2.0)
-	var size = 0.01
-	size = 6.0
-	var prev_turn_point = turnpoints[0]
-	for e in route:
-		draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, Color.darkturquoise, 0.5)
-		# draw_line((prev_turn_point * 16) + shift, (e * 16) + shift, Color.deeppink , 1.0)
-		prev_turn_point = e
 
 func get_dir():
 	var random_dir = _dirs[randi() % _dirs.size()]
