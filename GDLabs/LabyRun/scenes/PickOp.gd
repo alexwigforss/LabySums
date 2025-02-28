@@ -7,6 +7,12 @@ export var player: NodePath
 
 signal op_picked(op)
 
+# In the script of the instantiated scene
+var value: int
+
+func init_value(new_value):
+	value = new_value
+
 func _ready():
 	$Label.text = ops[opnr]
 
