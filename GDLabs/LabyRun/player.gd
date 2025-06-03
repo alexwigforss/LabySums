@@ -23,7 +23,7 @@ var inertia = 100
 var recent_op = null
 #func on_emit_pick():
 #	print("emit picked")
-
+onready var sprite = get_node("Sprite")
 
 func _ready():
 	# set_collision_layer_bit ( 0, false )
@@ -46,18 +46,22 @@ func _physics_process(delta):
 	var stop = true
 	
 	if walk_left:
+		sprite.region_rect = Rect2(48, 0, 16, 16)
 		if velocity.x <= WALK_MIN_SPEED and velocity.x > -WALK_MAX_SPEED:
 			force.x -= WALK_FORCE
 			stop = false
 	if walk_right:
+		sprite.region_rect = Rect2(32, 0, 16, 16)
 		if velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED:
 			force.x += WALK_FORCE
 			stop = false
 	if walk_up:
+		sprite.region_rect = Rect2(0, 0, 16, 16)  # T.ex. uppåt?
 		if velocity.y <= WALK_MIN_SPEED and velocity.y > -WALK_MAX_SPEED:
 			force.y -= WALK_FORCE
 			stop = false
 	if walk_down:
+		sprite.region_rect = Rect2(16, 0, 16, 16)  # Ner = titta framåt
 		if velocity.y >= -WALK_MIN_SPEED and velocity.y < WALK_MAX_SPEED:
 			force.y += WALK_FORCE
 			stop = false

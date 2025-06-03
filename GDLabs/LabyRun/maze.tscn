@@ -190,7 +190,6 @@ position = Vector2( 24, 56 )
 
 [node name="door" parent="Map1" instance=ExtResource( 2 )]
 position = Vector2( 201, 8 )
-strength = 10
 
 [node name="oneway" type="KinematicBody2D" parent="Map1"]
 position = Vector2( 2, 184 )
@@ -300,7 +299,6 @@ position = Vector2( 152, 88 )
 
 [node name="door" parent="Map3" instance=ExtResource( 2 )]
 position = Vector2( 24, 216 )
-strength = 6
 
 [node name="Map4" type="TileMap" parent="."]
 light_mask = 0
@@ -342,7 +340,6 @@ position = Vector2( 152, 88 )
 
 [node name="door" parent="Map4" instance=ExtResource( 2 )]
 position = Vector2( 26, 185 )
-strength = 10
 
 [node name="actors" type="Node2D" parent="."]
 
@@ -456,8 +453,6 @@ color = Color( 0.164706, 0.521569, 0.152941, 1 )
 energy = 13.23
 
 [connection signal="picked" from="Map1/pickNums/pickNum2" to="player" method="_on_Area2d_picked"]
-[connection signal="doormatch" from="Map1/door" to="." method="_on_door_match"]
-[connection signal="nomatch" from="Map1/door" to="." method="_on_door_nomatch"]
 [connection signal="op_picked" from="Map2/pickOps/pickOp" to="player" method="_on_pickOp_op_picked"]
 [connection signal="op_picked" from="Map2/pickOps/pickOp2" to="player" method="_on_pickOp_op_picked"]
 [connection signal="op_picked" from="Map2/pickOps/pickOp3" to="player" method="_on_pickOp_op_picked"]
@@ -465,16 +460,12 @@ energy = 13.23
 [connection signal="picked" from="Map2/pickNums/pickNum" to="player" method="_on_Area2d_picked"]
 [connection signal="picked" from="Map2/pickNums/pickNum2" to="player" method="_on_Area2d_picked"]
 [connection signal="picked" from="Map2/pickNums/pickNum3" to="player" method="_on_Area2d_picked"]
-[connection signal="doormatch" from="Map2/door" to="." method="_on_door_match"]
-[connection signal="nomatch" from="Map2/door" to="." method="_on_door_nomatch"]
 [connection signal="op_picked" from="Map3/pickOps/pickOp" to="player" method="_on_pickOp_op_picked"]
 [connection signal="op_picked" from="Map3/pickOps/pickOp3" to="player" method="_on_pickOp_op_picked"]
 [connection signal="op_picked" from="Map3/pickOps/pickOp4" to="player" method="_on_pickOp_op_picked"]
 [connection signal="picked" from="Map3/pickNums/pickNum" to="player" method="_on_Area2d_picked"]
 [connection signal="picked" from="Map3/pickNums/pickNum2" to="player" method="_on_Area2d_picked"]
 [connection signal="picked" from="Map3/pickNums/pickNum3" to="player" method="_on_Area2d_picked"]
-[connection signal="doormatch" from="Map3/door" to="." method="_on_door_match"]
-[connection signal="nomatch" from="Map3/door" to="." method="_on_door_nomatch"]
 [connection signal="op_picked" from="Map4/pickOps/pickOp" to="player" method="_on_pickOp_op_picked"]
 [connection signal="op_picked" from="Map4/pickOps/pickOp2" to="player" method="_on_pickOp_op_picked"]
 [connection signal="op_picked" from="Map4/pickOps/pickOp3" to="player" method="_on_pickOp_op_picked"]
@@ -482,8 +473,6 @@ energy = 13.23
 [connection signal="picked" from="Map4/pickNums/pickNum" to="player" method="_on_Area2d_picked"]
 [connection signal="picked" from="Map4/pickNums/pickNum2" to="player" method="_on_Area2d_picked"]
 [connection signal="picked" from="Map4/pickNums/pickNum3" to="player" method="_on_Area2d_picked"]
-[connection signal="doormatch" from="Map4/door" to="." method="_on_door_match"]
-[connection signal="nomatch" from="Map4/door" to="." method="_on_door_nomatch"]
 [connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
 [connection signal="pressed" from="player/Camera2D/ResetButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="body_entered" from="player/PlayerArea" to="player" method="_on_PlayerArea_body_entered"]
