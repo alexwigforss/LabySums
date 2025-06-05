@@ -1,5 +1,6 @@
 extends Area2D
 export var player: NodePath
+onready var sprite = get_node("Sprite")
 
 signal picked(nr)
 
@@ -10,7 +11,27 @@ func init_value(new_value):
 	value = new_value
 
 func _ready():
-	$Label.text = str(value)
+	if value == 1:
+		sprite.region_rect = Rect2(64, 0, 16, 16)
+	if value == 2:
+		sprite.region_rect = Rect2(80, 0, 16, 16)
+	if value == 3:
+		sprite.region_rect = Rect2(96, 0, 16, 16)
+	if value == 4:
+		sprite.region_rect = Rect2(112, 0, 16, 16)
+	if value == 5:
+		sprite.region_rect = Rect2(128, 0, 16, 16)
+	if value == 6:
+		sprite.region_rect = Rect2(144, 0, 16, 16)
+	if value == 7:
+		sprite.region_rect = Rect2(160, 0, 16, 16)
+	if value == 8:
+		sprite.region_rect = Rect2(176, 0, 16, 16)
+	if value == 9:
+		sprite.region_rect = Rect2(192, 0, 16, 16)
+	if value == 0:
+		sprite.region_rect = Rect2(208, 0, 16, 16)
+	#$Label.text = str(value)
 
 func _on_pickNum_body_entered(body):
 	if body.is_in_group("player"):
