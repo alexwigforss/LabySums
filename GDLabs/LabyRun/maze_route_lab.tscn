@@ -168,6 +168,7 @@ autoplay = "BgAnim"
 anims/BgAnim = SubResource( 21 )
 
 [node name="Map1" type="TileMap" parent="."]
+visible = false
 modulate = Color( 0.72549, 0.760784, 0.882353, 1 )
 light_mask = 0
 tile_set = SubResource( 2 )
