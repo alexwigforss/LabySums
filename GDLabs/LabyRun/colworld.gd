@@ -20,10 +20,8 @@ func _on_goal_body_entered(body):
 func _on_ResetButton_pressed():
 	get_tree().reload_current_scene()
 
-
 func _on_door_nomatch(nr):
 	_label.text = "Only " + str(nr) + " may pass"
-
 
 func _on_door_match(_nr):
 	active_map_nr += 1

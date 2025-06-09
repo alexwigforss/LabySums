@@ -168,7 +168,6 @@ autoplay = "BgAnim"
 anims/BgAnim = SubResource( 21 )
 
 [node name="Map1" type="TileMap" parent="."]
-visible = false
 modulate = Color( 0.72549, 0.760784, 0.882353, 1 )
 light_mask = 0
 tile_set = SubResource( 2 )
@@ -202,6 +201,7 @@ shape = SubResource( 19 )
 one_way_collision = true
 
 [node name="Node2D" type="Node2D" parent="Map1"]
+visible = false
 script = ExtResource( 9 )
 
 [node name="actors" type="Node2D" parent="."]

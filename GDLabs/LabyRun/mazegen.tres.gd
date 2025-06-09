@@ -163,14 +163,12 @@ func assemble_route(dir,rout_index):
 			#assemblin = false
 			break
 			
-	
 	#print('GOFROM',gofrom,'GOTO',goto,'Direction: ',directions[dir])
 	current_direction = directions[dir]
 	#print('GOFROM',gofrom,'GOTO',goto,'Direction: ',directions[dir])
 	
 
 	#print(len(routes))
-
 
 func _draw():
 	# draw_arc((start * 16) + shift, 8.0, 0, 2 * PI, 64, Color.green, 2.0)
@@ -192,7 +190,6 @@ func next_direction(_dir):
 		return _dir + 1
 	else:
 		return 0
-
 
 func no_possible_steps(_pos):
 	var nps = 0
