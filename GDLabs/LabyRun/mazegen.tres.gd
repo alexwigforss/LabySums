@@ -6,8 +6,8 @@ var dir = 0
 var cellsize = 16.0
 var half_cell = 8.0
 
-var start = Vector2(1,13)
-var goal = Vector2(12,1)
+export var start = Vector2(1,13)
+export var goal = Vector2(12,1)
 
 var shift = Vector2(8,8)
 
