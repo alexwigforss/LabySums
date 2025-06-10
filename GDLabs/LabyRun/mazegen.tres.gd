@@ -38,7 +38,7 @@ onready var pickNums = get_node("pickNums")
 func _ready():
 	random_maze()
 	assemble_route(-1,0)
-	print(routes[0])
+	#print(routes[0])
 	var temp_dir = start_directions_int[1]
 	#assemble_route(temp_dir,1)
 	var i = 1
@@ -51,11 +51,13 @@ func _ready():
 	
 	# TODO Fixa buggen att routes ibland inte räcker till för att rita ut all num och ops
 	# Kanske genom att söka från ett annat hörn ifall listan är för liten
-	
-	for route in routes:
-		print(route)
-	print(start_directions)
-	print(start_directions_int)
+
+	# DIBOOGIENG
+	print(self, "Direction is ", dir, "", direction_labels[dir])
+	#for route in routes:
+	#	print(route)
+	#print(start_directions)
+	#print(start_directions_int)
 
 	random_picks()
 
@@ -122,7 +124,7 @@ func assemble_route(dir,rout_index):
 	var index = 0
 	#print(routes)
 	var assemblin = true
-	print('Start direcction: ', directions[dir] )
+	#print('Start direcction: ', directions[dir] )
 	
 	#var turned = false
 	while assemblin:
@@ -151,16 +153,16 @@ func assemble_route(dir,rout_index):
 			gofrom = goto
 			goto = gofrom + current_direction
 			if is_pos_pressent(gofrom):
-				print('Breaking because of hit SELF_OR_OTHER!')
+				#print('Breaking because of hit SELF_OR_OTHER!')
 				break
 			elif gofrom == goal:
-				print('Breaking because of REACHING_GOAL!')
+				#print('Breaking because of REACHING_GOAL!')
 				break
 			routes[rout_index].append(gofrom)
 
 		index += 1
 		if index >= 40:
-			print('Breaking because of INDEX!')
+			#print('Breaking because of INDEX!')
 			#assemblin = false
 			break
 			
