@@ -6,6 +6,7 @@ var dir = 0
 var cellsize = 16.0
 var half_cell = 8.0
 
+export var debug = false
 export var start = Vector2(1,13)
 export var goal = Vector2(12,1)
 
@@ -171,19 +172,20 @@ func assemble_route(dir,rout_index):
 	#print(len(routes))
 
 func _draw():
-	# draw_arc((start * 16) + shift, 8.0, 0, 2 * PI, 64, Color.green, 2.0)
-	var size = 6.0
+	if debug:
+		# draw_arc((start * 16) + shift, 8.0, 0, 2 * PI, 64, Color.green, 2.0)
+		var size = 6.0
 	
-	# Define an array of colors to use for different routes
-	var colors = [Color.cyan, Color.magenta, Color.yellow, Color.orange, Color.purple, Color.red, Color.blue, Color.pink, Color.cornsilk, Color.darkblue]
-	var color_count = colors.size()
+		# Define an array of colors to use for different routes
+		var colors = [Color.cyan, Color.magenta, Color.yellow, Color.orange, Color.purple, Color.red, Color.blue, Color.pink, Color.cornsilk, Color.darkblue]
+		var color_count = colors.size()
 	
-	# Loop through all routes and draw them with different colors
-	for route_index in range(routes.size()):
-	#for route_index in range(0,3):
-		var color = colors[route_index % color_count]
-		for e in routes[route_index]:
-			draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, color, 0.5)
+		# Loop through all routes and draw them with different colors
+		for route_index in range(routes.size()):
+		#for route_index in range(0,3):
+			var color = colors[route_index % color_count]
+			for e in routes[route_index]:
+				draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, color, 0.5)
 			
 func next_direction(_dir):
 	if _dir < 3:
