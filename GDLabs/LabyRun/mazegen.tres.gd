@@ -30,7 +30,7 @@ var pickable_scene: PackedScene = preload("res://scenes/PickOp.tscn")
 var pickable_num: PackedScene = preload("res://scenes/PickNum.tscn")
 
 
-# Referens till player-objektet
+# Referenser
 onready var player = get_node("/root/colworld/player")
 onready var pickOps = get_node("pickOps")
 onready var pickNums = get_node("pickNums")
@@ -43,7 +43,7 @@ func _ready():
 	#assemble_route(temp_dir,1)
 	var i = 1
 	#while i < len(routes):
-	while i < 15:
+	while i < 20:
 		assemble_route(start_directions_int[i],i)
 		i += 1
 		
@@ -149,7 +149,7 @@ func assemble_route(dir,rout_index):
 			var turnright = (dir + 1) % 4
 			look(turnright,gofrom,(dir + 1) % 4)
 
-			# UPDATE GOFROM (Ta ett stex)
+			# UPDATE GOFROM (Ta ett steg)
 			gofrom = goto
 			goto = gofrom + current_direction
 			if is_pos_pressent(gofrom):
