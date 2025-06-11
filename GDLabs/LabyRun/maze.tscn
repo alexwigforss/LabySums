@@ -218,6 +218,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map2" instance=ExtResource( 2 )]
 position = Vector2( 8, 24 )
+strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map2"]
 position = Vector2( 200.063, 237.7 )
