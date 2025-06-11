@@ -23,13 +23,14 @@ func _on_door_body_entered(body, _extra_arg_0):
 	var plpower = emitting_actor.strength
 
 	if body.get_name() == "player" && plpower == strength:
-		# Hämta TileMap som ligger under parent
+		# Hämta TileMap parent
 		var tilemap_parent = get_parent()
 		if tilemap_parent:
 			var color = tilemap_parent.modulate
 			color.a = 0.5
 			tilemap_parent.modulate = color
 
+		# Hämta nästa TileMap som ligger under parent
 		var next_map = get_next_map()
 		if next_map:
 			next_map.modulate = Color(1, 1, 1, 1.0)  # Ändra transparens t.ex.
