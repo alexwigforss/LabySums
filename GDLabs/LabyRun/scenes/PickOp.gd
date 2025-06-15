@@ -17,12 +17,16 @@ func init_value(new_value):
 func _ready():
 	# $Label.text = ops[opnr]
 	if opnr == 0:
+		# +
 		sprite.region_rect = Rect2(32, 0, 16, 16)
 	if opnr == 1:
+		# -
 		sprite.region_rect = Rect2(48, 0, 16, 16)
 	if opnr == 2:
+		# *
 		sprite.region_rect = Rect2(16, 0, 16, 16)
 	if opnr == 3:
+		# /
 		sprite.region_rect = Rect2(0, 0, 16, 16)
 
 func _on_pickOp_body_entered(body):

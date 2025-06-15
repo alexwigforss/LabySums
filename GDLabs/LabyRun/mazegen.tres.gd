@@ -19,7 +19,7 @@ var start_directions_int = [dir]
 var probs = ['s']
 var route = [start]
 var routes = [route]
-export var nums = [6,2,2]
+export var nums = [6,2,2,3]
 # ops legend = ['+','-','*','/']
 # ops legend = ['0','1','2','3']
 var ops = [0,1,2]
@@ -35,7 +35,21 @@ onready var player = get_node("/root/colworld/player")
 onready var pickOps = get_node("pickOps")
 onready var pickNums = get_node("pickNums")
 
+
+
 func _ready():
+	var csharp_node = get_node("../TaskFactory")
+	
+	var result = csharp_node.AddNumbers(3, 5)
+	csharp_node.createExpression(3);
+	
+	nums = csharp_node.getNums();
+	ops = csharp_node.getSigns();
+
+	print("Nums är: ", nums)
+	# print("Digs är: ", digs)
+	print("Signs är: ", ops)
+
 	random_maze()
 	assemble_route(-1,0)
 	#print(routes[0])
@@ -64,18 +78,25 @@ func _ready():
 func random_picks():
 	var depth = 1
 	var num = true
-	var x = 0
-	var y = 0
+	var num_index = 0
+	var op_index = 0
+
 	while depth < len(routes):
-		x = routes[depth][int(routes[depth].size()/3)].x
-		y = routes[depth][int(routes[depth].size()/3)].y
+		var x = routes[depth][int(routes[depth].size()/3)].x
+		var y = routes[depth][int(routes[depth].size()/3)].y
+	
 		if num:
-			instance_num(x,y,nums[(depth -1) % nums.size()])
-			num = false
+			if num_index < nums.size():
+				instance_num(x, y, nums[num_index])
+				num_index += 1
+				num = false
 		else:
-			instance_pick(x,y,ops[(depth -1) % ops.size()])
-			num = true
-		depth += 1
+			if op_index < ops.size():
+				instance_pick(x, y, ops[op_index])
+				op_index += 1
+				num = true
+		depth += 1		
+		
 
 func instance_pick(px,py,op):
 	px*=16
