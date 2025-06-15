@@ -1,0 +1,15 @@
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/bin/Debug/net8.0/TaskMaker
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/bin/Debug/net8.0/TaskMaker.deps.json
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/bin/Debug/net8.0/TaskMaker.runtimeconfig.json
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/bin/Debug/net8.0/TaskMaker.dll
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/bin/Debug/net8.0/TaskMaker.pdb
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/TaskMaker.GeneratedMSBuildEditorConfig.editorconfig
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/TaskMaker.AssemblyInfoInputs.cache
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/TaskMaker.AssemblyInfo.cs
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/TaskMaker.csproj.CoreCompileInputs.cache
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/TaskMaker.sourcelink.json
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/TaskMaker.dll
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/refint/TaskMaker.dll
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/TaskMaker.pdb
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/TaskMaker.genruntimeconfig.cache
+/home/alex/Godots/LabySums/RandomTerms/TaskMaker/obj/Debug/net8.0/ref/TaskMaker.dll
