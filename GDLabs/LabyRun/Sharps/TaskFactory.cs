@@ -66,9 +66,12 @@ public class TaskFactory : Node2D
 		return result;
 	}
 	
+	static int getSolution(){
+		return expression.Calculate();
+	}
+	
 	//private Expression logic = new Expression();
 	Expression exp = new Expression(2, true);
-
 
 	public override void _Ready()
 	{

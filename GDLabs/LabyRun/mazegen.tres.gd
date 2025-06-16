@@ -39,12 +39,15 @@ onready var pickNums = get_node("pickNums")
 
 func _ready():
 	var csharp_node = get_node("../TaskFactory")
-	
+	var door_node = get_node("door")
 	var result = csharp_node.AddNumbers(3, 5)
-	csharp_node.createExpression(3);
 	
+	csharp_node.createExpression(3);
 	nums = csharp_node.getNums();
 	ops = csharp_node.getSigns();
+	var solution = csharp_node.getSolution();
+
+	door_node.set_streangth(solution);
 
 	print("Nums är: ", nums)
 	# print("Digs är: ", digs)

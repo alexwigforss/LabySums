@@ -8,6 +8,10 @@ signal doormatch(nr)
 func _ready():
 	$Label.text = str(strength)
 
+func set_streangth(st):
+	strength = st
+	$Label.text = str(strength)
+
 func get_next_map():
 	var current_map = get_parent()
 	var root = current_map.get_parent()
