@@ -246,7 +246,7 @@ position = Vector2( 24, 24 )
 position = Vector2( -200, 216 )
 
 [node name="stone" parent="." instance=ExtResource( 10 )]
-position = Vector2( 56, 152 )
+position = Vector2( -170, 9 )
 
 [node name="doors" type="Node2D" parent="."]
 

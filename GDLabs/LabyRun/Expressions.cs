@@ -18,7 +18,6 @@ public class Expression
 	{
 		eps = GenerateExpression(amountOfOps, positive);
 		epsArr = Eps.ToArray();
-		// epsArr = [.. Eps];
 	}
 
 	private static Queue<Ep> GenerateExpression(int lvl, bool forcePositive = true)

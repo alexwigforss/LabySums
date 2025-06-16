@@ -33,6 +33,10 @@ func _ready():
 	$Camera2D/ColorRect/MainLabel.text = str(strength)
 	# emit_signal("picked")
 
+func reset_strength():
+	strength = 1
+	_ready()
+
 func _physics_process(delta):
 	# Create forces
 	var force = Vector2(0, 0)

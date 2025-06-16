@@ -5,10 +5,12 @@ public class TaskFactory : Node2D
 {
 	static char? prevChar = null;
 	static Expression expression;
+	
 	static void createExpression(int nrOfOperators)
 	{
-		expression = new Expression(nrOfOperators, true);
+		expression = new Expression(nrOfOperators, false);
 	}
+	
 	static int charToNum(char c){
 		switch (c)
 		{
