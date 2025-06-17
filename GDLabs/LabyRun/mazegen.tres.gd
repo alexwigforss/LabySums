@@ -110,6 +110,8 @@ func instance_pick(px,py,op):
 	pickable_instance.position = Vector2(px+half_cell, py+half_cell)
 	pickable_instance.connect("op_picked", player, "_on_pickOp_op_picked")
 
+# SUGESTION give the player strength of the first number
+# At segment enter
 func instance_num(px,py,num):
 	px *= 16
 	py *= 16
@@ -238,6 +240,7 @@ func random_picks_old():
 				instance_num(x,y,4)
 				num = false
 
+# BUG Sometimes puts a brick in front of the door
 func random_maze():
 	var rx = 0
 	var ry = 0
