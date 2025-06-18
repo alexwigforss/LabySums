@@ -1,9 +1,5 @@
 extends KinematicBody2D
-# signal custom_signal
-# signal goal_signal
-# signal door_signal
-# Member variables
-const GRAVITY = 0.0 # pixels/second/second
+const GRAVITY = 0.0
 
 # Angle in degrees towards either side that the player can consider "floor"
 const FLOOR_ANGLE_TOLERANCE = 40
@@ -102,6 +98,7 @@ func _on_PlayerArea_body_entered(body):
 
 func _on_Area2d_picked(nr):
 	if recent_op == null:
+		print("OP was Null")
 		return
 	elif recent_op == '+':
 		strength += nr

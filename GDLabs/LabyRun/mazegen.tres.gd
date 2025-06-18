@@ -35,8 +35,6 @@ onready var player = get_node("/root/colworld/player")
 onready var pickOps = get_node("pickOps")
 onready var pickNums = get_node("pickNums")
 
-
-
 func _ready():
 	var csharp_node = get_node("../TaskFactory")
 	var door_node = get_node("door")
@@ -60,7 +58,7 @@ func _ready():
 	#assemble_route(temp_dir,1)
 	var i = 1
 	#while i < len(routes):
-	while i < 20:
+	while i < 30:
 		assemble_route(start_directions_int[i],i)
 		i += 1
 		
@@ -72,9 +70,9 @@ func _ready():
 	# DIBOOGIENG
 	print(self, "Direction is ", dir, "", direction_labels[dir])
 	#for route in routes:
-	#	print(route)
-	#print(start_directions)
-	#print(start_directions_int)
+		#print(route)
+	# print(start_directions)
+	# print(start_directions_int)
 
 	random_picks()
 
@@ -83,7 +81,10 @@ func random_picks():
 	var num = true
 	var num_index = 0
 	var op_index = 0
-
+	# BUG Alla ritas inte alltid ut
+	# FÖRSLAG förbättra, assemble_route
+	# eller itterera över alla tal och börja om
+	# ELLER Radbryt Routes oftare
 	while depth < len(routes):
 		var x = routes[depth][int(routes[depth].size()/3)].x
 		var y = routes[depth][int(routes[depth].size()/3)].y
@@ -135,6 +136,7 @@ func look(pos, gofrom, d):
 			routes += [[gofrom + directions[pos]]]
 			start_directions.append(directions[pos])
 			start_directions_int.append(d)
+			return true
 
 func is_pos_pressent(pos):
 	for route in routes:
@@ -149,13 +151,15 @@ func assemble_route(dir,rout_index):
 	var goto = start + current_direction
 	var index = 0
 	#print(routes)
+	var foundSplit = false
 	var assemblin = true
 	#print('Start direcction: ', directions[dir] )
 	
 	#var turned = false
 	while assemblin:
+		# OM NÄSTA STEG ÄR VÄGG
 		if get_cell(goto.x, goto.y) == 0:
-			dir = (dir + 1) % 4
+			dir = (dir + 1) % 4 # BYT RIKTNING
 			current_direction = directions[dir]
 			goto = gofrom + current_direction
 			# Lock back after first turn in case of split
@@ -170,20 +174,28 @@ func assemble_route(dir,rout_index):
 		if get_cell(goto.x, goto.y) != 0:
 			# Först så titta vi åt vänster
 			var turnleft = (dir - 1) % 4
-			look(turnleft,gofrom,(dir - 1) % 4)
+			if look(turnleft,gofrom,(dir - 1) % 4):
+				pass
+				#foundSplit = true
 			# Sedan tittar vi åt höger
 			var turnright = (dir + 1) % 4
-			look(turnright,gofrom,(dir + 1) % 4)
+			if look(turnright,gofrom,(dir + 1) % 4):
+				foundSplit = true
 
 			# UPDATE GOFROM (Ta ett steg)
 			gofrom = goto
 			goto = gofrom + current_direction
-			if is_pos_pressent(gofrom):
+			if is_pos_pressent(gofrom): # Om positionen redan lagrad
 				#print('Breaking because of hit SELF_OR_OTHER!')
-				break
+				break # BRYT
 			elif gofrom == goal:
 				#print('Breaking because of REACHING_GOAL!')
 				break
+			#elif foundSplit:
+			#	routes += [[gofrom]]
+			#	start_directions.append(dir)
+			#	start_directions_int.append(dir)
+			#	break
 			routes[rout_index].append(gofrom)
 
 		index += 1
@@ -213,6 +225,7 @@ func _draw():
 		#for route_index in range(0,3):
 			var color = colors[route_index % color_count]
 			for e in routes[route_index]:
+			#var e = routes[route_index][0]
 				draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, color, 0.5)
 			
 func next_direction(_dir):
