@@ -126,28 +126,25 @@ extents = Vector2( 7, 7 )
 script = ExtResource( 1 )
 
 [node name="BgNode2D" type="Node2D" parent="."]
-position = Vector2( 281, -32 )
+visible = false
+position = Vector2( 200, 0 )
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Cp1" type="Sprite" parent="BgNode2D"]
-modulate = Color( 1, 1, 1, 0.462745 )
 position = Vector2( 288, 288 )
 texture = SubResource( 22 )
 
 [node name="Cp2" type="Sprite" parent="BgNode2D"]
-modulate = Color( 1, 1, 1, 0.462745 )
 position = Vector2( -736, 288 )
 scale = Vector2( -1, 1 )
 texture = SubResource( 22 )
 
 [node name="Cp3" type="Sprite" parent="BgNode2D"]
-modulate = Color( 1, 1, 1, 0.462745 )
 position = Vector2( 288, -736 )
 scale = Vector2( 1, -1 )
 texture = SubResource( 22 )
 
 [node name="Cp4" type="Sprite" parent="BgNode2D"]
-modulate = Color( 1, 1, 1, 0.462745 )
 position = Vector2( -736, -736 )
 scale = Vector2( -1, -1 )
 texture = SubResource( 22 )
@@ -164,31 +161,27 @@ scale = Vector2( -1, 1 )
 texture = SubResource( 22 )
 
 [node name="BgNode2D2" type="Node2D" parent="."]
-modulate = Color( 1, 1, 1, 0.462745 )
+modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( -823, 0 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
 
 [node name="Cp1" type="Sprite" parent="BgNode2D2"]
-modulate = Color( 1, 1, 1, 0.462745 )
 position = Vector2( 288, 288 )
 texture = SubResource( 22 )
 
 [node name="Cp2" type="Sprite" parent="BgNode2D2"]
-modulate = Color( 1, 1, 1, 0.462745 )
 position = Vector2( -736, 288 )
 rotation = -3.14159
 scale = Vector2( 1, -1 )
 texture = SubResource( 22 )
 
 [node name="Cp3" type="Sprite" parent="BgNode2D2"]
-modulate = Color( 1, 1, 1, 0.462745 )
 position = Vector2( 288, -736 )
 scale = Vector2( 1, -1 )
 texture = SubResource( 22 )
 
 [node name="Cp4" type="Sprite" parent="BgNode2D2"]
-modulate = Color( 1, 1, 1, 0.462745 )
 position = Vector2( -736, -736 )
 rotation = -3.14159
 texture = SubResource( 22 )
