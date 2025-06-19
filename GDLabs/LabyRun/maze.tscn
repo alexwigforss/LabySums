@@ -183,9 +183,9 @@ script = ExtResource( 13 )
 debug = true
 
 [node name="pickOps" type="Node2D" parent="Map1"]
+modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map1"]
-modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map1" instance=ExtResource( 2 )]
 position = Vector2( 201, 8 )
@@ -217,9 +217,9 @@ start = Vector2( 12, 1 )
 goal = Vector2( 1, 2 )
 
 [node name="pickOps" type="Node2D" parent="Map2"]
+modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map2"]
-modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map2" instance=ExtResource( 2 )]
 position = Vector2( 8, 24 )
@@ -294,6 +294,7 @@ autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 9 )]
 position = Vector2( 23.9771, 215.955 )
+collision_mask = 3
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 current = true
