@@ -58,7 +58,7 @@ func _ready():
 	#assemble_route(temp_dir,1)
 	var i = 1
 	#while i < len(routes):
-	while i < 30:
+	while i < 25:
 		assemble_route(start_directions_int[i],i)
 		i += 1
 		

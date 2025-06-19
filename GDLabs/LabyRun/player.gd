@@ -12,7 +12,7 @@ const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second
 const SLIDE_STOP_MIN_TRAVEL = 1.0 # one pixel
 
 var velocity = Vector2()
-var strength = 1
+var strength = 0
 #var on_air_time = 100
 #var jumping = false
 var inertia = 100
@@ -30,7 +30,10 @@ func _ready():
 	# emit_signal("picked")
 
 func reset_strength():
-	strength = 1
+	strength = 0
+	recent_op = null
+	set_collision_mask_bit ( 1, true )
+	set_collision_mask_bit ( 2, false )
 	_ready()
 
 func _physics_process(delta):
@@ -97,7 +100,10 @@ func _on_PlayerArea_body_entered(body):
 	pass
 
 func _on_Area2d_picked(nr):
-	if recent_op == null:
+	if recent_op == null and strength == 0:
+		print("First number picked: ", nr)
+		strength = nr
+	elif recent_op == null:
 		print("OP was Null")
 		return
 	elif recent_op == '+':
