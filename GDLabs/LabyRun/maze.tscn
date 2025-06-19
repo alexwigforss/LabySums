@@ -19,8 +19,9 @@ load_path = "res://.import/steam_math_pipeground.png-81ee77ca32054b9e7f271baf38b
 
 [sub_resource type="Animation" id=21]
 resource_name = "BgAnim"
-length = 90.0
+length = 180.0
 loop = true
+step = 1.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
@@ -28,7 +29,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 15, 29.9, 45, 59.7, 75, 90 ),
+"times": PoolRealArray( 0, 30, 60, 90, 120, 150, 180 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -823, 0 ), Vector2( 81, 0 ), Vector2( 81, 0 ), Vector2( 81, 712 ), Vector2( 81, 0 ), Vector2( 81, 0 ), Vector2( -823, 0 ) ]
@@ -40,10 +41,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 14.7, 29.9, 60, 75 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 30, 60, 120, 150 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 90.0, 0.0, 0.0, 90.0 ]
+"values": [ 90.0, 90.0, 0.0, 0.0, 90.0 ]
 }
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -126,7 +127,6 @@ extents = Vector2( 7, 7 )
 script = ExtResource( 1 )
 
 [node name="BgNode2D" type="Node2D" parent="."]
-visible = false
 position = Vector2( 200, 0 )
 scale = Vector2( 0.5, 0.5 )
 
@@ -162,7 +162,7 @@ texture = SubResource( 22 )
 
 [node name="BgNode2D2" type="Node2D" parent="."]
 modulate = Color( 1, 1, 1, 0.498039 )
-position = Vector2( -823, 0 )
+position = Vector2( 81, 0 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
 
