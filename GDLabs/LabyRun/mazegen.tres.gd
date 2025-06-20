@@ -9,7 +9,7 @@ var half_cell = 8.0
 export var debug = false
 export var start = Vector2(1,13)
 export var goal = Vector2(12,1)
-
+export var number_of_operators = 1
 var shift = Vector2(8,8)
 
 var direction_labels = [['up'],['right'],['down'],['left']]
@@ -19,7 +19,7 @@ var start_directions_int = [dir]
 var probs = ['s']
 var route = [start]
 var routes = [route]
-export var nums = [6,2,2,3]
+var nums = [6,2,2,3]
 # ops legend = ['+','-','*','/']
 # ops legend = ['0','1','2','3']
 var ops = [0,1,2]
@@ -40,7 +40,7 @@ func _ready():
 	var door_node = get_node("door")
 	var result = csharp_node.AddNumbers(3, 5)
 	
-	csharp_node.createExpression(3);
+	csharp_node.createExpression(number_of_operators);
 	nums = csharp_node.getNums();
 	ops = csharp_node.getSigns();
 	var solution = csharp_node.getSolution();

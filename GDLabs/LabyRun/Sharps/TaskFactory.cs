@@ -8,7 +8,7 @@ public class TaskFactory : Node2D
 	
 	static void createExpression(int nrOfOperators)
 	{
-		expression = new Expression(nrOfOperators, false);
+		expression = new Expression(nrOfOperators, true);
 	}
 	
 	static int charToNum(char c){
