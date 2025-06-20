@@ -275,6 +275,7 @@ func random_maze():
 			set_cell(x+rx,y+ry,0)
 	#erase_cell() 
 	set_cell(goal.x,goal.y,-1)
+	set_cell(start.x,start.y,-1)
 
 func get_dir():
 	var random_dir = _dirs[randi() % _dirs.size()]
