@@ -1,7 +1,7 @@
 extends TileMap
 
 var _dirs = [-1,1]
-var dir = 0
+export var dir = 0
 
 var cellsize = 16.0
 var half_cell = 8.0
@@ -14,6 +14,7 @@ export var number_of_operators = 1
 export var result_max = 20
 
 var shift = Vector2(8,8)
+# export var set_start_direction = 'up'
 
 var direction_labels = [['up'],['right'],['down'],['left']]
 var directions = [Vector2(0,-1),Vector2(1,0),Vector2(0,1),Vector2(-1,0)]
@@ -66,7 +67,9 @@ func _ready():
 	#assemble_route(temp_dir,1)
 	var i = 1
 	#while i < len(routes):
-	while i < 25:
+	while i < 20:
+	#while i < start_directions_int.size():
+		print(start_directions_int.size())
 		assemble_route(start_directions_int[i],i)
 		i += 1
 		
@@ -139,7 +142,7 @@ func pop_sublists_with_length_one(lists):
 	return new_list
 
 func look(pos, gofrom, d):
-	if get_cell(gofrom.x + directions[pos].x, gofrom.y  + directions[pos].y) != 0:
+	if not get_cell(gofrom.x + directions[pos].x, gofrom.y  + directions[pos].y) in [0, 1]:
 		if not gofrom + directions[pos] in routes[0]:
 			routes += [[gofrom + directions[pos]]]
 			start_directions.append(directions[pos])
@@ -166,20 +169,20 @@ func assemble_route(dir,rout_index):
 	#var turned = false
 	while assemblin:
 		# OM NÄSTA STEG ÄR VÄGG
-		if get_cell(goto.x, goto.y) == 0:
+		if get_cell(goto.x, goto.y) in [0,1]:
 			dir = (dir + 1) % 4 # BYT RIKTNING
 			current_direction = directions[dir]
 			goto = gofrom + current_direction
 			# Lock back after first turn in case of split
-			if get_cell(goto.x, goto.y) != 0:
+			if not get_cell(goto.x, goto.y) in [0,1]:
 				var lookback = (dir - 2) % 4
 				look(lookback, gofrom,(dir - 2) % 4)
-			if get_cell(goto.x, goto.y) == 0:
+			if get_cell(goto.x, goto.y) in [0, 1]:
 				dir = (dir - 2) % 4
 				current_direction = directions[dir]
 				goto = gofrom + current_direction
 		
-		if get_cell(goto.x, goto.y) != 0:
+		if not get_cell(goto.x, goto.y) in [0, 1]:
 			# Först så titta vi åt vänster
 			var turnleft = (dir - 1) % 4
 			if look(turnleft,gofrom,(dir - 1) % 4):
@@ -245,7 +248,7 @@ func next_direction(_dir):
 func no_possible_steps(_pos):
 	var nps = 0
 	for step in directions:
-		if get_cell(_pos.x + step.x,_pos.y + step.y) != 0:
+		if not get_cell(_pos.x + step.x,_pos.y + step.y) in [0, 1]:
 			nps += 1
 	return nps
 			
