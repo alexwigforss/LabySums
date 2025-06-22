@@ -7,6 +7,7 @@ var cellsize = 16.0
 var half_cell = 8.0
 
 export var debug = false
+export var random_maze = true
 export var start = Vector2(1,13)
 export var goal = Vector2(12,1)
 export var number_of_operators = 1
@@ -58,7 +59,7 @@ func _ready():
 	# print("Digs är: ", digs)
 	print("Signs är: ", ops)
 
-	random_maze()
+	random_maze() if random_maze else no_random_maze()
 	assemble_route(-1,0)
 	#print(routes[0])
 	var temp_dir = start_directions_int[1]
@@ -261,6 +262,9 @@ func random_picks_old():
 				num = false
 
 # BUG Sometimes puts a brick in front of the door
+func no_random_maze():
+	return
+	
 func random_maze():
 	var rx = 0
 	var ry = 0
