@@ -68,8 +68,9 @@ func _ready():
 	var i = 1
 	#while i < len(routes):
 	while i < 20:
+	# TODO Add Exception Handling
 	#while i < start_directions_int.size():
-		print(start_directions_int.size())
+		print("Start Directions Int Size: ", start_directions_int.size())
 		assemble_route(start_directions_int[i],i)
 		i += 1
 		
