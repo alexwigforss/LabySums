@@ -19,7 +19,8 @@ var inertia = 100
 var recent_op = null
 #func on_emit_pick():
 #	print("emit picked")
-onready var sprite = get_node("Sprite")
+#onready var sprite = get_node("Sprite")
+onready var sprite = $AnimatedSprite
 
 func _ready():
 	# set_collision_layer_bit ( 0, false )
@@ -28,6 +29,7 @@ func _ready():
 #	$Camera2D/ColorRect/RichTextLabel.ALIGN_CENTER
 	$Camera2D/ColorRect/MainLabel.text = str(strength)
 	# emit_signal("picked")
+	sprite.play()
 
 func reset_strength():
 	strength = 0
@@ -49,27 +51,28 @@ func _physics_process(delta):
 	var stop = true
 	
 	if walk_left:
-		sprite.region_rect = Rect2(48, 0, 16, 16)
+		sprite.animation = "anim_left"
 		if velocity.x <= WALK_MIN_SPEED and velocity.x > -WALK_MAX_SPEED:
 			force.x -= WALK_FORCE
 			stop = false
 	if walk_right:
-		sprite.region_rect = Rect2(32, 0, 16, 16)
+		sprite.animation = "anim_right"
 		if velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED:
 			force.x += WALK_FORCE
 			stop = false
 	if walk_up:
-		sprite.region_rect = Rect2(0, 0, 16, 16)  # T.ex. uppåt?
+		sprite.animation = "anim_up"
 		if velocity.y <= WALK_MIN_SPEED and velocity.y > -WALK_MAX_SPEED:
 			force.y -= WALK_FORCE
 			stop = false
 	if walk_down:
-		sprite.region_rect = Rect2(16, 0, 16, 16)  # Ner = titta framåt
+		sprite.animation = "anim_down"
 		if velocity.y >= -WALK_MIN_SPEED and velocity.y < WALK_MAX_SPEED:
 			force.y += WALK_FORCE
 			stop = false
 	
 	if stop:
+		sprite.stop()
 		var vsign = sign(velocity.x)
 		var yvsign = sign(velocity.y)
 		var vlen = abs(velocity.x)
@@ -84,7 +87,8 @@ func _physics_process(delta):
 		
 		velocity.x = vlen * vsign
 		velocity.y = yvlen * yvsign
-	
+	else:
+		sprite.play()
 	# Integrate forces to velocity
 	velocity += force * delta	
 	# Integrate velocity into motion and move
