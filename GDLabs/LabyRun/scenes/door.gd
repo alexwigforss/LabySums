@@ -33,7 +33,6 @@ func _on_door_body_entered(body, _extra_arg_0):
 			var color = tilemap_parent.modulate
 			color.a = 0.5
 			tilemap_parent.modulate = color
-
 		# Hämta nästa TileMap som ligger under parent
 		var next_map = get_next_map()
 		if next_map:
