@@ -50,15 +50,15 @@ func _ready():
 		nums = csharp_node.getNums();
 		ops = csharp_node.getSigns();
 		solution = csharp_node.getSolution();
-		print("Generated ", solution)
+		# print("Generated ", solution)
 
 	
 
 	door_node.set_streangth(solution);
 
-	print("Nums är: ", nums)
+	# print("Nums är: ", nums)
 	# print("Digs är: ", digs)
-	print("Signs är: ", ops)
+	# print("Signs är: ", ops)
 
 	random_maze() if random_maze else no_random_maze()
 	assemble_route(-1,0)
@@ -70,7 +70,7 @@ func _ready():
 	while i < 20:
 	# TODO Add Exception Handling
 	#while i < start_directions_int.size():
-		print("Start Directions Int Size: ", start_directions_int.size())
+		# print("Start Directions Int Size: ", start_directions_int.size())
 		assemble_route(start_directions_int[i],i)
 		i += 1
 		
@@ -80,7 +80,7 @@ func _ready():
 	# Kanske genom att söka från ett annat hörn ifall listan är för liten
 
 	# DIBOOGIENG
-	print(self, "Direction is ", dir, "", direction_labels[dir])
+	# print(self, "Direction is ", dir, "", direction_labels[dir])
 	#for route in routes:
 		#print(route)
 	# print(start_directions)

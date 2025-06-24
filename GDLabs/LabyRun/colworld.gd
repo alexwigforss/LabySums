@@ -9,9 +9,9 @@ func _ready():
 	_current = get_node("/root/colworld/Map" + str(active_map_nr))
 	
 func _on_goal_body_entered(body):
+	print("Signal from goal")
 	var emitting_scene = get_node("/root/colworld/player")
 	var plpower = emitting_scene.strength
-
 	if body.get_name() == "player" && plpower == 10:
 		_label.text = "An door has opened"
 	elif body.get_name() == "player" && plpower == 10:

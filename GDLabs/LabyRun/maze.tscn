@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=2]
@@ -11,7 +11,9 @@
 [ext_resource path="res://player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/PushBox.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sounds/andra.mp3" type="AudioStream" id=11]
+[ext_resource path="res://paths/numpanel.svg" type="Texture" id=12]
 [ext_resource path="res://mazegen.tres.gd" type="Script" id=13]
+[ext_resource path="res://getGoalNr.gd" type="Script" id=14]
 
 [sub_resource type="StreamTexture" id=22]
 flags = 4
@@ -656,10 +658,9 @@ valign = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
-autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 9 )]
-position = Vector2( 471.977, -392.045 )
+position = Vector2( 23.977, 215.955 )
 collision_mask = 3
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -672,7 +673,6 @@ margin_left = -196.0
 margin_top = 124.0
 margin_right = 134.0
 margin_bottom = 146.0
-color = Color( 0.878431, 0.760784, 0.760784, 1 )
 
 [node name="MainLabel" type="RichTextLabel" parent="player/Camera2D/ColorRect"]
 modulate = Color( 0, 0, 0, 1 )
@@ -693,6 +693,24 @@ margin_right = 194.023
 margin_bottom = 144.045
 text = "Reload"
 script = SubResource( 17 )
+
+[node name="Numpanel" type="Sprite" parent="player/Camera2D"]
+position = Vector2( -167.977, -114.955 )
+texture = ExtResource( 12 )
+
+[node name="TargetLabel" type="Label" parent="player/Camera2D/Numpanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -31.0
+margin_top = -31.0
+margin_right = -1.0
+margin_bottom = -1.0
+text = "000"
+align = 1
+valign = 1
+script = ExtResource( 14 )
 
 [node name="Label" type="Label" parent="player"]
 visible = false
