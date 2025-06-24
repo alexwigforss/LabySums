@@ -37,7 +37,10 @@ func _on_door_body_entered(body, _extra_arg_0):
 		var next_map = get_next_map()
 		if next_map:
 			next_map.modulate = Color(1, 1, 1, 1.0)  # Ändra transparens t.ex.
-			
+		# Hämta Target Label
+		var target_label = get_node("/root/colworld/player/Camera2D/Numpanel/TargetLabel")
+		target_label.next_segment()
+
 		print(plpower," ",self,"removed",_extra_arg_0)
 		emit_signal("doormatch", strength)
 		emitting_actor.reset_strength()

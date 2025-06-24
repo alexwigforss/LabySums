@@ -712,13 +712,6 @@ align = 1
 valign = 1
 script = ExtResource( 14 )
 
-[node name="Label" type="Label" parent="player/Camera2D/Numpanel"]
-margin_left = -26.0
-margin_top = -7.0
-margin_right = -20.0
-margin_bottom = 7.0
-text = "?"
-
 [node name="Label" type="Label" parent="player"]
 visible = false
 modulate = Color( 0, 0, 0, 1 )

@@ -14,3 +14,7 @@ func _ready():
 		print(door_nr)
 		
 	text = str(doornums[current_segment - 1])
+
+func next_segment():
+	current_segment += 1
+	text = str(doornums[current_segment - 1])
