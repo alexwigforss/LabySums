@@ -1,12 +1,10 @@
 extends TileMap
 
-var _dirs = [-1,1]
+# ['+','-','*','/']
+# ['0','1','2','3']
+
 export var dir = 0
-
-var cellsize = 16.0
-var half_cell = 8.0
-
-export var debug = false
+export var debug_draw_routes = false
 export var random_maze = true
 export var start = Vector2(1,13)
 export var goal = Vector2(12,1)
@@ -14,8 +12,6 @@ export var number_of_operators = 1
 export var result_max = 20
 
 var shift = Vector2(8,8)
-# export var set_start_direction = 'up'
-
 var direction_labels = [['up'],['right'],['down'],['left']]
 var directions = [Vector2(0,-1),Vector2(1,0),Vector2(0,1),Vector2(-1,0)]
 var start_directions = [directions[dir]]
@@ -24,9 +20,11 @@ var probs = ['s']
 var route = [start]
 var routes = [route]
 var nums = [6,2,2,3]
-# ops legend = ['+','-','*','/']
-# ops legend = ['0','1','2','3']
 var ops = [0,1,2]
+var _dirs = [-1,1]
+var cellsize = 16.0
+var half_cell = 8.0
+
 
 # Skapa en PackedScene av PickOp
 var pickable_scene: PackedScene = preload("res://scenes/PickOp.tscn")
@@ -184,12 +182,12 @@ func assemble_route(dir,rout_index):
 				goto = gofrom + current_direction
 		
 		if not get_cell(goto.x, goto.y) in [0, 1]:
-			# Först så titta vi åt vänster
+			# Kollar vänster
 			var turnleft = (dir - 1) % 4
 			if look(turnleft,gofrom,(dir - 1) % 4):
 				pass
 				#foundSplit = true
-			# Sedan tittar vi åt höger
+			# Kollar höger
 			var turnright = (dir + 1) % 4
 			if look(turnright,gofrom,(dir + 1) % 4):
 				foundSplit = true
@@ -217,14 +215,12 @@ func assemble_route(dir,rout_index):
 			break
 			
 	#print('GOFROM',gofrom,'GOTO',goto,'Direction: ',directions[dir])
-	current_direction = directions[dir]
-	#print('GOFROM',gofrom,'GOTO',goto,'Direction: ',directions[dir])
-	
-
 	#print(len(routes))
+	current_direction = directions[dir]	
+
 
 func _draw():
-	if debug:
+	if debug_draw_routes:
 		# draw_arc((start * 16) + shift, 8.0, 0, 2 * PI, 64, Color.green, 2.0)
 		var size = 6.0
 	
@@ -239,7 +235,8 @@ func _draw():
 			for e in routes[route_index]:
 			#var e = routes[route_index][0]
 				draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, color, 0.5)
-			
+
+
 func next_direction(_dir):
 	if _dir < 3:
 		return _dir + 1
@@ -252,7 +249,7 @@ func no_possible_steps(_pos):
 		if not get_cell(_pos.x + step.x,_pos.y + step.y) in [0, 1]:
 			nps += 1
 	return nps
-			
+
 
 func random_picks_old():
 	var num = false
@@ -265,10 +262,11 @@ func random_picks_old():
 				instance_num(x,y,4)
 				num = false
 
-# BUG Sometimes puts a brick in front of the door
+
 func no_random_maze():
 	return
-	
+
+
 func random_maze():
 	var rx = 0
 	var ry = 0
@@ -285,6 +283,8 @@ func random_maze():
 	set_cell(goal.x,goal.y,-1)
 	set_cell(start.x,start.y,-1)
 
+
 func get_dir():
 	var random_dir = _dirs[randi() % _dirs.size()]
 	return random_dir
+
