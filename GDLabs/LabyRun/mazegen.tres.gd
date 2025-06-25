@@ -1,6 +1,5 @@
 extends TileMap
 
-# ['0','1','2','3']
 
 export var start_dir = 0
 export var debug_print_init = false
@@ -12,6 +11,7 @@ export var start = Vector2(1,13)
 export var goal = Vector2(12,1)
 export var number_of_operators = 1
 export var result_max = 20
+
 
 var signs = ['+','-','*','/']
 var shift = Vector2(8,8)
@@ -27,11 +27,12 @@ var ops = [0,1,2]
 var _dirs = [-1,1]
 var cellsize = 16.0
 var half_cell = 8.0
+var solution = 9999999
 
 
 # Skapa en PackedScene av PickOp
 var pickable_scene: PackedScene = preload("res://scenes/PickOp.tscn")
-# Skapa en PackedScene av PickOp
+# Skapa en PackedScene av PickNum
 var pickable_num: PackedScene = preload("res://scenes/PickNum.tscn")
 
 
@@ -39,8 +40,6 @@ var pickable_num: PackedScene = preload("res://scenes/PickNum.tscn")
 onready var player = get_node("/root/colworld/player")
 onready var pickOps = get_node("pickOps")
 onready var pickNums = get_node("pickNums")
-
-var solution = 9999999
 
 
 func get_expression(n,o):
@@ -68,7 +67,6 @@ func get_expression_string(n,o):
 func _ready():
 	var csharp_node = get_node("../TaskFactory")
 	var door_node = get_node("door")
-	# var result = csharp_node.AddNumbers(3, 5)
 	while solution > result_max:	
 		csharp_node.createExpression(number_of_operators);
 		nums = csharp_node.getNums();
@@ -83,21 +81,15 @@ func _ready():
 
 	door_node.set_streangth(solution);
 
-	# print("Nums är: ", nums)
-	# print("Digs är: ", digs)
-	# print("Signs är: ", ops)
 
-	random_maze() if random_maze else no_random_maze()
+	randomize_maze() if random_maze else no_random_maze()
 	assemble_route(-1,0)
-	#print(routes[0])
 	var temp_dir = start_directions_int[1]
-	#assemble_route(temp_dir,1)
 	var i = 1
+
 	#while i < len(routes):
 	while i < 20:
 	# TODO Add Exception Handling
-	#while i < start_directions_int.size():
-		# print("Start Directions Int Size: ", start_directions_int.size())
 		assemble_route(start_directions_int[i],i)
 		i += 1
 		
@@ -105,6 +97,7 @@ func _ready():
 	
 	# TODO Fixa buggen att routes ibland inte räcker till för att rita ut all num och ops
 	# Kanske genom att söka från ett annat hörn ifall listan är för liten
+	# NOTE för närvarande verkar det funka så länge man inte har fler än tre operatorer
 
 	# DIBOOGIENG
 	if debug_print_route:
@@ -125,10 +118,7 @@ func random_picks():
 	var num = true
 	var num_index = 0
 	var op_index = 0
-	# BUG Alla ritas inte alltid ut
-	# FÖRSLAG förbättra, assemble_route
-	# eller itterera över alla tal och börja om
-	# ELLER Radbryt Routes oftare
+
 	while depth < len(routes):
 		var x = routes[depth][int(routes[depth].size()/3)].x
 		var y = routes[depth][int(routes[depth].size()/3)].y
@@ -155,8 +145,8 @@ func instance_pick(px,py,op):
 	pickable_instance.position = Vector2(px+half_cell, py+half_cell)
 	pickable_instance.connect("op_picked", player, "_on_pickOp_op_picked")
 
-# SUGESTION give the player strength of the first number
-# At segment enter
+
+# SUGESTION give the player strength of the first number at entrance of new segment (door opened)
 func instance_num(px,py,num):
 	px *= 16
 	py *= 16
@@ -166,6 +156,7 @@ func instance_num(px,py,num):
 	num_instance.position = Vector2(px+half_cell, py+half_cell)
 	num_instance.connect("picked", player, "_on_Area2d_picked")
 
+
 # Function to pop sublists with length 1
 func pop_sublists_with_length_one(lists):
 	var new_list = []
@@ -173,6 +164,7 @@ func pop_sublists_with_length_one(lists):
 		if sublist.size() != 1:
 			new_list.append(sublist)
 	return new_list
+
 
 func look(pos, gofrom, d):
 	if not get_cell(gofrom.x + directions[pos].x, gofrom.y  + directions[pos].y) in [0, 1]:
@@ -182,9 +174,10 @@ func look(pos, gofrom, d):
 			start_directions_int.append(d)
 			return true
 
+
 func is_pos_pressent(pos):
-	for route in routes:
-		if pos in route:
+	for r in routes:
+		if pos in r:
 			return true
 	return false
 	
@@ -194,12 +187,9 @@ func assemble_route(dir,rout_index):
 	var gofrom = start
 	var goto = start + current_direction
 	var index = 0
-	#print(routes)
 	var foundSplit = false
 	var assemblin = true
-	#print('Start direcction: ', directions[dir] )
 	
-	#var turned = false
 	while assemblin:
 		# OM NÄSTA STEG ÄR VÄGG
 		if get_cell(goto.x, goto.y) in [0,1]:
@@ -230,44 +220,36 @@ func assemble_route(dir,rout_index):
 			gofrom = goto
 			goto = gofrom + current_direction
 			if is_pos_pressent(gofrom): # Om positionen redan lagrad
-				#print('Breaking because of hit SELF_OR_OTHER!')
+				if debug_print_route and verbose:
+					print('Breaking because of hit SELF_OR_OTHER!')
 				break # BRYT
 			elif gofrom == goal:
-				#print('Breaking because of REACHING_GOAL!')
+				if debug_print_route and verbose:
+					print('Breaking because of REACHING_GOAL!')
 				break
-			#elif foundSplit:
-			#	routes += [[gofrom]]
-			#	start_directions.append(dir)
-			#	start_directions_int.append(dir)
-			#	break
 			routes[rout_index].append(gofrom)
 
 		index += 1
 		if index >= 40:
-			#print('Breaking because of INDEX!')
-			#assemblin = false
+			if debug_print_route and verbose:
+				print('Breaking because of INDEX!')
 			break
-			
-	#print('GOFROM',gofrom,'GOTO',goto,'Direction: ',directions[dir])
-	#print(len(routes))
+
 	current_direction = directions[dir]	
 
 
 func _draw():
 	if debug_draw_routes:
-		# draw_arc((start * 16) + shift, 8.0, 0, 2 * PI, 64, Color.green, 2.0)
-		var size = 6.0
 	
 		# Define an array of colors to use for different routes
 		var colors = [Color.cyan, Color.magenta, Color.yellow, Color.orange, Color.purple, Color.red, Color.blue, Color.pink, Color.cornsilk, Color.darkblue]
 		var color_count = colors.size()
+		var size = 6.0
 	
 		# Loop through all routes and draw them with different colors
 		for route_index in range(routes.size()):
-		#for route_index in range(0,3):
 			var color = colors[route_index % color_count]
 			for e in routes[route_index]:
-			#var e = routes[route_index][0]
 				draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, color, 0.5)
 
 
@@ -276,6 +258,7 @@ func next_direction(_dir):
 		return _dir + 1
 	else:
 		return 0
+
 
 func no_possible_steps(_pos):
 	var nps = 0
@@ -301,7 +284,7 @@ func no_random_maze():
 	return
 
 
-func random_maze():
+func randomize_maze():
 	var rx = 0
 	var ry = 0
 	for x in range(2,13,2):
@@ -313,7 +296,6 @@ func random_maze():
 				rx = 0
 				ry = get_dir()
 			set_cell(x+rx,y+ry,0)
-	#erase_cell() 
 	set_cell(goal.x,goal.y,-1)
 	set_cell(start.x,start.y,-1)
 
