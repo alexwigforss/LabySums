@@ -1,6 +1,5 @@
 extends TileMap
 
-# ['+','-','*','/']
 # ['0','1','2','3']
 
 export var start_dir = 0
@@ -12,6 +11,7 @@ export var start = Vector2(1,13)
 export var goal = Vector2(12,1)
 export var number_of_operators = 1
 export var result_max = 20
+var signs = ['+','-','*','/']
 
 var shift = Vector2(8,8)
 var direction_labels = [['up'],['right'],['down'],['left']]
@@ -41,6 +41,29 @@ onready var pickNums = get_node("pickNums")
 
 var solution = 9999999
 
+func get_expression(n,o):
+	var x = []
+	var i = 0
+	for e in n:
+		x.append(e)
+		if i < len(n) - 1:
+			x.append(signs[o[i]])
+			i += 1
+	return x
+
+func get_expression_string(n,o):
+	var s = ""
+	var i = 0
+	for e in n:
+		s += str(e) + " "
+		# x.append(e)
+		if i < len(n) - 1:
+			s += str(signs[o[i]]) + " "
+			#x.append(signs[o[i]])
+			i += 1
+	return s
+
+
 func _ready():
 	var csharp_node = get_node("../TaskFactory")
 	var door_node = get_node("door")
@@ -50,8 +73,9 @@ func _ready():
 		nums = csharp_node.getNums();
 		ops = csharp_node.getSigns();
 		solution = csharp_node.getSolution();
+		var expression = get_expression_string(nums,ops)
 		if debug_print_init:
-			print("Generated nums: ", nums," ops: ", ops , " = " , solution)
+			print("Generated expression: " ,expression ," = " , solution)
 
 	
 
