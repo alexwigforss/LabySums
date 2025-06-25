@@ -4,15 +4,16 @@ extends TileMap
 
 export var start_dir = 0
 export var debug_print_init = false
-export var debug_priint_route = false
+export var debug_print_route = false
 export var debug_draw_routes = false
+export var verbose = false
 export var random_maze = true
 export var start = Vector2(1,13)
 export var goal = Vector2(12,1)
 export var number_of_operators = 1
 export var result_max = 20
-var signs = ['+','-','*','/']
 
+var signs = ['+','-','*','/']
 var shift = Vector2(8,8)
 var direction_labels = [['up'],['right'],['down'],['left']]
 var directions = [Vector2(0,-1),Vector2(1,0),Vector2(0,1),Vector2(-1,0)]
@@ -41,6 +42,7 @@ onready var pickNums = get_node("pickNums")
 
 var solution = 9999999
 
+
 func get_expression(n,o):
 	var x = []
 	var i = 0
@@ -51,15 +53,14 @@ func get_expression(n,o):
 			i += 1
 	return x
 
+
 func get_expression_string(n,o):
 	var s = ""
 	var i = 0
 	for e in n:
 		s += str(e) + " "
-		# x.append(e)
 		if i < len(n) - 1:
 			s += str(signs[o[i]]) + " "
-			#x.append(signs[o[i]])
 			i += 1
 	return s
 
@@ -73,8 +74,9 @@ func _ready():
 		nums = csharp_node.getNums();
 		ops = csharp_node.getSigns();
 		solution = csharp_node.getSolution();
-		var expression = get_expression_string(nums,ops)
 		if debug_print_init:
+			print("Debug print from: ", self)
+			var expression = get_expression_string(nums,ops)
 			print("Generated expression: " ,expression ," = " , solution)
 
 	
@@ -105,11 +107,16 @@ func _ready():
 	# Kanske genom att söka från ett annat hörn ifall listan är för liten
 
 	# DIBOOGIENG
-	# print(self, "Direction is ", dir, "", direction_labels[dir])
-	#for route in routes:
-		#print(route)
-	# print(start_directions)
-	# print(start_directions_int)
+	if debug_print_route:
+		print("Start direction is ", start_dir, " ", direction_labels[start_dir])
+		print("Direction Vectors: ")
+		print(start_directions)
+		print("Direction Ints:")
+		print(start_directions_int)
+		if verbose:
+			print("Verbose output of all routes:")
+			for r in routes:
+				print(r)
 
 	random_picks()
 
