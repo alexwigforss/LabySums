@@ -12,7 +12,7 @@
 [ext_resource path="res://scenes/PushBox.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sounds/andra.mp3" type="AudioStream" id=11]
 [ext_resource path="res://paths/numpanel.svg" type="Texture" id=12]
-[ext_resource path="res://mazegen.tres.gd" type="Script" id=13]
+[ext_resource path="res://mazegen.gd" type="Script" id=13]
 [ext_resource path="res://getGoalNr.gd" type="Script" id=14]
 
 [sub_resource type="StreamTexture" id=22]
