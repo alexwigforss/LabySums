@@ -3,7 +3,9 @@ extends TileMap
 # ['+','-','*','/']
 # ['0','1','2','3']
 
-export var dir = 0
+export var start_dir = 0
+export var debug_print_init = false
+export var debug_priint_route = false
 export var debug_draw_routes = false
 export var random_maze = true
 export var start = Vector2(1,13)
@@ -14,8 +16,8 @@ export var result_max = 20
 var shift = Vector2(8,8)
 var direction_labels = [['up'],['right'],['down'],['left']]
 var directions = [Vector2(0,-1),Vector2(1,0),Vector2(0,1),Vector2(-1,0)]
-var start_directions = [directions[dir]]
-var start_directions_int = [dir]
+var start_directions = [directions[start_dir]]
+var start_directions_int = [start_dir]
 var probs = ['s']
 var route = [start]
 var routes = [route]
@@ -48,7 +50,8 @@ func _ready():
 		nums = csharp_node.getNums();
 		ops = csharp_node.getSigns();
 		solution = csharp_node.getSolution();
-		# print("Generated ", solution)
+		if debug_print_init:
+			print("Generated nums: ", nums," ops: ", ops , " = " , solution)
 
 	
 
@@ -109,7 +112,7 @@ func random_picks():
 				instance_pick(x, y, ops[op_index])
 				op_index += 1
 				num = true
-		depth += 1		
+		depth += 1
 		
 
 func instance_pick(px,py,op):
