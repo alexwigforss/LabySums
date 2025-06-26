@@ -1,13 +1,16 @@
 extends Node2D
 
 var _label
-var _current
+var _current_level
 var active_map_nr = 1
+var current_segment = 1
 
 func _ready():
 	_label = get_node("player/Camera2D/ColorRect/MainLabel")
-	_current = get_node("/root/colworld/Map" + str(active_map_nr))
+	_current_level = get_node("/root/colworld/Map" + str(active_map_nr))
 	
+# The prototype for the boss level
+# Not to be confusade with segment doors.
 func _on_goal_body_entered(body):
 	print("Signal from goal")
 	var emitting_scene = get_node("/root/colworld/player")
@@ -19,6 +22,10 @@ func _on_goal_body_entered(body):
 
 func _on_ResetButton_pressed():
 	get_tree().reload_current_scene()
+
+func _on_ResetSegment_pressed():
+	print("Reset Segment Button Pressed!")
+
 
 func _on_door_nomatch(nr):
 	_label.text = "Only " + str(nr) + " may pass"

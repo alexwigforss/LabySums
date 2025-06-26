@@ -670,7 +670,7 @@ zoom = Vector2( 0.5, 0.5 )
 modulate = Color( 0.372549, 0.454902, 0.67451, 1 )
 margin_left = -196.0
 margin_top = 124.0
-margin_right = 134.0
+margin_right = 64.0
 margin_bottom = 146.0
 
 [node name="MainLabel" type="RichTextLabel" parent="player/Camera2D/ColorRect"]
@@ -685,12 +685,20 @@ grow_horizontal = 0
 text = "Hello Numbio!"
 fit_content_height = true
 
-[node name="ResetButton" type="Button" parent="player/Camera2D"]
-margin_left = 139.023
-margin_top = 124.045
-margin_right = 194.023
-margin_bottom = 144.045
+[node name="ReloadButton" type="Button" parent="player/Camera2D"]
+margin_left = 75.023
+margin_top = 125.045
+margin_right = 130.023
+margin_bottom = 145.045
 text = "Reload"
+script = SubResource( 17 )
+
+[node name="ResetSegmentButton" type="Button" parent="player/Camera2D"]
+margin_left = 139.023
+margin_top = 125.045
+margin_right = 194.023
+margin_bottom = 145.045
+text = "Reset"
 script = SubResource( 17 )
 
 [node name="Numpanel" type="Sprite" parent="player/Camera2D"]
@@ -738,5 +746,6 @@ energy = 13.23
 script = ExtResource( 4 )
 
 [connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
-[connection signal="pressed" from="player/Camera2D/ResetButton" to="." method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
 [connection signal="body_entered" from="player/PlayerArea" to="player" method="_on_PlayerArea_body_entered"]
