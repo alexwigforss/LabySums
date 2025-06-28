@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://paths/numpanel.svg" type="Texture" id=12]
 [ext_resource path="res://mazegen.gd" type="Script" id=13]
 [ext_resource path="res://getGoalNr.gd" type="Script" id=14]
+[ext_resource path="res://circle.png" type="Texture" id=15]
 
 [sub_resource type="StreamTexture" id=22]
 flags = 4
@@ -131,6 +132,7 @@ script = ExtResource( 1 )
 [node name="BgNode2D" type="Node2D" parent="."]
 position = Vector2( 200, 0 )
 scale = Vector2( 0.5, 0.5 )
+z_index = -1
 
 [node name="Cp1" type="Sprite" parent="BgNode2D"]
 position = Vector2( 288, 288 )
@@ -167,6 +169,7 @@ modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( 81, 0 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
+z_index = -1
 
 [node name="Cp1" type="Sprite" parent="BgNode2D2"]
 position = Vector2( 288, 288 )
@@ -224,7 +227,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map0" instance=ExtResource( 2 )]
 position = Vector2( 201, 8 )
-strength = 10
 
 [node name="oneway" type="KinematicBody2D" parent="Map0"]
 position = Vector2( 2, 184 )
@@ -260,7 +262,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map1" instance=ExtResource( 2 )]
 position = Vector2( 201, 8 )
-strength = 10
 
 [node name="Map2" type="TileMap" parent="."]
 modulate = Color( 1, 1, 1, 0.627451 )
@@ -281,7 +282,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map2" instance=ExtResource( 2 )]
 position = Vector2( 8, 24 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map2"]
 position = Vector2( 200.063, 237.7 )
@@ -316,7 +316,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map3" instance=ExtResource( 2 )]
 position = Vector2( 120, 8 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map3"]
 position = Vector2( 238, 24 )
@@ -356,7 +355,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map4" instance=ExtResource( 2 )]
 position = Vector2( 120, 8 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map4"]
 position = Vector2( 120, 238 )
@@ -393,7 +391,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map5" instance=ExtResource( 2 )]
 position = Vector2( 232, 120 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map5"]
 position = Vector2( 120, 238 )
@@ -429,7 +426,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map6" instance=ExtResource( 2 )]
 position = Vector2( 232, 216 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map6"]
 position = Vector2( 1, 120 )
@@ -466,7 +462,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map7" instance=ExtResource( 2 )]
 position = Vector2( 232, 24 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map7"]
 position = Vector2( 2, 216 )
@@ -503,7 +498,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map8" instance=ExtResource( 2 )]
 position = Vector2( 24, 232 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map8"]
 position = Vector2( 2, 24 )
@@ -540,7 +534,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map9" instance=ExtResource( 2 )]
 position = Vector2( 232, 184 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map9"]
 position = Vector2( 24.0001, 2 )
@@ -670,7 +663,7 @@ zoom = Vector2( 0.5, 0.5 )
 modulate = Color( 0.372549, 0.454902, 0.67451, 1 )
 margin_left = -196.0
 margin_top = 124.0
-margin_right = 134.0
+margin_right = 64.0
 margin_bottom = 146.0
 
 [node name="MainLabel" type="RichTextLabel" parent="player/Camera2D/ColorRect"]
@@ -685,12 +678,20 @@ grow_horizontal = 0
 text = "Hello Numbio!"
 fit_content_height = true
 
-[node name="ResetButton" type="Button" parent="player/Camera2D"]
-margin_left = 139.023
-margin_top = 124.045
-margin_right = 194.023
-margin_bottom = 144.045
+[node name="ReloadButton" type="Button" parent="player/Camera2D"]
+margin_left = 75.023
+margin_top = 125.045
+margin_right = 130.023
+margin_bottom = 145.045
 text = "Reload"
+script = SubResource( 17 )
+
+[node name="ResetSegmentButton" type="Button" parent="player/Camera2D"]
+margin_left = 139.023
+margin_top = 125.045
+margin_right = 194.023
+margin_bottom = 145.045
+text = "Reset"
 script = SubResource( 17 )
 
 [node name="Numpanel" type="Sprite" parent="player/Camera2D"]
@@ -737,6 +738,11 @@ energy = 13.23
 [node name="TaskFactory" type="Node2D" parent="."]
 script = ExtResource( 4 )
 
+[node name="Sprite" type="Sprite" parent="."]
+z_index = -1
+texture = ExtResource( 15 )
+
 [connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
-[connection signal="pressed" from="player/Camera2D/ResetButton" to="." method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
+[connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
 [connection signal="body_entered" from="player/PlayerArea" to="player" method="_on_PlayerArea_body_entered"]

@@ -8,6 +8,7 @@ export var debug_draw_routes = false
 export var verbose = false
 export var random_maze = true
 export var start = Vector2(1,13)
+var start_pos
 export var goal = Vector2(12,1)
 export var number_of_operators = 1
 export var result_max = 20
@@ -65,6 +66,7 @@ func get_expression_string(n,o):
 
 
 func _ready():
+	start_pos = start
 	var csharp_node = get_node("../TaskFactory")
 	var door_node = get_node("door")
 	while solution > result_max:	
@@ -303,4 +305,30 @@ func randomize_maze():
 func get_dir():
 	var random_dir = _dirs[randi() % _dirs.size()]
 	return random_dir
+
+
+func clear_nums_and_ops():
+	# TODO Sätt player till 0
+	print("Clear Nums And Ops ", self)
+
+	for child in pickOps.get_children():
+		if child is PickOp:
+			child.free()
+
+	for child in pickNums.get_children():
+		if child is PickNum:
+			child.free()
+
+	random_picks()
+
+	for child in pickOps.get_children():
+		if child is PickOp:
+			print("It's a PickOp:", child)
+
+	for child in pickNums.get_children():
+		if child is PickNum:
+			print("It's a PickNum:", child)
+			
+	pickNums.modulate.a = 1  # Ändrar alpha-värdet till 1
+	pickOps.modulate.a = 0.5  # Ändrar alpha-värdet till 1
 
