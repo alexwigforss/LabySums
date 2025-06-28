@@ -3,8 +3,7 @@ extends Area2D
 export var strength = 1
 var root
 var current_map
-signal nomatch(nr)
-signal doormatch(nr)
+
 
 func _ready():
 	$Label.text = str(strength)
@@ -45,8 +44,8 @@ func _on_door_body_entered(body, _extra_arg_0):
 		
 
 		print(plpower," ",self," removed ",_extra_arg_0)
-		emit_signal("doormatch", strength)
 		emitting_actor.reset_strength()
 		queue_free()
 	elif body.get_name() == "player" && plpower != strength:
-		emit_signal("nomatch", strength)	
+		var msg_label = get_node("/root/colworld/player/Camera2D/ColorRect/MainLabel")
+		msg_label.text = "Only " + str(strength) + " may pass"

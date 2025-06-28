@@ -224,7 +224,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map0" instance=ExtResource( 2 )]
 position = Vector2( 201, 8 )
-strength = 10
 
 [node name="oneway" type="KinematicBody2D" parent="Map0"]
 position = Vector2( 2, 184 )
@@ -260,7 +259,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map1" instance=ExtResource( 2 )]
 position = Vector2( 201, 8 )
-strength = 10
 
 [node name="Map2" type="TileMap" parent="."]
 modulate = Color( 1, 1, 1, 0.627451 )
@@ -281,7 +279,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map2" instance=ExtResource( 2 )]
 position = Vector2( 8, 24 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map2"]
 position = Vector2( 200.063, 237.7 )
@@ -316,7 +313,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map3" instance=ExtResource( 2 )]
 position = Vector2( 120, 8 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map3"]
 position = Vector2( 238, 24 )
@@ -356,7 +352,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map4" instance=ExtResource( 2 )]
 position = Vector2( 120, 8 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map4"]
 position = Vector2( 120, 238 )
@@ -393,7 +388,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map5" instance=ExtResource( 2 )]
 position = Vector2( 232, 120 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map5"]
 position = Vector2( 120, 238 )
@@ -429,7 +423,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map6" instance=ExtResource( 2 )]
 position = Vector2( 232, 216 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map6"]
 position = Vector2( 1, 120 )
@@ -466,7 +459,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map7" instance=ExtResource( 2 )]
 position = Vector2( 232, 24 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map7"]
 position = Vector2( 2, 216 )
@@ -503,7 +495,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map8" instance=ExtResource( 2 )]
 position = Vector2( 24, 232 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map8"]
 position = Vector2( 2, 24 )
@@ -540,7 +531,6 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map9" instance=ExtResource( 2 )]
 position = Vector2( 232, 184 )
-strength = 14
 
 [node name="oneway" type="KinematicBody2D" parent="Map9"]
 position = Vector2( 24.0001, 2 )
