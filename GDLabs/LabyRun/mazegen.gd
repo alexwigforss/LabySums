@@ -304,3 +304,29 @@ func get_dir():
 	var random_dir = _dirs[randi() % _dirs.size()]
 	return random_dir
 
+
+func clear_nums_and_ops():
+	# TODO Sätt player till 0
+	print("Clear Nums And Ops ", self)
+
+	for child in pickOps.get_children():
+		if child is PickOp:
+			child.free()
+
+	for child in pickNums.get_children():
+		if child is PickNum:
+			child.free()
+
+	random_picks()
+
+	for child in pickOps.get_children():
+		if child is PickOp:
+			print("It's a PickOp:", child)
+
+	for child in pickNums.get_children():
+		if child is PickNum:
+			print("It's a PickNum:", child)
+			
+	pickNums.modulate.a = 1  # Ändrar alpha-värdet till 1
+	pickOps.modulate.a = 0.5  # Ändrar alpha-värdet till 1
+

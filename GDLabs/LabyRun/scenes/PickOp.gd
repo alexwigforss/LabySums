@@ -1,3 +1,4 @@
+class_name PickOp
 extends Area2D
 
 # Declare member variables here. Examples:

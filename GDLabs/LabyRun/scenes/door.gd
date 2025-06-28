@@ -1,20 +1,21 @@
 extends Area2D
 
 export var strength = 1
-
+var root
+var current_map
 signal nomatch(nr)
 signal doormatch(nr)
 
 func _ready():
 	$Label.text = str(strength)
+	current_map = get_parent()
+	root = current_map.get_parent()
 
 func set_streangth(st):
 	strength = st
 	$Label.text = str(strength)
 
 func get_next_map():
-	var current_map = get_parent()
-	var root = current_map.get_parent()
 	var children = root.get_children()
 	var index = children.find(current_map)
 	
@@ -27,6 +28,7 @@ func _on_door_body_entered(body, _extra_arg_0):
 	var plpower = emitting_actor.strength
 
 	if body.get_name() == "player" && plpower == strength:
+		root.update_current_segment()
 		# Hämta TileMap parent
 		var tilemap_parent = get_parent()
 		if tilemap_parent:
@@ -40,8 +42,9 @@ func _on_door_body_entered(body, _extra_arg_0):
 		# Hämta Target Label
 		var target_label = get_node("/root/colworld/player/Camera2D/Numpanel/TargetLabel")
 		target_label.next_segment()
+		
 
-		print(plpower," ",self,"removed",_extra_arg_0)
+		print(plpower," ",self," removed ",_extra_arg_0)
 		emit_signal("doormatch", strength)
 		emitting_actor.reset_strength()
 		queue_free()

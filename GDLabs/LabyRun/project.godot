@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Area2D",
+"class": "PickNum",
+"language": "GDScript",
+"path": "res://PickNr.gd"
+}, {
+"base": "Area2D",
+"class": "PickOp",
+"language": "GDScript",
+"path": "res://scenes/PickOp.gd"
+} ]
+_global_script_class_icons={
+"PickNum": "",
+"PickOp": ""
+}
+
 [application]
 
 config/name="Kinematic Character"
