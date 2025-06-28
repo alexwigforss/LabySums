@@ -8,6 +8,7 @@ export var debug_draw_routes = false
 export var verbose = false
 export var random_maze = true
 export var start = Vector2(1,13)
+var start_pos
 export var goal = Vector2(12,1)
 export var number_of_operators = 1
 export var result_max = 20
@@ -65,6 +66,7 @@ func get_expression_string(n,o):
 
 
 func _ready():
+	start_pos = start
 	var csharp_node = get_node("../TaskFactory")
 	var door_node = get_node("door")
 	while solution > result_max:	
