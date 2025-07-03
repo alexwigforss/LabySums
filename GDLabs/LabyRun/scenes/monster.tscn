@@ -16,6 +16,7 @@ script = ExtResource( 1 )
 shape = SubResource( 16 )
 
 [node name="monster" type="StaticBody2D" parent="."]
+collision_mask = 17
 
 [node name="collision" type="CollisionShape2D" parent="monster"]
 position = Vector2( 0.498299, 0.123726 )

@@ -1,8 +1,4 @@
 extends KinematicBody2D
-# signal custom_signal
-# signal goal_signal
-# signal door_signal
-# Member variables
 const GRAVITY = 0.0 # pixels/second/second
 
 # Angle in degrees towards either side that the player can consider "floor"
@@ -17,13 +13,15 @@ const SLIDE_STOP_MIN_TRAVEL = 1.0 # one pixel
 
 var velocity = Vector2()
 var strength = 0
-#var on_air_time = 100
-#var jumping = false
 var inertia = 100
 var dir = 0
 var dirs = [true,false,false,false]
 
+signal player_hit
+var start_position := Vector2.ZERO
+
 func _ready():
+	start_position = position
 	#$Label.text = str(velocity)
 	pass
 	
@@ -118,19 +116,28 @@ func _physics_process(delta):
 		if collision.collider.is_in_group("object"):
 			collision.collider.apply_central_impulse(-collision.normal * inertia)
 
+
+func reset_to_start():
+	position = start_position
+	velocity = Vector2.ZERO  # optional: stop any current motion
+
+
 func _on_pickup_body_entered(body):
 	if body.is_in_group("player"):
 		strength += 1
 		$Label.text = str(strength)
 		print(body," entered actor ",strength)
 
-#func _on_MonsterArea2D_body_entered(_body):
-#	emit_signal("custom_signal",strength)
-#
-#func _on_goal_entered(_body):
-#	print("body entered goal")
-#	emit_signal("goal_signal",strength)
 
 func _on_door_body_entered(_body):
 	print("body entered door")
 	# emit_signal("door_signal",strength,body)
+
+
+func _on_Area2D_body_entered(body):
+	if body.is_in_group("player"):
+		print("Spelaren träffad av fiende!")
+		emit_signal("player_hit")
+		reset_to_start()
+
+	print("Actor entered", body)

@@ -6,12 +6,15 @@ onready var emitting_actor = get_node("/root/colworld/player")
 
 func _ready():
 	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
+	get_node("actors/actor").connect("player_hit", self, "_on_enemy_player_hit")
 	
 # The prototype for the boss level
 # Not to be confusade with segment doors.
 func _on_goal_body_entered(body):
 	print("Signal from goal")
 
+func _on_enemy_player_hit():
+	reset_segment()
 
 func _on_ResetButton_pressed():
 	get_tree().reload_current_scene()
