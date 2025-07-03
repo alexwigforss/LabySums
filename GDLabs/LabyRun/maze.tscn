@@ -604,7 +604,7 @@ one_way_collision = true
 [node name="actors" type="Node2D" parent="."]
 
 [node name="actor" parent="actors" instance=ExtResource( 5 )]
-position = Vector2( 56, 184 )
+position = Vector2( 56, 56 )
 
 [node name="sensor" parent="actors" instance=ExtResource( 8 )]
 position = Vector2( -200, 216 )
