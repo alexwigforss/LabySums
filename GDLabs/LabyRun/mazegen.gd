@@ -143,7 +143,8 @@ func instance_pick(px,py,op):
 	py*=16
 	var pickable_instance = pickable_scene.instance()
 	pickable_instance.set_opnr(op)
-	pickOps.add_child(pickable_instance)
+	pickOps.call_deferred("add_child", pickable_instance)
+	#pickOps.add_child(pickable_instance)
 	pickable_instance.position = Vector2(px+half_cell, py+half_cell)
 	pickable_instance.connect("op_picked", player, "_on_pickOp_op_picked")
 
@@ -154,7 +155,8 @@ func instance_num(px,py,num):
 	py *= 16
 	var num_instance = pickable_num.instance()
 	num_instance.init_value(num)
-	pickNums.add_child(num_instance)
+	#pickNums.add_child(num_instance)
+	pickNums.call_deferred("add_child", num_instance)
 	num_instance.position = Vector2(px+half_cell, py+half_cell)
 	num_instance.connect("picked", player, "_on_Area2d_picked")
 

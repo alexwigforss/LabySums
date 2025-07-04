@@ -1,6 +1,6 @@
 extends Area2D
 
-export var strength = 5
+export var strength = 1
 
 func _ready():
 	$Label.text = str(strength)

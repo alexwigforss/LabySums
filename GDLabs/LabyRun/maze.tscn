@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://mazegen.gd" type="Script" id=13]
 [ext_resource path="res://getGoalNr.gd" type="Script" id=14]
 [ext_resource path="res://circle.png" type="Texture" id=15]
+[ext_resource path="res://scenes/monster.tscn" type="PackedScene" id=16]
 
 [sub_resource type="StreamTexture" id=22]
 flags = 4
@@ -603,7 +604,10 @@ one_way_collision = true
 [node name="actors" type="Node2D" parent="."]
 
 [node name="actor" parent="actors" instance=ExtResource( 5 )]
-position = Vector2( 24, 24 )
+position = Vector2( 56, 56 )
+
+[node name="actor2" parent="actors" instance=ExtResource( 5 )]
+position = Vector2( 88, -40 )
 
 [node name="sensor" parent="actors" instance=ExtResource( 8 )]
 position = Vector2( -200, 216 )
@@ -653,7 +657,8 @@ stream = ExtResource( 11 )
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 9 )]
 position = Vector2( 23.977, 215.955 )
-collision_mask = 3
+collision_layer = 18
+collision_mask = 1
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 current = true
@@ -741,6 +746,9 @@ script = ExtResource( 4 )
 [node name="Sprite" type="Sprite" parent="."]
 z_index = -1
 texture = ExtResource( 15 )
+
+[node name="MonsterArea2D" parent="." instance=ExtResource( 16 )]
+position = Vector2( 262, 184 )
 
 [connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
