@@ -21,8 +21,8 @@ signal player_hit
 var start_position := Vector2.ZERO
 
 func _ready():
+	add_to_group("enemies")
 	start_position = position
-	#$Label.text = str(velocity)
 	pass
 	
 func _next_direction():
@@ -58,7 +58,6 @@ func _next_random_direction():
 		return 
 
 func _physics_process(delta):
-	# Create forces
 	var force = Vector2(0, 0)
 	
 	var walk_left = dirs[0]
@@ -101,11 +100,8 @@ func _physics_process(delta):
 		velocity.x = vlen * vsign
 		velocity.y = yvlen * yvsign
 	
-	# Integrate forces to velocity
 	velocity += force * delta	
-	# Integrate velocity into motion and move
 	velocity = move_and_slide(velocity, Vector2(0, 0), false, 4, PI/4, false)
-	#$Label.text = str(velocity)
 
 	if velocity.x == 0 && velocity.y == 0:
 		#_next_direction()
@@ -120,18 +116,6 @@ func _physics_process(delta):
 func reset_to_start():
 	position = start_position
 	velocity = Vector2.ZERO  # optional: stop any current motion
-
-
-func _on_pickup_body_entered(body):
-	if body.is_in_group("player"):
-		strength += 1
-		$Label.text = str(strength)
-		print(body," entered actor ",strength)
-
-
-func _on_door_body_entered(_body):
-	print("body entered door")
-	# emit_signal("door_signal",strength,body)
 
 
 func _on_Area2D_body_entered(body):

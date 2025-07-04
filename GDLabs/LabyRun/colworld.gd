@@ -6,8 +6,10 @@ onready var emitting_actor = get_node("/root/colworld/player")
 
 func _ready():
 	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
-	get_node("actors/actor").connect("player_hit", self, "_on_enemy_player_hit")
-	
+	# get_node("actors/actor").connect("player_hit", self, "_on_enemy_player_hit")
+	# get_node("actors/actor2").connect("player_hit", self, "_on_enemy_player_hit")
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.connect("player_hit", self, "_on_enemy_player_hit")
 # The prototype for the boss level
 # Not to be confusade with segment doors.
 func _on_goal_body_entered(body):
@@ -22,7 +24,8 @@ func _on_ResetButton_pressed():
 func reset_segment():
 	_current_level.clear_nums_and_ops()
 	emitting_actor.reset_strength()
-	# print("X ",_current_level.start_pos.x," Y ",_current_level.start_pos.y)
+	print("Reseting segment", current_segment_id)
+	print("X ",_current_level.start_pos.x," Y ",_current_level.start_pos.y)
 	emitting_actor.position = Vector2(
 		_current_level.position.x + 8 + (_current_level.start_pos.x * 16),
 		_current_level.position.y + 8 + (_current_level.start_pos.y * 16)
