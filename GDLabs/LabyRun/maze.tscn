@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=2]
 [ext_resource path="res://princess.png" type="Texture" id=3]
 [ext_resource path="res://Sharps/TaskFactory.cs" type="Script" id=4]
-[ext_resource path="res://actor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://actors/actor.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/obstacle.png" type="Texture" id=6]
 [ext_resource path="res://sprites/transparent.png" type="Texture" id=7]
 [ext_resource path="res://sensor.tscn" type="PackedScene" id=8]
@@ -123,7 +123,7 @@ func _ready():
 "
 
 [sub_resource type="RectangleShape2D" id=16]
-extents = Vector2( 7, 7 )
+extents = Vector2( 7.49995, 7.5 )
 
 [sub_resource type="CameraTexture" id=18]
 
@@ -730,7 +730,7 @@ align = 1
 [node name="PlayerArea" type="Area2D" parent="player"]
 
 [node name="PlayerCollShape" type="CollisionShape2D" parent="player/PlayerArea"]
-position = Vector2( 0.0229034, 0.0449982 )
+position = Vector2( -0.477049, -0.455002 )
 shape = SubResource( 16 )
 
 [node name="Light2D" type="Light2D" parent="."]

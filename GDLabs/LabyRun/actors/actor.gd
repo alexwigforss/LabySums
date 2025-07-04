@@ -5,7 +5,7 @@ const GRAVITY = 0.0 # pixels/second/second
 const FLOOR_ANGLE_TOLERANCE = 40
 const WALK_FORCE = 600
 const WALK_MIN_SPEED = 10
-const WALK_MAX_SPEED = 50
+const WALK_MAX_SPEED = 25
 const STOP_FORCE = 1300
 
 const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second
@@ -124,4 +124,4 @@ func _on_Area2D_body_entered(body):
 		emit_signal("player_hit")
 		reset_to_start()
 
-	print("Actor entered", body)
+	# print("Actor entered", body)
