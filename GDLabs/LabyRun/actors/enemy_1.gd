@@ -23,8 +23,18 @@ var start_position := Vector2.ZERO
 func _ready():
 	add_to_group("enemies")
 	start_position = position
-	pass
 	
+	# TODO Implement on_exited
+	$AreaUp.connect("body_entered", self, "_on_body_entered", ["top"])
+	$AreaDown.connect("body_entered", self, "_on_body_entered", ["bottom"])
+	$AreaLeft.connect("body_entered", self, "_on_body_entered", ["left"])
+	$AreaRight.connect("body_entered", self, "_on_body_entered", ["right"])
+	
+func _on_body_entered(body: Node, direction: String):
+	if body.is_in_group("walls") or body.name == "Map1": # <- Begin with
+		print("Collision on", direction, "with", body.name)
+	# TODO Introduce a state_has_changed
+
 func _next_direction():
 	dir += 1
 	if dir >= 4:

@@ -209,7 +209,7 @@ texture = SubResource( 22 )
 autoplay = "BgAnim"
 anims/BgAnim = SubResource( 21 )
 
-[node name="Map0" type="TileMap" parent="."]
+[node name="Map0" type="TileMap" parent="." groups=["wall"]]
 light_mask = 0
 position = Vector2( 432, 112 )
 tile_set = SubResource( 2 )
@@ -243,7 +243,7 @@ position = Vector2( 0.0629883, -0.149994 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="Map1" type="TileMap" parent="."]
+[node name="Map1" type="TileMap" parent="." groups=["walls"]]
 light_mask = 0
 tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
@@ -265,7 +265,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 [node name="door" parent="Map1" instance=ExtResource( 2 )]
 position = Vector2( 201, 8 )
 
-[node name="Map2" type="TileMap" parent="."]
+[node name="Map2" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( 0, -224 )
@@ -298,7 +298,7 @@ position = Vector2( 0.0629883, 4.20001 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="Map3" type="TileMap" parent="."]
+[node name="Map3" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( -224, -224 )
@@ -336,7 +336,7 @@ one_way_collision = true
 [node name="stone" parent="Map3" instance=ExtResource( 10 )]
 position = Vector2( 72, 136 )
 
-[node name="Map4" type="TileMap" parent="."]
+[node name="Map4" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( -224, -448 )
@@ -371,7 +371,7 @@ position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="Map5" type="TileMap" parent="."]
+[node name="Map5" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( -224, -672 )
@@ -407,7 +407,7 @@ position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="Map6" type="TileMap" parent="."]
+[node name="Map6" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( 0, -672 )
@@ -443,7 +443,7 @@ position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="Map7" type="TileMap" parent="."]
+[node name="Map7" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( 224, -672 )
@@ -479,7 +479,7 @@ position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="Map8" type="TileMap" parent="."]
+[node name="Map8" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( 448, -672 )
@@ -515,7 +515,7 @@ position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="Map9" type="TileMap" parent="."]
+[node name="Map9" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( 448, -448 )
@@ -551,7 +551,7 @@ position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="Map10" type="TileMap" parent="."]
+[node name="Map10" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
 position = Vector2( 673, -304 )
@@ -574,7 +574,7 @@ position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="BossMap" type="TileMap" parent="."]
+[node name="BossMap" type="TileMap" parent="." groups=["wall"]]
 light_mask = 0
 position = Vector2( 913, -384 )
 tile_set = SubResource( 2 )
