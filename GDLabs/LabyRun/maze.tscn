@@ -1,10 +1,10 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=2]
 [ext_resource path="res://princess.png" type="Texture" id=3]
 [ext_resource path="res://Sharps/TaskFactory.cs" type="Script" id=4]
-[ext_resource path="res://actors/actor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://actors/enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/obstacle.png" type="Texture" id=6]
 [ext_resource path="res://sprites/transparent.png" type="Texture" id=7]
 [ext_resource path="res://sensor.tscn" type="PackedScene" id=8]
@@ -16,6 +16,7 @@
 [ext_resource path="res://getGoalNr.gd" type="Script" id=14]
 [ext_resource path="res://circle.png" type="Texture" id=15]
 [ext_resource path="res://scenes/monster.tscn" type="PackedScene" id=16]
+[ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=17]
 
 [sub_resource type="StreamTexture" id=22]
 flags = 4
@@ -604,13 +605,16 @@ one_way_collision = true
 [node name="actors" type="Node2D" parent="."]
 
 [node name="actor" parent="actors" instance=ExtResource( 5 )]
-position = Vector2( 56, 56 )
+position = Vector2( -40, -40 )
 
 [node name="actor2" parent="actors" instance=ExtResource( 5 )]
 position = Vector2( 88, -40 )
 
 [node name="sensor" parent="actors" instance=ExtResource( 8 )]
 position = Vector2( -200, 216 )
+
+[node name="actor3" parent="actors" instance=ExtResource( 17 )]
+position = Vector2( 88, 120 )
 
 [node name="doors" type="Node2D" parent="."]
 
