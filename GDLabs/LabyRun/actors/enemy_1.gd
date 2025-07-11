@@ -15,6 +15,7 @@ var velocity = Vector2()
 var strength = 0
 var inertia = 100
 var dir = 0
+var current_dir = -1
 var dir_labels = ['left','up','right','down']
 var dirs = [true,false,false,false]
 var free_sensors = [true,true,true,true]
@@ -51,14 +52,15 @@ func _sight_state_changed(entered, d_num):
 	# print("STATE HAS CHANGED TO ", entered, " ON ", dir_labels[d_num])
 	if entered:
 		free_sensors[d_num] = false
+		return
 	elif not entered:
 		free_sensors[d_num] = true
 	
 	# Check if all directions are blocked — we're stuck
-	if not true in free_sensors:
-		print("All directions blocked — dead end.")
-	else:
-		_next_direction_from_sensors(free_sensors)
+		if not true in free_sensors:
+			print("All directions blocked — dead end.")
+		else:
+			_next_direction_from_sensors(free_sensors)
 
 func _next_direction_from_sensors(sensors):
 	var available = []
@@ -67,31 +69,22 @@ func _next_direction_from_sensors(sensors):
 			available.append(i)
 	
 	if available.size() == 0:
-		print("NO AVAILABLE DIRECTIONS! Stuck!")
+		print("NO AVAILABLE DIRECTIONS! STUCK!")
 		dirs = [false, false, false, false]
+		current_dir = -1
 		return
 	
 	var dir = available[randi() % available.size()]
-	print("Available directions: ", sensors, " New direction is ", dir_labels[dir])
 	
+	# Prevent immediate reversal (optional)
+	if dir == (current_dir + 2) % 4:
+		if available.size() > 1:
+			available.erase(dir)
+			dir = available[randi() % available.size()]
+	
+	print("FROM DIR:", dir_labels[current_dir], " TO DIR:", dir_labels[dir], " FROM SENSORS:", sensors)
+	current_dir = dir
 	dirs = [dir == 0, dir == 1, dir == 2, dir == 3]
-
-#	while sensors[dir] != true:
-#		print("BAM")
-#		dir = randi() % 4
-#	print("Availible directions ", sensors ," New direction is ", dir_labels[dir])
-#	if dir == 0:
-#		dirs = [true,false,false,false]
-#		return 
-#	if dir == 1:
-#		dirs = [false,true,false,false]
-#		return 
-#	if dir == 2:
-#		dirs = [false,false,true,false]
-#		return 
-#	if dir == 3:
-#		dirs = [false,false,false,true]
-#		return
 
 func _next_direction():
 	dir += 1
