@@ -15,8 +15,9 @@ var velocity = Vector2()
 var strength = 0
 var inertia = 100
 var dir = 0
+var dir_labels = ['left','up','right','down']
 var dirs = [true,false,false,false]
-
+var free_sensors = [true,true,true,true]
 signal player_hit
 var start_position := Vector2.ZERO
 
@@ -25,15 +26,72 @@ func _ready():
 	start_position = position
 	
 	# TODO Implement on_exited
-	$AreaUp.connect("body_entered", self, "_on_body_entered", ["top"])
-	$AreaDown.connect("body_entered", self, "_on_body_entered", ["bottom"])
-	$AreaLeft.connect("body_entered", self, "_on_body_entered", ["left"])
-	$AreaRight.connect("body_entered", self, "_on_body_entered", ["right"])
+	$AreaLeft.connect("body_entered", self, "_on_body_entered", ["left",0])
+	$AreaUp.connect("body_entered", self, "_on_body_entered", ["top",1])
+	$AreaRight.connect("body_entered", self, "_on_body_entered", ["right",2])
+	$AreaDown.connect("body_entered", self, "_on_body_entered", ["bottom",3])
+
+	$AreaLeft.connect("body_exited", self, "_on_body_exited", ["left",0])
+	$AreaUp.connect("body_exited", self, "_on_body_exited", ["top",1])
+	$AreaRight.connect("body_exited", self, "_on_body_exited", ["right",2])
+	$AreaDown.connect("body_exited", self, "_on_body_exited", ["bottom",3])
+
 	
-func _on_body_entered(body: Node, direction: String):
-	if body.is_in_group("walls") or body.name == "Map1": # <- Begin with
-		print("Collision on", direction, "with", body.name)
-	# TODO Introduce a state_has_changed
+func _on_body_entered(body: Node, direction: String, dir_num: int):
+	if body.is_in_group("walls") or "Map" in body.name: # == "Map1": # <- Begin with
+		#print("Collision on", direction, " with ", body.name)
+		_sight_state_changed(true,dir_num)	
+
+func _on_body_exited(body: Node, direction: String, dir_num: int):
+	if body.is_in_group("walls") or "Map" in body.name: # == "Map1": # <- Begin with
+		#print("Exited on", direction, " with ", body.name)
+		_sight_state_changed(false, dir_num)
+
+func _sight_state_changed(entered, d_num):
+	# print("STATE HAS CHANGED TO ", entered, " ON ", dir_labels[d_num])
+	if entered:
+		free_sensors[d_num] = false
+	elif not entered:
+		free_sensors[d_num] = true
+	
+	# Check if all directions are blocked — we're stuck
+	if not true in free_sensors:
+		print("All directions blocked — dead end.")
+	else:
+		_next_direction_from_sensors(free_sensors)
+
+func _next_direction_from_sensors(sensors):
+	var available = []
+	for i in range(sensors.size()):
+		if sensors[i]:
+			available.append(i)
+	
+	if available.size() == 0:
+		print("NO AVAILABLE DIRECTIONS! Stuck!")
+		dirs = [false, false, false, false]
+		return
+	
+	var dir = available[randi() % available.size()]
+	print("Available directions: ", sensors, " New direction is ", dir_labels[dir])
+	
+	dirs = [dir == 0, dir == 1, dir == 2, dir == 3]
+
+#	while sensors[dir] != true:
+#		print("BAM")
+#		dir = randi() % 4
+#	print("Availible directions ", sensors ," New direction is ", dir_labels[dir])
+#	if dir == 0:
+#		dirs = [true,false,false,false]
+#		return 
+#	if dir == 1:
+#		dirs = [false,true,false,false]
+#		return 
+#	if dir == 2:
+#		dirs = [false,false,true,false]
+#		return 
+#	if dir == 3:
+#		dirs = [false,false,false,true]
+#		return
 
 func _next_direction():
 	dir += 1
@@ -113,9 +171,9 @@ func _physics_process(delta):
 	velocity += force * delta	
 	velocity = move_and_slide(velocity, Vector2(0, 0), false, 4, PI/4, false)
 
-	if velocity.x == 0 && velocity.y == 0:
+	# if velocity.x == 0 && velocity.y == 0:
 		#_next_direction()
-		_next_random_direction()
+		# _next_random_direction()
 
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
