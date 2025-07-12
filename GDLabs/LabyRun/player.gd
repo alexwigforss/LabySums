@@ -21,6 +21,9 @@ func _ready():
 	$Label.text = str(strength)
 	$Camera2D/ColorRect/MainLabel.text = str(strength)
 	sprite.play()
+	print("Initial Layer: ", bin_string(collision_layer))
+	print("Initial Mask: ", bin_string(collision_mask))
+
 
 func reset_strength():
 	strength = 0
@@ -114,7 +117,7 @@ func _on_Area2d_picked(nr):
 	recent_op = null
 	set_collision_mask_bit ( 2, true )
 	set_collision_mask_bit ( 1, false )
-	# print("Player entered pick ", nr)
+	print("After number picked: ", bin_string(collision_mask))
 
 func _on_pickOp_op_picked(op):
 	print("Player entered op ", op)
@@ -124,4 +127,11 @@ func _on_pickOp_op_picked(op):
 	$Label.text += op
 	set_collision_mask_bit ( 1, true )
 	set_collision_mask_bit ( 2, false )
+	print("After op picked: ", bin_string(collision_mask))
 
+func bin_string(n):
+	var ret_str = ""
+	while n > 0:
+		ret_str = String(n&1) + ret_str
+		n = n>>1
+	return ret_str
