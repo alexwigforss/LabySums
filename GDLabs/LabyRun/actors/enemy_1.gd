@@ -5,7 +5,7 @@ const GRAVITY = 0.0 # pixels/second/second
 const FLOOR_ANGLE_TOLERANCE = 40
 const WALK_FORCE = 600
 const WALK_MIN_SPEED = 10
-const WALK_MAX_SPEED = 50
+const WALK_MAX_SPEED = 25
 const STOP_FORCE = 1300
 
 const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second
@@ -15,16 +15,80 @@ var velocity = Vector2()
 var strength = 0
 var inertia = 100
 var dir = 0
+var current_dir = -1
+var dir_labels = ['left','up','right','down']
 var dirs = [true,false,false,false]
-
+var free_sensors = [true,true,true,true]
 signal player_hit
 var start_position := Vector2.ZERO
-
+var first_frame = true
+var state_has_changed = false
 func _ready():
 	add_to_group("enemies")
 	start_position = position
-	pass
 	
+	# TODO Implement on_exited
+	$AreaLeft.connect("body_entered", self, "_on_body_entered", ["left",0])
+	$AreaUp.connect("body_entered", self, "_on_body_entered", ["up",1])
+	$AreaRight.connect("body_entered", self, "_on_body_entered", ["right",2])
+	$AreaDown.connect("body_entered", self, "_on_body_entered", ["down",3])
+
+	$AreaLeft.connect("body_exited", self, "_on_body_exited", ["left",0])
+	$AreaUp.connect("body_exited", self, "_on_body_exited", ["up",1])
+	$AreaRight.connect("body_exited", self, "_on_body_exited", ["right",2])
+	$AreaDown.connect("body_exited", self, "_on_body_exited", ["down",3])
+	
+	
+func _on_body_entered(body, direction, index):
+	if body.is_in_group("walls") or "Map" in body.name:
+		free_sensors[index] = false
+		get_node("Area" + direction.capitalize() + "/Highlight").visible = true
+		_sight_state_changed(true, index)
+
+
+func _on_body_exited(body, direction, index):
+	if body.is_in_group("walls") or "Map" in body.name:
+		free_sensors[index] = true
+		get_node("Area" + direction.capitalize() + "/Highlight").visible = false
+		print("Exited on", direction, " with ", body.name)
+		_sight_state_changed(false, index)
+
+
+func _sight_state_changed(entered, d_num):
+	# print("STATE HAS CHANGED TO ", entered, " ON ", dir_labels[d_num])
+	if entered:
+		free_sensors[d_num] = false
+		return
+	elif not entered:
+		free_sensors[d_num] = true
+		state_has_changed = true
+	
+
+func _next_direction_from_sensors(sensors):
+	var available = []
+	for i in range(sensors.size()):
+		if sensors[i]:
+			available.append(i)
+	
+	if available.size() == 0:
+		print("NO AVAILABLE DIRECTIONS! STUCK!")
+		dirs = [false, false, false, false]
+		current_dir = -1
+		return
+	
+	var dir = available[randi() % available.size()]
+
+	
+	# Prevent immediate reversal (optional)
+	if dir == (current_dir + 2) % 4:
+		if available.size() > 1:
+			available.erase(dir)
+			dir = available[randi() % available.size()]
+	
+	print("FROM DIR:", dir_labels[current_dir], " TO DIR:", dir_labels[dir], " FROM SENSORS:", sensors)
+	current_dir = dir
+	dirs = [dir == 0, dir == 1, dir == 2, dir == 3]
+
 func _next_direction():
 	dir += 1
 	if dir >= 4:
@@ -103,14 +167,21 @@ func _physics_process(delta):
 	velocity += force * delta	
 	velocity = move_and_slide(velocity, Vector2(0, 0), false, 4, PI/4, false)
 
-	if velocity.x == 0 && velocity.y == 0:
+	if (velocity.x == 0 && velocity.y == 0 ) or state_has_changed:
 		#_next_direction()
-		_next_random_direction()
+		# _next_random_direction()
+		_next_direction_from_sensors(free_sensors)
+		state_has_changed = false
 
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.collider.is_in_group("object"):
 			collision.collider.apply_central_impulse(-collision.normal * inertia)
+	#print("")
+	if first_frame:
+		print("Initial state: ", free_sensors)
+		first_frame = false
+		
 
 
 func reset_to_start():
@@ -124,4 +195,4 @@ func _on_Area2D_body_entered(body):
 		emit_signal("player_hit")
 		reset_to_start()
 
-	print("Actor entered", body)
+	# print("Actor entered", body)

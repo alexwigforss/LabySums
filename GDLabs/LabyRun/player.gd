@@ -13,22 +13,13 @@ const SLIDE_STOP_MIN_TRAVEL = 1.0 # one pixel
 
 var velocity = Vector2()
 var strength = 0
-#var on_air_time = 100
-#var jumping = false
 var inertia = 100
 var recent_op = null
-#func on_emit_pick():
-#	print("emit picked")
-#onready var sprite = get_node("Sprite")
 onready var sprite = $AnimatedSprite
 
 func _ready():
-	# set_collision_layer_bit ( 0, false )
-	# set_collision_mask_bit ( 0, false )
 	$Label.text = str(strength)
-#	$Camera2D/ColorRect/RichTextLabel.ALIGN_CENTER
 	$Camera2D/ColorRect/MainLabel.text = str(strength)
-	# emit_signal("picked")
 	sprite.play()
 
 func reset_strength():
@@ -46,7 +37,6 @@ func _physics_process(delta):
 	var walk_right = Input.is_action_pressed("move_right")
 	var walk_up = Input.is_action_pressed("move_up")
 	var walk_down = Input.is_action_pressed("move_down")
-	#var jump = Input.is_action_pressed("jump")
 	
 	var stop = true
 	
@@ -89,6 +79,7 @@ func _physics_process(delta):
 		velocity.y = yvlen * yvsign
 	else:
 		sprite.play()
+
 	# Integrate forces to velocity
 	velocity += force * delta	
 	# Integrate velocity into motion and move
@@ -100,7 +91,7 @@ func _physics_process(delta):
 			collision.collider.apply_central_impulse(-collision.normal * inertia)
 
 func _on_PlayerArea_body_entered(body):
-	print("Player entered", body)
+	# print("Player entered", body)
 	pass
 
 func _on_Area2d_picked(nr):
