@@ -23,6 +23,8 @@ signal player_hit
 var start_position := Vector2.ZERO
 var first_frame = true
 var state_has_changed = false
+export var debug_hits = false
+
 func _ready():
 	add_to_group("enemies")
 	start_position = position
@@ -42,15 +44,17 @@ func _ready():
 func _on_body_entered(body, direction, index):
 	if body.is_in_group("walls") or "Map" in body.name:
 		free_sensors[index] = false
-		get_node("Area" + direction.capitalize() + "/Highlight").visible = true
+		if debug_hits:
+			get_node("Area" + direction.capitalize() + "/Highlight").visible = true
 		_sight_state_changed(true, index)
 
 
 func _on_body_exited(body, direction, index):
 	if body.is_in_group("walls") or "Map" in body.name:
 		free_sensors[index] = true
-		get_node("Area" + direction.capitalize() + "/Highlight").visible = false
-		print("Exited on", direction, " with ", body.name)
+		if debug_hits:
+			get_node("Area" + direction.capitalize() + "/Highlight").visible = false
+		#print("Exited on", direction, " with ", body.name)
 		_sight_state_changed(false, index)
 
 
@@ -85,7 +89,7 @@ func _next_direction_from_sensors(sensors):
 			available.erase(dir)
 			dir = available[randi() % available.size()]
 	
-	print("FROM DIR:", dir_labels[current_dir], " TO DIR:", dir_labels[dir], " FROM SENSORS:", sensors)
+	#print("FROM DIR:", dir_labels[current_dir], " TO DIR:", dir_labels[dir], " FROM SENSORS:", sensors)
 	current_dir = dir
 	dirs = [dir == 0, dir == 1, dir == 2, dir == 3]
 

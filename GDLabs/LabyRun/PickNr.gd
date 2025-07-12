@@ -35,12 +35,20 @@ func _ready():
 	#$Label.text = str(value)
 
 func _on_pickNum_body_entered(body):
-	if body.is_in_group("player"):
-		var sibling_node = get_parent().get_parent().get_node("pickOps")  # Ersätt "SiblingNodeName" med det faktiska namnet
-		if sibling_node is Node2D:
-			sibling_node.modulate.a = 1  # Ändrar alpha-värdet till 1
-		var parent_node = get_parent()  # Hämtar föräldranoden
-		if parent_node is Node2D:  # Kontrollerar om föräldranoden är en Node2D
-			parent_node.modulate.a = 0.5  # Ändrar alpha-värdet till 0.5
-		emit_signal("picked", value)
-		queue_free()# Replace with function body.
+	if not body.is_in_group("player"):
+		return
+
+	# ❗ Check if player is allowed to pick numbers (i.e., mask bit 2 is ON)
+	if not body.get_collision_mask_bit(1):
+		print("Ignored number: player not allowed to pick numbers right now")
+		return  # Do NOT pick up or free
+		
+	# Allow pick-up logic to proceed
+	var sibling_node = get_parent().get_parent().get_node("pickOps")
+	if sibling_node is Node2D:
+		sibling_node.modulate.a = 1
+	var parent_node = get_parent()
+	if parent_node is Node2D:
+		parent_node.modulate.a = 0.5
+	emit_signal("picked", value)
+	queue_free()
