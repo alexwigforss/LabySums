@@ -30,6 +30,16 @@ func _ready():
 		# /
 		sprite.region_rect = Rect2(0, 0, 16, 16)
 
+	# Overlay sprite for highlighting the operator
+	var overlay_sprite = Sprite.new()
+	overlay_sprite.texture = load("res://sprites/nums_trans.png")
+	overlay_sprite.region_enabled = true
+	overlay_sprite.region_rect = sprite.region_rect # Use same region as main sprite
+	overlay_sprite.position = sprite.position
+	overlay_sprite.z_index = 1 # Ensure it's above the main sprite
+	overlay_sprite.modulate.a = 1
+	add_child(overlay_sprite)
+
 func _on_pickOp_body_entered(body):
 	if body.is_in_group("player"):
 		

@@ -45,6 +45,16 @@ func _ready():
 		over_sprite.region_rect = Rect2(208, 0, 16, 16)
 	#$Label.text = str(value)
 
+	# Overlay sprite for highlighting the number
+	var overlay_sprite = Sprite.new()
+	overlay_sprite.texture = load("res://sprites/nums_trans.png")
+	overlay_sprite.region_enabled = true
+	overlay_sprite.region_rect = sprite.region_rect # Use same region as main sprite
+	overlay_sprite.position = sprite.position
+	overlay_sprite.z_index = 1 # Ensure it's above the main sprite
+	overlay_sprite.modulate.a = 1
+	add_child(overlay_sprite)
+
 func _on_pickNum_body_entered(body):
 	if not body.is_in_group("player"):
 		return
