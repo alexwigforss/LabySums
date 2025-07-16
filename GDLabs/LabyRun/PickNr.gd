@@ -69,5 +69,7 @@ func _on_pickNum_body_entered(body):
 	if parent_node is Node2D:
 		parent_node.modulate.a = 0.5
 		print(parent_node.get_path(),parent_node.modulate)
+	if overlay_sprite:
+		overlay_sprite.queue_free()
 	emit_signal("picked", value)
 	queue_free()
