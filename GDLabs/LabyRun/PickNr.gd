@@ -4,12 +4,10 @@ export var player: NodePath
 onready var sprite = get_node("Sprite")
 onready var over_lay_node = get_parent().get_parent().get_node("overLay")
 signal picked(nr)
+var overlay_sprite = Sprite.new()
 
 # In the script of the instantiated scene
 var value: int
-
-var overlay_sprite = Sprite.new()
-
 
 func init_value(new_value):
 	value = new_value
