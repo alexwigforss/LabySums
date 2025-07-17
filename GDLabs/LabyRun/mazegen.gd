@@ -44,6 +44,7 @@ var pickable_num: PackedScene = preload("res://scenes/PickNum.tscn")
 onready var player = get_node("/root/colworld/player")
 onready var pickOps = get_node("pickOps")
 onready var pickNums = get_node("pickNums")
+onready var overLay = get_node("overLay")
 
 
 var binary_map = []
@@ -164,7 +165,6 @@ func _ready():
 	binary_map = assemble_binary_map(binary_map)
 	if debug_print_binary:
 		print_2d_array(binary_map)
-
 
 	random_picks()
 
@@ -363,7 +363,6 @@ func get_dir():
 
 
 func clear_nums_and_ops():
-	# TODO Sätt player till 0
 	print("Clear Nums And Ops ", self)
 
 	for child in pickOps.get_children():
@@ -373,6 +372,9 @@ func clear_nums_and_ops():
 	for child in pickNums.get_children():
 		if child is PickNum:
 			child.free()
+			
+	for child in overLay.get_children():
+		child.free()
 
 	random_picks()
 
