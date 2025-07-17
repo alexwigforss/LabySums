@@ -1,0 +1,60 @@
+🪨 1. Stenåldern (förhistoria)
+Tema: Talsystem, räkning med stenar, repknutar (quipu-liknande system)
+Matematik: Tidiga räkneredskap, symboler för mängder
+Exempel: Ishango-benet (Afrika, ca 20 000 f.Kr.) som visar primtalsmönster
+
+🏺 2. Forntida Egypten
+Tema: Geometri för pyramider, bråk med enbart täljare 1
+Matematik: Praktisk matematik: areor, volymer, mätning av jord (”geo-metri”)
+Exempel: Rhind-papyrusen
+
+🏛 3. Antikens Grekland
+Tema: Bevisföring, geometri, logik
+Matematik: Euklid, Pythagoras, Arkimedes
+Exempel: Beviset för Pythagoras sats, Euklids element
+
+🏹 4. Babylonien
+Tema: Kilskrift, positionssystem, bas 60
+Matematik: Tidiga algebraiska lösningar, kvadratiska ekvationer
+Exempel: Lermedelplattor med lösningar till andragradsekvationer
+
+📜 5. Kina (klassisk tid)
+Tema: Abakus, algoritmer, negativa tal
+Matematik: Metoder för linjära ekvationer, decimalnotation
+Exempel: "Ni bronsstänger"-metoden (tidig Gauss-elimination)
+
+🌙 6. Indien (klassisk period)
+Tema: Nollan uppfinns, trigonometriska funktioner
+Matematik: Decimalposition, tidiga formler för sinus och cosinus
+Exempel: Aryabhata och Brahmagupta
+
+🌙 7. Den islamiska guldåldern
+Tema: Algebra, översättningar av grekiska texter, optik
+Matematik: Systematisering av algebra (ordet kommer från al-jabr)
+Exempel: Al-Khwarizmi, Omar Khayyam
+
+🎓 8. Medeltida Europa
+Tema: Återupptäckt av antika texter, kloster som kunskapsbevarare
+Matematik: Fibonacci, introduktion av arabiska siffror i väst
+Exempel: Fibonaccis talföljd (i Liber Abaci)
+
+📐 9. Renaissance & tidig modern tid
+Tema: Analytisk geometri, perspektiv i konst
+Matematik: Descartes, Newton, Leibniz
+
+Exempel: Kalkylens födelse
+🌍 10. Upplysningstiden
+Tema: Sannolikhet, statistik, logik
+
+Matematik: Euler, Laplace, Gauss
+Exempel: Grafer, komplexa tal, normalfördelning
+
+🚀 11. Rymdåldern
+Tema: Raketbanor, numerisk analys, datorer
+Matematik: Matrisberäkningar, iteration, system av differentialekvationer
+
+💾 12. Digitala åldern
+Tema: Algoritmer, kryptografi, AI
+Matematik: Turing, Boole, Shannon
+Exempel: Boolska algebra, binär kod, datorlogik
+
