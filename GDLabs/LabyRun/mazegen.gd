@@ -6,6 +6,9 @@ export var debug_print_init = false
 export var debug_print_route = false
 export var debug_draw_routes = false
 export var verbose = false
+export var debug_print_binary = false
+
+
 export var random_maze = true
 export var start = Vector2(1,13)
 var start_pos
@@ -41,7 +44,52 @@ var pickable_num: PackedScene = preload("res://scenes/PickNum.tscn")
 onready var player = get_node("/root/colworld/player")
 onready var pickOps = get_node("pickOps")
 onready var pickNums = get_node("pickNums")
+onready var overLay = get_node("overLay")
 
+
+var binary_map = []
+
+func init_binary_map(w,h):
+	var grid = []
+	var grid_width = w
+	var grid_height = h
+
+	# Fill the 2D array with false
+	for y in range(grid_height):
+		var row = []
+		for x in range(grid_width):
+			row.append(false)
+		grid.append(row)
+
+	return grid
+
+func print_2d_array(array):
+	print("Binary map for ", self)
+	for row in array:
+		var line = ""
+		for cell in row:
+			# Use format string to pad width (2 spaces)
+			line += "%2d" % int(cell)
+			# Replace with next line if need word representation
+			# line += "%-6s" % str(cell)
+		print(line)
+
+func assemble_binary_map(array):
+	var x = 0
+	var y = 0
+	var grid = array
+	for row in grid:
+		for col in row:
+			# NOTE for now we include the "invisible" sprite 1 wich
+			# is for blocking the route-finder from leaving its segment
+			# if used for player navigation we might want to exclude it
+			# to avoid blocking on entering new segment
+			if get_cell(x, y) in [0,1]:
+				grid[y][x] = true
+			y += 1
+		x += 1
+		y = 0
+	return grid
 
 func get_expression(n,o):
 	var x = []
@@ -112,6 +160,11 @@ func _ready():
 			print("Verbose output of all routes:")
 			for r in routes:
 				print(r)
+
+	binary_map = init_binary_map(15,15)
+	binary_map = assemble_binary_map(binary_map)
+	if debug_print_binary:
+		print_2d_array(binary_map)
 
 	random_picks()
 
@@ -310,7 +363,6 @@ func get_dir():
 
 
 func clear_nums_and_ops():
-	# TODO Sätt player till 0
 	print("Clear Nums And Ops ", self)
 
 	for child in pickOps.get_children():
@@ -320,6 +372,9 @@ func clear_nums_and_ops():
 	for child in pickNums.get_children():
 		if child is PickNum:
 			child.free()
+			
+	for child in overLay.get_children():
+		child.free()
 
 	random_picks()
 
