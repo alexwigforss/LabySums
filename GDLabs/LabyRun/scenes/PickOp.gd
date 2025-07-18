@@ -7,15 +7,20 @@ export var opnr = 0
 export var player: NodePath
 
 signal op_picked(op)
+signal op_picked_boss(x,y,opnr)
 onready var sprite = get_node("Sprite")
 onready var over_lay_node = get_parent().get_parent().get_node("overLay")
 var overlay_sprite = Sprite.new()
 
 # In the script of the instantiated scene
 var value: int
+var boss_map = false
 
 func init_value(new_value):
 	value = new_value
+
+func init_boss_picks():
+	boss_map = true
 
 func _ready():
 	# $Label.text = ops[opnr]
@@ -55,7 +60,10 @@ func _on_pickOp_body_entered(body):
 			parent_node.modulate.a = 0.5  # Ändrar alpha-värdet till 0.5
 		if overlay_sprite:
 			overlay_sprite.queue_free()
+		if boss_map:
+			emit_signal("op_picked_boss", position.x, position.y, opnr)
 		emit_signal("op_picked", ops[opnr])
+		
 		queue_free()# Replace with function body.
 
 func set_opnr(n):

@@ -19,9 +19,9 @@ onready var pickNums = get_node("pickNums")
 onready var overLay = get_node("overLay")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-		random_picks()
+		place_picks()
 
-func random_picks():
+func place_picks():
 	# var depth = 1
 	var num = true
 	var num_index = 0
@@ -66,11 +66,30 @@ func instance_pick(px,py,op):
 	py*=16
 	var pickable_instance = pickable_op.instance()
 	pickable_instance.set_opnr(op)
+	pickable_instance.init_boss_picks()
 	pickOps.call_deferred("add_child", pickable_instance)
 	#pickOps.add_child(pickable_instance)
 	pickable_instance.position = Vector2(px+half_cell, py+half_cell)
 	pickable_instance.connect("op_picked", player, "_on_pickOp_op_picked")
+	pickable_instance.connect("op_picked_boss", self, "_on_pickOp_op_picked")
 
+func instance_pick_at(px,py,op):
+	# px*=16
+	#py*=16
+	var pickable_instance = pickable_op.instance()
+	pickable_instance.set_opnr(op)
+	pickable_instance.init_boss_picks()
+	pickOps.call_deferred("add_child", pickable_instance)
+	#pickOps.add_child(pickable_instance)
+	pickable_instance.position = Vector2(px+half_cell, py+half_cell)
+	pickable_instance.connect("op_picked", player, "_on_pickOp_op_picked")
+	pickable_instance.connect("op_picked_boss", self, "_on_pickOp_op_picked")
+
+func _on_pickOp_op_picked(x,y,opnr):
+	print("Operator picked:", opnr)
+	yield(get_tree().create_timer(1.5), "timeout") # 0.5 second delay
+	print("Delayed output", x ," " ,  y , " " , opnr)
+	instance_pick_at(x, y, opnr)
 
 # SUGESTION give the player strength of the first number at entrance of new segment (door opened)
 func instance_num(px,py,num):
