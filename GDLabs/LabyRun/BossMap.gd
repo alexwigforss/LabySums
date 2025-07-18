@@ -3,8 +3,10 @@ extends TileMap
 var cellsize = 16.0
 var half_cell = 8.0
 
-var nums = [6,2,2,3]
+var nums = [1,2,3]
 var ops = [0,1,2]
+# var nums = [1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0]
+# var ops = [0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3]
 
 # Skapa en PackedScene av PickOp
 var pickable_op: PackedScene = preload("res://scenes/PickOp.tscn")
@@ -20,29 +22,44 @@ func _ready():
 		random_picks()
 
 func random_picks():
-	var depth = 1
+	# var depth = 1
 	var num = true
 	var num_index = 0
 	var op_index = 0
 
 	var x = 0
-	var y = 0
+	var y = 2
+	var directions = [
+		Vector2(2, 0),   # right
+		Vector2(0, 2),   # down
+		Vector2(-2, 0),  # left
+		Vector2(0, -2)   # up
+	]
+	var steps = [6, 5, 5, 4] # steps for each direction
+	var dir_index = 0
 
-	while depth < 8:
-		x += 1
-		y += 1
-	
-		if num:
-			if num_index < nums.size():
-				instance_num(x, y, nums[num_index])
-				num_index += 1
-				num = false
-		else:
-			if op_index < ops.size():
-				instance_pick(x, y, ops[op_index])
-				op_index += 1
-				num = true
-		depth += 1
+	for i in steps:
+		for _j in range(i):
+			x += int(directions[dir_index].x)
+			y += int(directions[dir_index].y)
+			if num:
+				if num_index < nums.size():
+					instance_num(x, y, nums[num_index])
+					num_index += 1
+					num = false
+				if num_index >= nums.size():
+					num_index = 0
+			else:
+				if op_index < ops.size():
+					instance_pick(x, y, ops[op_index])
+					op_index += 1
+					num = true
+				if op_index >= ops.size():
+					op_index = 0		
+			# depth += 1
+		dir_index += 1
+		
+
 		
 func instance_pick(px,py,op):
 	px*=16
