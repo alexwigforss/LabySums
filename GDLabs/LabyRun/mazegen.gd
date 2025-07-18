@@ -127,10 +127,7 @@ func _ready():
 			var expression = get_expression_string(nums,ops)
 			print("Generated expression: " ,expression ," = " , solution)
 
-	
-
 	door_node.set_streangth(solution);
-
 
 	randomize_maze() if random_maze else no_random_maze()
 	assemble_route(-1,0)

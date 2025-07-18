@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://mazegen.gd" type="Script" id=2]
@@ -14,8 +14,6 @@
 [ext_resource path="res://circle.png" type="Texture" id=12]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=13]
 [ext_resource path="res://player.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scenes/PickNum.tscn" type="PackedScene" id=15]
-[ext_resource path="res://scenes/PickOp.tscn" type="PackedScene" id=16]
 [ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=17]
 
 [sub_resource type="StreamTexture" id=22]
@@ -262,14 +260,7 @@ script = ExtResource( 6 )
 [node name="pickOps" type="Node2D" parent="BossMap"]
 modulate = Color( 1, 1, 1, 0.313726 )
 
-[node name="pickOp" parent="BossMap/pickOps" instance=ExtResource( 16 )]
-position = Vector2( 64, 72 )
-
 [node name="pickNums" type="Node2D" parent="BossMap"]
-
-[node name="pickNum" parent="BossMap/pickNums" instance=ExtResource( 15 )]
-position = Vector2( 82, 190 )
-overide_value = 1
 
 [node name="oneway" type="KinematicBody2D" parent="BossMap"]
 position = Vector2( 2, 120 )
@@ -294,7 +285,7 @@ position = Vector2( -144, 120 )
 [node name="doors" type="Node2D" parent="."]
 
 [node name="goal" type="Area2D" parent="."]
-position = Vector2( 121, 120 )
+position = Vector2( 185, 120 )
 
 [node name="collision" type="CollisionShape2D" parent="goal"]
 shape = SubResource( 7 )
