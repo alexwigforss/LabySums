@@ -1,11 +1,13 @@
 extends Node2D
 
 var _current_level
+export var number_of_segments = 9
 var current_segment_id = 1
 onready var emitting_actor = get_node("/root/colworld/player")
 
 func _ready():
 	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
+	
 	# get_node("actors/actor").connect("player_hit", self, "_on_enemy_player_hit")
 	# get_node("actors/actor2").connect("player_hit", self, "_on_enemy_player_hit")
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -36,9 +38,13 @@ func _on_ResetSegment_pressed():
 	print("Reset Segment Button Pressed!")
 	reset_segment()
 
+# TODO Get BossMap here if out of maps
 func update_current_segment():
 	current_segment_id +=1
-	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
+	if current_segment_id < number_of_segments:
+		_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
+	elif current_segment_id == number_of_segments:
+		_current_level = get_node("/root/colworld/BossMap")
 	print("Current segment = ", current_segment_id)
 
 

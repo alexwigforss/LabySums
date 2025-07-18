@@ -5,6 +5,7 @@ onready var sprite = get_node("Sprite")
 onready var over_lay_node = get_parent().get_parent().get_node("overLay")
 signal picked(nr)
 var overlay_sprite = Sprite.new()
+export var overide_value = -1
 
 # In the script of the instantiated scene
 var value: int
@@ -13,6 +14,8 @@ func init_value(new_value):
 	value = new_value
 
 func _ready():
+	if overide_value >= 0:
+		value = overide_value
 	if value == 1:
 		sprite.region_rect = Rect2(64, 0, 16, 16)
 	if value == 2:

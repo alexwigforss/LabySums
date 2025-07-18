@@ -35,7 +35,7 @@ var solution = 9999999
 
 
 # Skapa en PackedScene av PickOp
-var pickable_scene: PackedScene = preload("res://scenes/PickOp.tscn")
+var pickable_op: PackedScene = preload("res://scenes/PickOp.tscn")
 # Skapa en PackedScene av PickNum
 var pickable_num: PackedScene = preload("res://scenes/PickNum.tscn")
 
@@ -194,7 +194,7 @@ func random_picks():
 func instance_pick(px,py,op):
 	px*=16
 	py*=16
-	var pickable_instance = pickable_scene.instance()
+	var pickable_instance = pickable_op.instance()
 	pickable_instance.set_opnr(op)
 	pickOps.call_deferred("add_child", pickable_instance)
 	#pickOps.add_child(pickable_instance)
