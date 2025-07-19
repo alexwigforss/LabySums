@@ -1,10 +1,49 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://princess.png" type="Texture" id=1]
 [ext_resource path="res://scenes/boss_behave.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 15.6458, 15.9686 )
+
+[sub_resource type="Animation" id=19]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=8]
 length = 0.001
@@ -93,21 +132,56 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 1, 1 ), Vector2( 0.8, 0.8 ), Vector2( 1, 1 ) ]
 }
 
-[node name="Boss2D" type="Node2D"]
+[sub_resource type="AnimationNodeBlend2" id=20]
 
-[node name="boss" type="Area2D" parent="."]
+[sub_resource type="AnimationNodeBlend2" id=21]
+
+[sub_resource type="AnimationNodeBlend2" id=22]
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=24]
+animation = "Strife"
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "Wiggle"
+
+[sub_resource type="AnimationNodeAnimation" id=26]
+animation = "ZoomAnim"
+
+[sub_resource type="AnimationNodeBlendTree" id=27]
+graph_offset = Vector2( -179.361, -20.6067 )
+nodes/BlendStrife/node = SubResource( 20 )
+nodes/BlendStrife/position = Vector2( 240, 80 )
+nodes/BlendWiggle/node = SubResource( 21 )
+nodes/BlendWiggle/position = Vector2( 460, 160 )
+nodes/BlendZoom/node = SubResource( 22 )
+nodes/BlendZoom/position = Vector2( 680, 220 )
+nodes/Idle/node = SubResource( 23 )
+nodes/Idle/position = Vector2( 40, 80 )
+nodes/Strife/node = SubResource( 24 )
+nodes/Strife/position = Vector2( 40, 200 )
+nodes/Wiggle/node = SubResource( 25 )
+nodes/Wiggle/position = Vector2( 240, 300 )
+nodes/Zoom/node = SubResource( 26 )
+nodes/Zoom/position = Vector2( 460, 380 )
+nodes/output/position = Vector2( 900, 200 )
+node_connections = [ "output", 0, "BlendZoom", "BlendStrife", 0, "Idle", "BlendStrife", 1, "Strife", "BlendWiggle", 0, "BlendStrife", "BlendWiggle", 1, "Wiggle", "BlendZoom", 0, "BlendWiggle", "BlendZoom", 1, "Zoom" ]
+
+[node name="boss" type="Area2D"]
 scale = Vector2( 1.2, 1.2 )
 script = ExtResource( 2 )
 
-[node name="collision" type="CollisionShape2D" parent="boss"]
+[node name="collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 7 )
 
-[node name="Sprite" type="Sprite" parent="boss"]
+[node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.831373, 0.811765, 0.486275, 1 )
 scale = Vector2( 2.00594, 1.93675 )
 texture = ExtResource( 1 )
 
-[node name="Label" type="Label" parent="boss"]
+[node name="Label" type="Label" parent="."]
 margin_left = -16.0
 margin_top = -15.0
 margin_right = 14.0
@@ -118,8 +192,17 @@ text = "10"
 align = 1
 valign = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="boss"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idle = SubResource( 19 )
 anims/RESET = SubResource( 8 )
 anims/Strife = SubResource( 10 )
 anims/Wiggle = SubResource( 11 )
 anims/ZoomAnim = SubResource( 9 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 27 )
+anim_player = NodePath("../AnimationPlayer")
+process_mode = 2
+parameters/BlendStrife/blend_amount = 0.0
+parameters/BlendWiggle/blend_amount = 0.0
+parameters/BlendZoom/blend_amount = 0.0

@@ -281,9 +281,6 @@ position = Vector2( -144, 120 )
 
 [node name="doors" type="Node2D" parent="."]
 
-[node name="boss" parent="." instance=ExtResource( 7 )]
-position = Vector2( 120, 120 )
-
 [node name="youwin" type="Label" parent="."]
 visible = false
 margin_left = 209.0
@@ -399,6 +396,12 @@ texture = ExtResource( 12 )
 [node name="MonsterArea2D" parent="." instance=ExtResource( 4 )]
 position = Vector2( 161, 184 )
 
+[node name="BossGlobalTransform" type="Node2D" parent="."]
+position = Vector2( 122, 120 )
+
+[node name="boss" parent="BossGlobalTransform" instance=ExtResource( 7 )]
+
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
 [connection signal="body_entered" from="player/PlayerArea" to="player" method="_on_PlayerArea_body_entered"]
+[connection signal="body_entered" from="BossGlobalTransform/boss" to="." method="_on_boss_body_entered"]
