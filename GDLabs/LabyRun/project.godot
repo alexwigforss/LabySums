@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "PickNum",
 "language": "GDScript",
-"path": "res://PickNr.gd"
+"path": "res://scenes/PickNr.gd"
 }, {
 "base": "Area2D",
 "class": "PickOp",

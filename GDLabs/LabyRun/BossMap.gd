@@ -91,16 +91,36 @@ func _on_pickOp_op_picked(x,y,opnr):
 	print("Delayed output", x ," " ,  y , " " , opnr)
 	instance_pick_at(x, y, opnr)
 
+func _on_pickNum_picked(x,y,v):
+	print("Number picked:", v)
+	yield(get_tree().create_timer(1.5), "timeout") # 0.5 second delay
+	print("Delayed output", x ," " ,  y , " " , v)
+	instance_num_at(x, y, v)
+
 # SUGESTION give the player strength of the first number at entrance of new segment (door opened)
 func instance_num(px,py,num):
 	px *= 16
 	py *= 16
 	var num_instance = pickable_num.instance()
 	num_instance.init_value(num)
+	num_instance.init_boss_picks()
 	#pickNums.add_child(num_instance)
 	pickNums.call_deferred("add_child", num_instance)
 	num_instance.position = Vector2(px+half_cell, py+half_cell)
 	num_instance.connect("picked", player, "_on_Area2d_picked")
+	num_instance.connect("num_picked_boss", self, "_on_pickNum_picked")
+
+func instance_num_at(px,py,num):
+	var num_instance = pickable_num.instance()
+	num_instance.init_value(num)
+	num_instance.init_boss_picks()
+	#pickNums.add_child(num_instance)
+	pickNums.call_deferred("add_child", num_instance)
+	num_instance.position = Vector2(px+half_cell, py+half_cell)
+	num_instance.connect("picked", player, "_on_Area2d_picked")
+	num_instance.connect("num_picked_boss", self, "_on_pickNum_picked")
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
