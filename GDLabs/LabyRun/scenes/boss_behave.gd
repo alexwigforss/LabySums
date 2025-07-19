@@ -14,5 +14,9 @@ func _ready():
 	anim_tree.set("parameters/BlendWiggle/blend_amount", 0.0)
 	anim_tree.set("parameters/BlendZoom/blend_amount", 0.0)
 
+func begin_strife():
+	anim_tree.set("parameters/BlendStrife/blend_amount", 1.0)
+	
+
 func _process(delta):
 	anim_tree.advance(delta)

@@ -14,8 +14,11 @@ onready var player = get_node("/root/colworld/player")
 onready var pickOps = get_node("pickOps")
 onready var pickNums = get_node("pickNums")
 onready var overLay = get_node("overLay")
+var start_pos
+export var start = Vector2(1,7)
 
 func _ready():
+	start_pos = start
 	place_picks()
 
 func place_picks():
@@ -89,19 +92,63 @@ func instance_num_at(px,py,num):
 
 # SIGNALING RECIEVERS
 
-func _on_pickOp_op_picked(x,y,opnr):
+var active_timers = []
+
+func _on_pickOp_op_picked(x, y, opnr):
 	print("Operator picked:", opnr)
-	yield(get_tree().create_timer(3), "timeout") # 0.5 second delay
-	print("Delayed output", x ," " ,  y , " " , opnr)
+	var timer = Timer.new()
+	timer.wait_time = 3
+	timer.one_shot = true
+	add_child(timer)
+	active_timers.append(timer)
+	timer.start()
+	yield(timer, "timeout")
+	active_timers.erase(timer)
+	timer.queue_free()
+	print("Delayed output", x, y, opnr)
 	instance_pick_at(x-8, y-8, opnr)
 
-
-func _on_pickNum_picked(x,y,v):
+func _on_pickNum_picked(x, y, v):
 	print("Number picked:", v)
-	yield(get_tree().create_timer(3), "timeout") # 0.5 second delay
-	print("Delayed output", x ," " ,  y , " " , v)
+	var timer = Timer.new()
+	timer.wait_time = 3
+	timer.one_shot = true
+	add_child(timer)
+	active_timers.append(timer)
+	timer.start()
+	yield(timer, "timeout")
+	active_timers.erase(timer)
+	timer.queue_free()
+	print("Delayed output", x, y, v)
 	instance_num_at(x-8, y-8, v)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func clear_nums_and_ops():
+	print("Clear Nums And Ops ", self)
+	for timer in active_timers:
+		timer.stop()
+		timer.queue_free()
+	active_timers.clear()
+
+	for child in pickOps.get_children():
+		if child is PickOp:
+			child.free()
+
+	for child in pickNums.get_children():
+		if child is PickNum:
+			child.free()
+			
+	for child in overLay.get_children():
+		child.free()
+
+	place_picks()
+
+	for child in pickOps.get_children():
+		if child is PickOp:
+			print("It's a PickOp:", child)
+
+	for child in pickNums.get_children():
+		if child is PickNum:
+			print("It's a PickNum:", child)
+			
+	pickNums.modulate.a = 1
+	pickOps.modulate.a = 0.5

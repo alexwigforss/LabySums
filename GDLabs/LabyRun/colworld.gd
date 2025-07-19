@@ -4,7 +4,7 @@ var _current_level
 export var number_of_segments = 9
 var current_segment_id = 1
 onready var emitting_actor = get_node("/root/colworld/player")
-
+onready var boss_node = get_node("/root/colworld/BossGlobalTransform/boss")
 func _ready():
 	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
 	
@@ -44,7 +44,9 @@ func update_current_segment():
 	if current_segment_id < number_of_segments:
 		_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
 	elif current_segment_id == number_of_segments:
+		print("BAMM Entered Boss Segment!")
 		_current_level = get_node("/root/colworld/BossMap")
+		boss_node.begin_strife()
 	print("Current segment = ", current_segment_id)
 
 

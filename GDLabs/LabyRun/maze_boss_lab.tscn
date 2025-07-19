@@ -125,7 +125,7 @@ extents = Vector2( 7.49995, 7.5 )
 
 [node name="colworld" type="Node2D"]
 script = ExtResource( 1 )
-number_of_segments = 1
+number_of_segments = 2
 
 [node name="BgNode2D" type="Node2D" parent="."]
 position = Vector2( 200, 0 )
