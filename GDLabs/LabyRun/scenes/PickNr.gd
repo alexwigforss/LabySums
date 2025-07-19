@@ -48,7 +48,7 @@ func _ready():
 	overlay_sprite.region_enabled = true
 	overlay_sprite.region_rect = sprite.region_rect # Use same region as main sprite
 	overlay_sprite.position = position
-	overlay_sprite.z_index = 10
+	overlay_sprite.z_index = 1
 
 	over_lay_node.add_child(overlay_sprite)
 
@@ -67,10 +67,6 @@ func _on_pickNum_body_entered(body):
 		sibling_node.modulate.a = 1
 		print(sibling_node.get_path(),sibling_node.modulate)
 	
-	# if over_lay_node is Node2D:
-	# 	over_lay_node.modulate.a = 1.0
-	# 	print(over_lay_node.get_path(),over_lay_node.modulate)
-
 	var parent_node = get_parent()
 	if parent_node is Node2D:
 		parent_node.modulate.a = 0.5
