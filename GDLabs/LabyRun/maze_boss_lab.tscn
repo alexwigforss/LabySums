@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://mazegen.gd" type="Script" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://scenes/monster.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Sharps/TaskFactory.cs" type="Script" id=5]
 [ext_resource path="res://BossMap.gd" type="Script" id=6]
-[ext_resource path="res://princess.png" type="Texture" id=7]
+[ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=7]
 [ext_resource path="res://paths/numpanel.svg" type="Texture" id=8]
 [ext_resource path="res://sprites/transparent.png" type="Texture" id=9]
 [ext_resource path="res://sprites/obstacle.png" type="Texture" id=10]
@@ -102,9 +102,6 @@ resource_local_to_scene = true
 
 [sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 8, 2.14999 )
-
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 15.6458, 15.9686 )
 
 [sub_resource type="GDScript" id=17]
 script/source = "extends Button
@@ -284,27 +281,8 @@ position = Vector2( -144, 120 )
 
 [node name="doors" type="Node2D" parent="."]
 
-[node name="goal" type="Area2D" parent="."]
-position = Vector2( 185, 120 )
-
-[node name="collision" type="CollisionShape2D" parent="goal"]
-shape = SubResource( 7 )
-
-[node name="Sprite" type="Sprite" parent="goal"]
-modulate = Color( 0.831373, 0.811765, 0.486275, 1 )
-scale = Vector2( 2.00594, 1.93675 )
-texture = ExtResource( 7 )
-
-[node name="Label" type="Label" parent="goal"]
-margin_left = -16.0
-margin_top = -15.0
-margin_right = 14.0
-margin_bottom = 13.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "10"
-align = 1
-valign = 1
+[node name="boss" parent="." instance=ExtResource( 7 )]
+position = Vector2( 120, 120 )
 
 [node name="youwin" type="Label" parent="."]
 visible = false
@@ -421,7 +399,6 @@ texture = ExtResource( 12 )
 [node name="MonsterArea2D" parent="." instance=ExtResource( 4 )]
 position = Vector2( 161, 184 )
 
-[connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
 [connection signal="body_entered" from="player/PlayerArea" to="player" method="_on_PlayerArea_body_entered"]

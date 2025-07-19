@@ -60,3 +60,7 @@ func _on_door_match(_nr):
 	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
 	if _current_level is Node2D:
 		_current_level.modulate.a = 1  # Ändrar alpha-värdet till 0.5
+
+
+func _on_boss_body_entered(body):
+	print("Signal from boss")
