@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://princess.png" type="Texture" id=1]
 [ext_resource path="res://scenes/boss_behave.gd" type="Script" id=2]
@@ -141,8 +141,16 @@ tracks/0/keys = {
 [sub_resource type="AnimationNodeAnimation" id=23]
 animation = "Idle"
 
+[sub_resource type="AnimationNodeTimeSeek" id=29]
+
+[sub_resource type="AnimationNodeTimeSeek" id=30]
+
+[sub_resource type="AnimationNodeTimeSeek" id=31]
+
 [sub_resource type="AnimationNodeAnimation" id=24]
 animation = "Strife"
+
+[sub_resource type="AnimationNodeTimeScale" id=28]
 
 [sub_resource type="AnimationNodeAnimation" id=25]
 animation = "Wiggle"
@@ -151,23 +159,31 @@ animation = "Wiggle"
 animation = "ZoomAnim"
 
 [sub_resource type="AnimationNodeBlendTree" id=27]
-graph_offset = Vector2( -179.361, -20.6067 )
+graph_offset = Vector2( -484.823, 17.3029 )
 nodes/BlendStrife/node = SubResource( 20 )
-nodes/BlendStrife/position = Vector2( 240, 80 )
+nodes/BlendStrife/position = Vector2( 171, 76 )
 nodes/BlendWiggle/node = SubResource( 21 )
 nodes/BlendWiggle/position = Vector2( 460, 160 )
 nodes/BlendZoom/node = SubResource( 22 )
-nodes/BlendZoom/position = Vector2( 680, 220 )
+nodes/BlendZoom/position = Vector2( 817, 190 )
 nodes/Idle/node = SubResource( 23 )
-nodes/Idle/position = Vector2( 40, 80 )
+nodes/Idle/position = Vector2( -380, 95 )
+nodes/SeekStrife/node = SubResource( 29 )
+nodes/SeekStrife/position = Vector2( -19, 266 )
+nodes/SeekWiggle/node = SubResource( 30 )
+nodes/SeekWiggle/position = Vector2( 170.177, 468.303 )
+nodes/SeekZoom/node = SubResource( 31 )
+nodes/SeekZoom/position = Vector2( 646, 304 )
 nodes/Strife/node = SubResource( 24 )
-nodes/Strife/position = Vector2( 40, 200 )
+nodes/Strife/position = Vector2( -380, 247 )
+nodes/TimeScale/node = SubResource( 28 )
+nodes/TimeScale/position = Vector2( -190, 152 )
 nodes/Wiggle/node = SubResource( 25 )
-nodes/Wiggle/position = Vector2( 240, 300 )
+nodes/Wiggle/position = Vector2( -38, 437 )
 nodes/Zoom/node = SubResource( 26 )
 nodes/Zoom/position = Vector2( 460, 380 )
-nodes/output/position = Vector2( 900, 200 )
-node_connections = [ "output", 0, "BlendZoom", "BlendStrife", 0, "Idle", "BlendStrife", 1, "Strife", "BlendWiggle", 0, "BlendStrife", "BlendWiggle", 1, "Wiggle", "BlendZoom", 0, "BlendWiggle", "BlendZoom", 1, "Zoom" ]
+nodes/output/position = Vector2( 1026, 209 )
+node_connections = [ "output", 0, "BlendZoom", "BlendWiggle", 0, "BlendStrife", "BlendWiggle", 1, "SeekWiggle", "TimeScale", 0, "Strife", "BlendZoom", 0, "BlendWiggle", "BlendZoom", 1, "SeekZoom", "BlendStrife", 0, "Idle", "BlendStrife", 1, "SeekStrife", "SeekZoom", 0, "Zoom", "SeekWiggle", 0, "Wiggle", "SeekStrife", 0, "TimeScale" ]
 
 [node name="boss" type="Area2D"]
 scale = Vector2( 1.2, 1.2 )
@@ -206,3 +222,9 @@ process_mode = 2
 parameters/BlendStrife/blend_amount = 0.0
 parameters/BlendWiggle/blend_amount = 0.0
 parameters/BlendZoom/blend_amount = 0.0
+parameters/SeekStrife/seek_position = 1.0
+parameters/SeekWiggle/seek_position = 1.0
+parameters/SeekZoom/seek_position = 1.0
+parameters/TimeScale/scale = 1.0
+
+[connection signal="body_entered" from="." to="." method="_on_boss_body_entered"]
