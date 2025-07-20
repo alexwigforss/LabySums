@@ -2,6 +2,8 @@ extends Area2D
 
 onready var anim = $AnimationPlayer
 onready var anim_tree = $AnimationTree
+export var solution = 999
+onready var label = $Label
 
 func _ready():
 	anim.get_animation("ZoomAnim").loop = true
@@ -13,6 +15,7 @@ func _ready():
 	anim_tree.set("parameters/BlendStrife/blend_amount", 0.0)
 	anim_tree.set("parameters/BlendWiggle/blend_amount", 0.0)
 	anim_tree.set("parameters/BlendZoom/blend_amount", 0.0)
+	label.text = str(solution)
 
 func begin_strife():
 	if anim_tree != null:
