@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Movement",
+"language": "GDScript",
+"path": "res://common_movement.gd"
+}, {
 "base": "Area2D",
 "class": "PickNum",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://scenes/PickOp.gd"
 } ]
 _global_script_class_icons={
+"Movement": "",
 "PickNum": "",
 "PickOp": ""
 }
