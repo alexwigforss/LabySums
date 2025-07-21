@@ -25,16 +25,27 @@ func begin_strife():
 	pass
 	if anim_tree != null:
 		anim_tree.set("parameters/BlendStrife/blend_amount", 0.0)
-		anim_tree.set("parameters/BlendWiggle/blend_amount", 1.0)
+		anim_tree.set("parameters/BlendWiggle/blend_amount", 0.0)
 		anim_tree.set("parameters/BlendZoom/blend_amount", 0.0)
 
+var s = 0
 func _process(delta):
 	anim_tree.advance(delta)
 	# var dir = Vector2.UP
 	# movement.move_enemy(self, dir, delta)
-	movement.move_point_to_point(self, delta)
-
-
+	#movement.move_point_to_point(self, delta)
+#	if not movement.orbit_expand(self, delta, 75.0):
+#		print("expand")
+#		return
+	var t = movement.orbit_enemy(self, delta, 75.0, s) 
+	print("orbiting ", t)
+	if t > 5:
+		s = 1
+	if t > 10:
+		s = 2
+	if t > 15:
+		s = 0
+		movement.reset_timer()
 
 func _on_boss_body_entered(body):
 	if not body.is_in_group("player"):
@@ -43,3 +54,4 @@ func _on_boss_body_entered(body):
 	anim_tree.set("parameters/SeekWiggle/seek_position", 0.0)
 	anim_tree.set("parameters/SeekZoom/seek_position", 0.0)
 	movement.reset_enemy(self)
+	s = 0
