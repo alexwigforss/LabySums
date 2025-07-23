@@ -20,6 +20,7 @@ func _ready():
 	anim_tree.set("parameters/BlendWiggle/blend_amount", 0.0)
 	anim_tree.set("parameters/BlendZoom/blend_amount", 0.0)
 	label.text = str(solution)
+	movement.set_speed(50)
 
 func begin_strife():
 	pass
@@ -30,20 +31,26 @@ func begin_strife():
 
 var s = 0
 func _process(delta):
-	anim_tree.advance(delta)
-	# var dir = Vector2.UP
-	# movement.move_enemy(self, dir, delta)
-	#movement.move_point_to_point(self, delta)
-#	if not movement.orbit_expand(self, delta, 75.0):
-#		print("expand")
-#		return
-	var t = movement.orbit_enemy(self, delta, 75.0, s) 
-	print("orbiting ", t)
-	if t > 5:
+	# anim_tree.advance(delta)
+	# movement.move_square(self, delta, 50)
+
+	# var t = movement.orbit_enemy(self, delta, 75.0, s) 
+	# if t > 7.6:
+	# 	s = 0
+	# 	movement.reset_timer()
+	# elif t > 5.0:
+	# 	s = 2
+	# elif t > 2.6:
+	# 	s = 1
+
+	var t = movement.orbit_enemy(self, delta, 75.0, s)
+	if t <= 2.6:
+		pass  # inget händer
+	elif t <= 15.0:
 		s = 1
-	if t > 10:
+	elif t <= 17.6:
 		s = 2
-	if t > 15:
+	else:
 		s = 0
 		movement.reset_timer()
 
