@@ -2,6 +2,7 @@ extends Node
 class_name Movement
 
 var orbit_center = Vector2.ZERO
+var target = Vector2.ZERO
 var speed = 20
 var current_radius = 0.0
 var orb_x = 0.0;
@@ -24,7 +25,7 @@ func move_enemy(enemy: Node2D, direction: Vector2, delta: float):
 func move_square(actor: Node2D, delta: float, half_width: int):
 	var h_w = half_width
 	var box_points: Array = [Vector2(-h_w, -h_w), Vector2(h_w, -h_w),Vector2(h_w, h_w), Vector2(-h_w, h_w)]	
-	var target = box_points[moving_towards_index]
+	target = box_points[moving_towards_index]
 	var direction = (target - actor.position).normalized()
 	actor.position += direction * speed * delta
 
@@ -46,6 +47,24 @@ func bounce_in_box(actor: Node2D, delta: float, half_width: float, half_height: 
 		direction.x = 1 * -direction.x 
 	if actor.position.y > orbit_center.y + half_height or actor.position.y < orbit_center.y - half_height:
 		direction.y = 1 * -direction.y 
+	
+
+
+func random_dots_square(actor: Node2D, delta: float, half_width: float, half_height: float):
+	direction = (target - actor.position).normalized()
+	actor.position += direction * speed * delta
+	if actor.position.distance_to(target) < 1.0:
+		target.x = rand_range(orbit_center.x - half_width, orbit_center.x + half_width)
+		target.y = rand_range(orbit_center.y - half_height, orbit_center.y + half_height)
+
+func random_dots_circle(actor: Node2D, delta: float, r: float):
+	direction = (target - actor.position).normalized()
+	actor.position += direction * speed * delta
+	if actor.position.distance_to(target) < 1.0:
+		var angle = randf() * TAU
+		var radius = sqrt(randf()) * r
+		target.x = orbit_center.x + cos(angle) * radius
+		target.y = orbit_center.y + sin(angle) * radius
 	
 
 func _orbit(center: Vector2, r: float, delta: float) -> Vector2:

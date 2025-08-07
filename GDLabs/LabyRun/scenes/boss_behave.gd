@@ -39,8 +39,8 @@ var s = 0
 func _process(delta):
 	# anim_tree.advance(delta)
 	# movement.move_square(self, delta, orbit_radius)
-	movement.bounce_in_box(self, delta, 50.0, 30.0)
-
+	# movement.bounce_in_box(self, delta, 50.0, 30.0)
+	# movement.random_dots_square(self, delta, 50.0, 30.0)
 	# var t = movement.orbit_enemy(self, delta, 75.0, s) 
 	# if t > 7.6:
 	# 	s = 0
@@ -49,6 +49,9 @@ func _process(delta):
 	# 	s = 2
 	# elif t > 2.6:
 	# 	s = 1
+	movement.random_dots_circle(self, delta, orbit_radius)
+
+	movement.orbit_enemy(self, delta, orbit_radius, s)
 
 	# var t = movement.orbit_enemy(self, delta, orbit_radius, s)
 
