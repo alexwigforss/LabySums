@@ -1,0 +1,230 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://princess.png" type="Texture" id=1]
+[ext_resource path="res://scenes/boss_behave.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 15.6458, 15.9686 )
+
+[sub_resource type="Animation" id=19]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.2, 1.2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Strife"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 0, 0 ), Vector2( -10, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Wiggle"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -16.5, 0.0, 16.5, 0.0 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "ZoomAnim"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 1.2 ), Vector2( 1, 1 ), Vector2( 0.8, 0.8 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="AnimationNodeBlend2" id=20]
+
+[sub_resource type="AnimationNodeBlend2" id=21]
+
+[sub_resource type="AnimationNodeBlend2" id=22]
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeTimeSeek" id=29]
+
+[sub_resource type="AnimationNodeTimeSeek" id=30]
+
+[sub_resource type="AnimationNodeTimeSeek" id=31]
+
+[sub_resource type="AnimationNodeAnimation" id=24]
+animation = "Strife"
+
+[sub_resource type="AnimationNodeTimeScale" id=28]
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "Wiggle"
+
+[sub_resource type="AnimationNodeAnimation" id=26]
+animation = "ZoomAnim"
+
+[sub_resource type="AnimationNodeBlendTree" id=27]
+graph_offset = Vector2( -484.823, 17.3029 )
+nodes/BlendStrife/node = SubResource( 20 )
+nodes/BlendStrife/position = Vector2( 171, 76 )
+nodes/BlendWiggle/node = SubResource( 21 )
+nodes/BlendWiggle/position = Vector2( 460, 160 )
+nodes/BlendZoom/node = SubResource( 22 )
+nodes/BlendZoom/position = Vector2( 817, 190 )
+nodes/Idle/node = SubResource( 23 )
+nodes/Idle/position = Vector2( -380, 95 )
+nodes/SeekStrife/node = SubResource( 29 )
+nodes/SeekStrife/position = Vector2( -19, 266 )
+nodes/SeekWiggle/node = SubResource( 30 )
+nodes/SeekWiggle/position = Vector2( 170.177, 468.303 )
+nodes/SeekZoom/node = SubResource( 31 )
+nodes/SeekZoom/position = Vector2( 646, 304 )
+nodes/Strife/node = SubResource( 24 )
+nodes/Strife/position = Vector2( -380, 247 )
+nodes/TimeScale/node = SubResource( 28 )
+nodes/TimeScale/position = Vector2( -190, 152 )
+nodes/Wiggle/node = SubResource( 25 )
+nodes/Wiggle/position = Vector2( -38, 437 )
+nodes/Zoom/node = SubResource( 26 )
+nodes/Zoom/position = Vector2( 460, 380 )
+nodes/output/position = Vector2( 1026, 209 )
+node_connections = [ "output", 0, "BlendZoom", "TimeScale", 0, "Strife", "BlendZoom", 0, "BlendWiggle", "BlendZoom", 1, "SeekZoom", "SeekWiggle", 0, "Wiggle", "SeekZoom", 0, "Zoom", "SeekStrife", 0, "TimeScale", "BlendStrife", 0, "Idle", "BlendStrife", 1, "SeekStrife", "BlendWiggle", 0, "BlendStrife", "BlendWiggle", 1, "SeekWiggle" ]
+
+[node name="boss" type="Area2D"]
+scale = Vector2( 1.2, 1.2 )
+script = ExtResource( 2 )
+
+[node name="collision" type="CollisionShape2D" parent="."]
+shape = SubResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.831373, 0.811765, 0.486275, 1 )
+scale = Vector2( 2.00594, 1.93675 )
+texture = ExtResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -16.0
+margin_top = -15.0
+margin_right = 14.0
+margin_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "10"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idle = SubResource( 19 )
+anims/RESET = SubResource( 8 )
+anims/Strife = SubResource( 10 )
+anims/Wiggle = SubResource( 11 )
+anims/ZoomAnim = SubResource( 9 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 27 )
+anim_player = NodePath("../AnimationPlayer")
+process_mode = 2
+parameters/BlendStrife/blend_amount = 0.0
+parameters/BlendWiggle/blend_amount = 0.0
+parameters/BlendZoom/blend_amount = 0.0
+parameters/SeekStrife/seek_position = 1.0
+parameters/SeekWiggle/seek_position = 1.0
+parameters/SeekZoom/seek_position = 1.0
+parameters/TimeScale/scale = 1.0
+
+[connection signal="body_entered" from="." to="." method="_on_boss_body_entered"]

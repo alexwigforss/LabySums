@@ -4,15 +4,23 @@ export var player: NodePath
 onready var sprite = get_node("Sprite")
 onready var over_lay_node = get_parent().get_parent().get_node("overLay")
 signal picked(nr)
+signal num_picked_boss(x,y,opnr)
 var overlay_sprite = Sprite.new()
+export var overide_value = -1
 
 # In the script of the instantiated scene
 var value: int
+var boss_map = false
 
 func init_value(new_value):
 	value = new_value
 
+func init_boss_picks():
+	boss_map = true
+
 func _ready():
+	if overide_value >= 0:
+		value = overide_value
 	if value == 1:
 		sprite.region_rect = Rect2(64, 0, 16, 16)
 	if value == 2:
@@ -40,7 +48,7 @@ func _ready():
 	overlay_sprite.region_enabled = true
 	overlay_sprite.region_rect = sprite.region_rect # Use same region as main sprite
 	overlay_sprite.position = position
-	overlay_sprite.z_index = 10
+	overlay_sprite.z_index = 1
 
 	over_lay_node.add_child(overlay_sprite)
 
@@ -59,15 +67,15 @@ func _on_pickNum_body_entered(body):
 		sibling_node.modulate.a = 1
 		print(sibling_node.get_path(),sibling_node.modulate)
 	
-	# if over_lay_node is Node2D:
-	# 	over_lay_node.modulate.a = 1.0
-	# 	print(over_lay_node.get_path(),over_lay_node.modulate)
-
 	var parent_node = get_parent()
 	if parent_node is Node2D:
 		parent_node.modulate.a = 0.5
 		print(parent_node.get_path(),parent_node.modulate)
 	if overlay_sprite:
 		overlay_sprite.queue_free()
+
+	if boss_map:
+		emit_signal("num_picked_boss", position.x, position.y, value)
+
 	emit_signal("picked", value)
 	queue_free()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://PickNr.gd" type="Script" id=1]
+[ext_resource path="res://scenes/PickNr.gd" type="Script" id=1]
 [ext_resource path="res://sprites/nums.png" type="Texture" id=2]
 [ext_resource path="res://sprites/nums_trans.png" type="Texture" id=3]
 

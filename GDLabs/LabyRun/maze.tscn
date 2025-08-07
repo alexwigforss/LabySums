@@ -2,7 +2,7 @@
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=2]
-[ext_resource path="res://princess.png" type="Texture" id=3]
+[ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Sharps/TaskFactory.cs" type="Script" id=4]
 [ext_resource path="res://actors/enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/obstacle.png" type="Texture" id=6]
@@ -17,6 +17,7 @@
 [ext_resource path="res://circle.png" type="Texture" id=15]
 [ext_resource path="res://scenes/monster.tscn" type="PackedScene" id=16]
 [ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=17]
+[ext_resource path="res://BossMap.gd" type="Script" id=18]
 
 [sub_resource type="StreamTexture" id=22]
 flags = 4
@@ -104,9 +105,6 @@ resource_local_to_scene = true
 
 [sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 8, 2.14999 )
-
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 15.6458, 15.9686 )
 
 [sub_resource type="GDScript" id=17]
 script/source = "extends Button
@@ -602,6 +600,7 @@ show_collision = true
 collision_friction = 0.0
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393230, 0, 0, 458766, 0, 0, 524288, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
+script = ExtResource( 18 )
 
 [node name="pickOps" type="Node2D" parent="BossMap"]
 modulate = Color( 1, 1, 1, 0.313726 )
@@ -638,28 +637,6 @@ position = Vector2( -200, 216 )
 position = Vector2( 88, 120 )
 
 [node name="doors" type="Node2D" parent="."]
-
-[node name="goal" type="Area2D" parent="."]
-position = Vector2( 1033, -264 )
-
-[node name="collision" type="CollisionShape2D" parent="goal"]
-shape = SubResource( 7 )
-
-[node name="Sprite" type="Sprite" parent="goal"]
-modulate = Color( 0.831373, 0.811765, 0.486275, 1 )
-scale = Vector2( 2.00594, 1.93675 )
-texture = ExtResource( 3 )
-
-[node name="Label" type="Label" parent="goal"]
-margin_left = -15.0
-margin_top = -14.0
-margin_right = 15.0
-margin_bottom = 14.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "10"
-align = 1
-valign = 1
 
 [node name="youwin" type="Label" parent="."]
 visible = false
@@ -775,7 +752,11 @@ texture = ExtResource( 15 )
 [node name="MonsterArea2D" parent="." instance=ExtResource( 16 )]
 position = Vector2( 262, 184 )
 
-[connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
+[node name="BossGlobalTransform" type="Node2D" parent="."]
+position = Vector2( 1034, -264 )
+
+[node name="boss" parent="BossGlobalTransform" instance=ExtResource( 3 )]
+
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
 [connection signal="body_entered" from="player/PlayerArea" to="player" method="_on_PlayerArea_body_entered"]

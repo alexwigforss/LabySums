@@ -1,17 +1,17 @@
 extends Node2D
 
 var _current_level
+export var number_of_segments = 9
 var current_segment_id = 1
 onready var emitting_actor = get_node("/root/colworld/player")
+onready var boss_node = get_node("/root/colworld/BossGlobalTransform/boss")
 
 func _ready():
 	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
-	# get_node("actors/actor").connect("player_hit", self, "_on_enemy_player_hit")
-	# get_node("actors/actor2").connect("player_hit", self, "_on_enemy_player_hit")
+	
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		enemy.connect("player_hit", self, "_on_enemy_player_hit")
-# The prototype for the boss level
-# Not to be confusade with segment doors.
+
 func _on_goal_body_entered(body):
 	print("Signal from goal")
 
@@ -36,9 +36,15 @@ func _on_ResetSegment_pressed():
 	print("Reset Segment Button Pressed!")
 	reset_segment()
 
+# TODO Get BossMap here if out of maps
 func update_current_segment():
 	current_segment_id +=1
-	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
+	if current_segment_id < number_of_segments:
+		_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
+	elif current_segment_id == number_of_segments:
+		print("BAMM Entered Boss Segment!")
+		_current_level = get_node("/root/colworld/BossMap")
+		boss_node.begin_strife()
 	print("Current segment = ", current_segment_id)
 
 
@@ -54,3 +60,12 @@ func _on_door_match(_nr):
 	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
 	if _current_level is Node2D:
 		_current_level.modulate.a = 1  # Ändrar alpha-värdet till 0.5
+
+
+func _on_boss_body_entered(body):
+	print("Signal from boss")
+	if not body.is_in_group("player"):
+		if body.is_in_group("wall"):
+			print("Boss entered wall")
+		return
+	reset_segment()
