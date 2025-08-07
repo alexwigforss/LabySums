@@ -5,7 +5,7 @@ var cellsize = 16.0
 var half_cell = 8.0
 
 # NOTE If we want a zero here we need to excepthandle div by 0
-var nums = [1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9]
+var nums = [1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,8,9]
 var ops = [0,1,2,3]
 
 var pickable_op: PackedScene = preload("res://scenes/PickOp.tscn")

@@ -38,6 +38,16 @@ func move_square(actor: Node2D, delta: float, half_width: int):
 
 	# print("Moved Square Index: ", moving_towards_index, "Direction: ", direction)
 
+var direction = (Vector2(0.5,0.5))
+
+func bounce_in_box(actor: Node2D, delta: float, half_width: float, half_height: float):
+	actor.position += direction * speed * delta
+	if actor.position.x > orbit_center.x + half_width or actor.position.x < orbit_center.x - half_width:
+		direction.x = 1 * -direction.x 
+	if actor.position.y > orbit_center.y + half_height or actor.position.y < orbit_center.y - half_height:
+		direction.y = 1 * -direction.y 
+	
+
 func _orbit(center: Vector2, r: float, delta: float) -> Vector2:
 	# Beräkna hur snabbt vinkeln ska ändras för att motsvara speed i världen
 	var angular_speed = 0.0

@@ -183,7 +183,7 @@ nodes/Wiggle/position = Vector2( -38, 437 )
 nodes/Zoom/node = SubResource( 26 )
 nodes/Zoom/position = Vector2( 460, 380 )
 nodes/output/position = Vector2( 1026, 209 )
-node_connections = [ "output", 0, "BlendZoom", "BlendWiggle", 0, "BlendStrife", "BlendWiggle", 1, "SeekWiggle", "BlendZoom", 0, "BlendWiggle", "BlendZoom", 1, "SeekZoom", "BlendStrife", 0, "Idle", "BlendStrife", 1, "SeekStrife", "TimeScale", 0, "Strife", "SeekZoom", 0, "Zoom", "SeekStrife", 0, "TimeScale", "SeekWiggle", 0, "Wiggle" ]
+node_connections = [ "output", 0, "BlendZoom", "TimeScale", 0, "Strife", "BlendZoom", 0, "BlendWiggle", "BlendZoom", 1, "SeekZoom", "SeekWiggle", 0, "Wiggle", "SeekZoom", 0, "Zoom", "SeekStrife", 0, "TimeScale", "BlendStrife", 0, "Idle", "BlendStrife", 1, "SeekStrife", "BlendWiggle", 0, "BlendStrife", "BlendWiggle", 1, "SeekWiggle" ]
 
 [node name="boss" type="Area2D"]
 scale = Vector2( 1.2, 1.2 )

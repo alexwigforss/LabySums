@@ -3,7 +3,13 @@ extends Area2D
 onready var anim = $AnimationPlayer
 onready var anim_tree = $AnimationTree
 export var solution = 999
+export var speed = 25
+export var orbit_radius = 50.0
+
 onready var label = $Label
+
+# Hack untill implemented inside Square Movement
+var t = 0.0
 
 onready var movement = preload("res://common_movement.gd").new()
 
@@ -20,7 +26,7 @@ func _ready():
 	anim_tree.set("parameters/BlendWiggle/blend_amount", 0.0)
 	anim_tree.set("parameters/BlendZoom/blend_amount", 0.0)
 	label.text = str(solution)
-	movement.set_speed(50)
+	movement.set_speed(speed)
 
 func begin_strife():
 	pass
@@ -32,7 +38,8 @@ func begin_strife():
 var s = 0
 func _process(delta):
 	# anim_tree.advance(delta)
-	# movement.move_square(self, delta, 50)
+	# movement.move_square(self, delta, orbit_radius)
+	movement.bounce_in_box(self, delta, 50.0, 30.0)
 
 	# var t = movement.orbit_enemy(self, delta, 75.0, s) 
 	# if t > 7.6:
@@ -43,7 +50,11 @@ func _process(delta):
 	# elif t > 2.6:
 	# 	s = 1
 
-	var t = movement.orbit_enemy(self, delta, 75.0, s)
+	# var t = movement.orbit_enemy(self, delta, orbit_radius, s)
+
+	# Hack untill implemented inside Square Movement
+	t += 1 * delta
+
 	if t <= 2.6:
 		pass  # inget händer
 	elif t <= 15.0:
