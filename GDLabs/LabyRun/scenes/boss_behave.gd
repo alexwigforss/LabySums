@@ -8,7 +8,7 @@ export var orbit_radius = 50.0
 
 onready var label = $Label
 
-# Hack untill implemented inside Square Movement
+# Hack until implemented inside Square Movement
 var t = 0.0
 
 onready var movement = preload("res://common_movement.gd").new()
@@ -76,3 +76,9 @@ func _on_boss_body_entered(body):
 	anim_tree.set("parameters/SeekZoom/seek_position", 0.0)
 	movement.reset_enemy(self)
 	s = 0
+
+func decrese_hp(value):
+	solution -= value
+	label.text = str(solution)
+	if solution == 0:
+		print('Load next level')
