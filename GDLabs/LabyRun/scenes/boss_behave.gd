@@ -2,7 +2,7 @@ extends Area2D
 
 onready var anim = $AnimationPlayer
 onready var anim_tree = $AnimationTree
-export var solution = 999
+export var solution = 10
 export var speed = 25
 export var orbit_radius = 50.0
 
@@ -81,4 +81,5 @@ func decrese_hp(value):
 	solution -= value
 	label.text = str(solution)
 	if solution == 0:
+		var err = get_tree().change_scene("res://maps/maze_2.tscn")
 		print('Load next level')

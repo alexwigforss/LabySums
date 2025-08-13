@@ -1,20 +1,20 @@
 [gd_scene load_steps=25 format=2]
 
-[ext_resource path="res://colworld.gd" type="Script" id=1]
-[ext_resource path="res://mazegen.gd" type="Script" id=2]
-[ext_resource path="res://getGoalNr.gd" type="Script" id=3]
-[ext_resource path="res://scenes/monster.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Sharps/TaskFactory.cs" type="Script" id=5]
-[ext_resource path="res://BossMap.gd" type="Script" id=6]
-[ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=7]
-[ext_resource path="res://paths/numpanel.svg" type="Texture" id=8]
-[ext_resource path="res://sprites/transparent.png" type="Texture" id=9]
-[ext_resource path="res://sprites/obstacle.png" type="Texture" id=10]
-[ext_resource path="res://sounds/andra.mp3" type="AudioStream" id=11]
-[ext_resource path="res://circle.png" type="Texture" id=12]
-[ext_resource path="res://scenes/door.tscn" type="PackedScene" id=13]
-[ext_resource path="res://player.tscn" type="PackedScene" id=14]
-[ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=17]
+[ext_resource path="res://mazegen.gd" type="Script" id=1]
+[ext_resource path="res://getGoalNr.gd" type="Script" id=2]
+[ext_resource path="res://Sharps/TaskFactory.cs" type="Script" id=3]
+[ext_resource path="res://BossMap.gd" type="Script" id=4]
+[ext_resource path="res://colworld.gd" type="Script" id=5]
+[ext_resource path="res://paths/numpanel.svg" type="Texture" id=6]
+[ext_resource path="res://sprites/transparent.png" type="Texture" id=7]
+[ext_resource path="res://sprites/obstacle.png" type="Texture" id=8]
+[ext_resource path="res://sounds/andra.mp3" type="AudioStream" id=9]
+[ext_resource path="res://circle.png" type="Texture" id=10]
+[ext_resource path="res://player.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/door.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=13]
+[ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/monster.tscn" type="PackedScene" id=15]
 
 [sub_resource type="StreamTexture" id=22]
 flags = 4
@@ -59,7 +59,7 @@ points = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0 )
 [sub_resource type="TileSet" id=2]
 resource_local_to_scene = true
 0/name = ""
-0/texture = ExtResource( 10 )
+0/texture = ExtResource( 8 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 0, 0 )
@@ -86,7 +86,7 @@ resource_local_to_scene = true
 } ]
 0/z_index = 0
 1/name = "transparent.png 1"
-1/texture = ExtResource( 9 )
+1/texture = ExtResource( 7 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 16, 16 )
@@ -124,7 +124,7 @@ extents = Vector2( 7.49995, 7.5 )
 [sub_resource type="CameraTexture" id=18]
 
 [node name="colworld" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 5 )
 number_of_segments = 2
 current_segment_id = 1
 
@@ -215,7 +215,7 @@ show_collision = true
 collision_friction = 0.0
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393230, 0, 0, 458752, 0, 0, 524288, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 debug_draw_routes = true
 random_maze = false
 start = Vector2( 1, 1 )
@@ -227,7 +227,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map1"]
 
-[node name="door" parent="Map1" instance=ExtResource( 13 )]
+[node name="door" parent="Map1" instance=ExtResource( 12 )]
 position = Vector2( 233, 120 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map1"]
@@ -236,7 +236,7 @@ rotation = 1.5708
 
 [node name="sprite" type="Sprite" parent="Map1/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 10 )
+texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map1/oneway"]
 position = Vector2( 0.0629883, -0.149994 )
@@ -253,7 +253,7 @@ show_collision = true
 collision_friction = 0.0
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393230, 0, 0, 458752, 1, 0, 458766, 0, 0, 524288, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 6 )
+script = ExtResource( 4 )
 
 [node name="pickOps" type="Node2D" parent="BossMap"]
 modulate = Color( 1, 1, 1, 0.313726 )
@@ -266,7 +266,7 @@ rotation = 1.5708
 
 [node name="sprite" type="Sprite" parent="BossMap/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 10 )
+texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossMap/oneway"]
 position = Vector2( 0.0629883, -0.149994 )
@@ -277,7 +277,7 @@ one_way_collision = true
 
 [node name="actors" type="Node2D" parent="."]
 
-[node name="actor3" parent="actors" instance=ExtResource( 17 )]
+[node name="actor3" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( -144, 120 )
 
 [node name="doors" type="Node2D" parent="."]
@@ -299,9 +299,9 @@ align = 1
 valign = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 11 )
+stream = ExtResource( 9 )
 
-[node name="player" parent="." groups=["player"] instance=ExtResource( 14 )]
+[node name="player" parent="." groups=["player"] instance=ExtResource( 11 )]
 position = Vector2( -88.023, 135.955 )
 collision_layer = 18
 collision_mask = 3
@@ -347,7 +347,7 @@ script = SubResource( 17 )
 
 [node name="Numpanel" type="Sprite" parent="player/Camera2D"]
 position = Vector2( -167.977, -114.955 )
-texture = ExtResource( 8 )
+texture = ExtResource( 6 )
 
 [node name="TargetLabel" type="Label" parent="player/Camera2D/Numpanel"]
 anchor_left = 0.5
@@ -361,7 +361,7 @@ margin_bottom = -1.0
 text = "000"
 align = 1
 valign = 1
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 number_of_doors = 1
 
 [node name="Label" type="Label" parent="player"]
@@ -388,19 +388,19 @@ color = Color( 0.164706, 0.521569, 0.152941, 1 )
 energy = 13.23
 
 [node name="TaskFactory" type="Node2D" parent="."]
-script = ExtResource( 5 )
+script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 z_index = -1
-texture = ExtResource( 12 )
+texture = ExtResource( 10 )
 
-[node name="MonsterArea2D" parent="." instance=ExtResource( 4 )]
+[node name="MonsterArea2D" parent="." instance=ExtResource( 15 )]
 position = Vector2( 161, 184 )
 
 [node name="BossGlobalTransform" type="Node2D" parent="."]
 position = Vector2( 122, 120 )
 
-[node name="boss" parent="BossGlobalTransform" instance=ExtResource( 7 )]
+[node name="boss" parent="BossGlobalTransform" instance=ExtResource( 13 )]
 
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
