@@ -91,7 +91,6 @@ func instance_num_at(px,py,num):
 	num_instance.connect("picked", player, "_on_Area2d_picked")
 	num_instance.connect("num_picked_boss", self, "_on_pickNum_picked")
 
-# SIGNALING RECIEVERS
 
 var active_timers = []
 

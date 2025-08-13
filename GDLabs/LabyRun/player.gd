@@ -15,7 +15,10 @@ var velocity = Vector2()
 var strength = 0
 var inertia = 100
 var recent_op = null
+var is_boss_lvl = false
 onready var sprite = $AnimatedSprite
+var boss_node = null
+var bos_map_node = null
 
 func _ready():
 	$Label.text = str(strength)
@@ -32,6 +35,17 @@ func reset_strength():
 	set_collision_mask_bit ( 2, false )
 	_ready()
 
+func reset_strength_fire():
+	strength = 0
+	recent_op = null
+	set_collision_mask_bit ( 1, true )
+	set_collision_mask_bit ( 2, false )
+	$Label.text = str(strength)
+	$Camera2D/ColorRect/MainLabel.text = str(strength)
+	bos_map_node.pickNums.modulate.a = 1
+	bos_map_node.pickOps.modulate.a = 0.5
+
+
 func _physics_process(delta):
 	# Create forces
 	var force = Vector2(0, 0)
@@ -40,6 +54,7 @@ func _physics_process(delta):
 	var walk_right = Input.is_action_pressed("move_right")
 	var walk_up = Input.is_action_pressed("move_up")
 	var walk_down = Input.is_action_pressed("move_down")
+	var fire = Input.is_action_just_pressed("fire")
 	
 	var stop = true
 	
@@ -63,6 +78,14 @@ func _physics_process(delta):
 		if velocity.y >= -WALK_MIN_SPEED and velocity.y < WALK_MAX_SPEED:
 			force.y += WALK_FORCE
 			stop = false
+			
+	if fire and is_boss_lvl:
+		print('ZAPP')
+		if boss_node != null:
+			boss_node.decrese_hp(strength)
+			strength = 0
+			recent_op = null
+			reset_strength_fire()
 	
 	if stop:
 		sprite.stop()
@@ -135,3 +158,9 @@ func bin_string(n):
 		ret_str = String(n&1) + ret_str
 		n = n>>1
 	return ret_str
+
+func boss_segment_entered():
+	is_boss_lvl = true
+	boss_node = get_node("/root/colworld/BossGlobalTransform/boss")
+	bos_map_node = get_node("/root/colworld/BossMap")
+	print('Player entered boss segment')

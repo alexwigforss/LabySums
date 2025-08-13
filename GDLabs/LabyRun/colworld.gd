@@ -45,6 +45,7 @@ func update_current_segment():
 		print("BAMM Entered Boss Segment!")
 		_current_level = get_node("/root/colworld/BossMap")
 		boss_node.begin_strife()
+		emitting_actor.boss_segment_entered()
 	print("Current segment = ", current_segment_id)
 
 
