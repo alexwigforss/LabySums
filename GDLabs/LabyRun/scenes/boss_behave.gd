@@ -77,9 +77,15 @@ func _on_boss_body_entered(body):
 	movement.reset_enemy(self)
 	s = 0
 
-func decrese_hp(value):
+func decrese_hp(value):	
 	solution -= value
 	label.text = str(solution)
 	if solution == 0:
-		var err = get_tree().change_scene("res://maps/maze_2.tscn")
-		print('Load next level')
+		var global = get_node("/root/Global")
+		global.next_maze_index += 1
+		var path = "res://maps/maze_" + str(global.next_maze_index) + ".tscn"
+		var err = get_tree().change_scene(path)
+		if err != 0:
+			print('Failed to load next level ' + path)
+			return
+		print('Load next level ' + path)
