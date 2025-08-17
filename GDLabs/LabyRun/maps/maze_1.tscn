@@ -1,28 +1,26 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
-[ext_resource path="res://colworld.gd" type="Script" id=1]
-[ext_resource path="res://scenes/door.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Sharps/TaskFactory.cs" type="Script" id=4]
-[ext_resource path="res://actors/enemy.tscn" type="PackedScene" id=5]
-[ext_resource path="res://sprites/obstacle.png" type="Texture" id=6]
-[ext_resource path="res://sprites/transparent.png" type="Texture" id=7]
-[ext_resource path="res://sensor.tscn" type="PackedScene" id=8]
-[ext_resource path="res://player.tscn" type="PackedScene" id=9]
-[ext_resource path="res://scenes/PushBox.tscn" type="PackedScene" id=10]
-[ext_resource path="res://sounds/andra.mp3" type="AudioStream" id=11]
-[ext_resource path="res://paths/numpanel.svg" type="Texture" id=12]
-[ext_resource path="res://mazegen.gd" type="Script" id=13]
-[ext_resource path="res://getGoalNr.gd" type="Script" id=14]
-[ext_resource path="res://circle.png" type="Texture" id=15]
-[ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=17]
-[ext_resource path="res://BossMap.gd" type="Script" id=18]
+[ext_resource path="res://mazegen.gd" type="Script" id=1]
+[ext_resource path="res://getGoalNr.gd" type="Script" id=2]
+[ext_resource path="res://Sharps/TaskFactory.cs" type="Script" id=3]
+[ext_resource path="res://player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://BossMap.gd" type="Script" id=5]
+[ext_resource path="res://colworld.gd" type="Script" id=6]
+[ext_resource path="res://paths/numpanel.svg" type="Texture" id=7]
+[ext_resource path="res://sprites/transparent.png" type="Texture" id=8]
+[ext_resource path="res://sprites/obstacle.png" type="Texture" id=9]
+[ext_resource path="res://sounds/andra.mp3" type="AudioStream" id=10]
+[ext_resource path="res://circle.png" type="Texture" id=11]
+[ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=12]
+[ext_resource path="res://actors/enemy.tscn" type="PackedScene" id=13]
+[ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=14]
+[ext_resource path="res://scenes/PushBox.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/door.tscn" type="PackedScene" id=16]
+[ext_resource path="res://sensor.tscn" type="PackedScene" id=17]
+[ext_resource path="res://scenes/monster.tscn" type="PackedScene" id=18]
+[ext_resource path="res://sprites/StoneAge/20250813_170734.jpg" type="Texture" id=19]
 
-[sub_resource type="StreamTexture" id=22]
-flags = 4
-load_path = "res://.import/steam_math_pipeground.png-81ee77ca32054b9e7f271baf38bcd099.stex"
-
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=23]
 resource_name = "BgAnim"
 length = 180.0
 loop = true
@@ -61,7 +59,7 @@ points = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0 )
 [sub_resource type="TileSet" id=2]
 resource_local_to_scene = true
 0/name = ""
-0/texture = ExtResource( 6 )
+0/texture = ExtResource( 9 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 0, 0 )
@@ -88,7 +86,7 @@ resource_local_to_scene = true
 } ]
 0/z_index = 0
 1/name = "transparent.png 1"
-1/texture = ExtResource( 7 )
+1/texture = ExtResource( 8 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 16, 16 )
@@ -126,138 +124,32 @@ extents = Vector2( 7.49995, 7.5 )
 [sub_resource type="CameraTexture" id=18]
 
 [node name="colworld" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 6 )
 number_of_segments = 10
 
-[node name="BgNode2D" type="Node2D" parent="."]
-position = Vector2( 200, 0 )
-scale = Vector2( 0.5, 0.5 )
-z_index = -1
-
-[node name="Cp1" type="Sprite" parent="BgNode2D"]
-position = Vector2( 288, 288 )
-texture = SubResource( 22 )
-
-[node name="Cp2" type="Sprite" parent="BgNode2D"]
-position = Vector2( -736, 288 )
-scale = Vector2( -1, 1 )
-texture = SubResource( 22 )
-
-[node name="Cp3" type="Sprite" parent="BgNode2D"]
-position = Vector2( 288, -736 )
-scale = Vector2( 1, -1 )
-texture = SubResource( 22 )
-
-[node name="Cp4" type="Sprite" parent="BgNode2D"]
-position = Vector2( -736, -736 )
-scale = Vector2( -1, -1 )
-texture = SubResource( 22 )
-
-[node name="Cp5" type="Sprite" parent="BgNode2D"]
-modulate = Color( 1, 1, 1, 0.462745 )
-position = Vector2( 288, -1760 )
-texture = SubResource( 22 )
-
-[node name="Cp7" type="Sprite" parent="BgNode2D"]
-position = Vector2( 1312, 288 )
-texture = SubResource( 22 )
-
-[node name="Cp8" type="Sprite" parent="BgNode2D"]
-position = Vector2( 1312, -736 )
-scale = Vector2( 1, -1 )
-texture = SubResource( 22 )
-
-[node name="Cp9" type="Sprite" parent="BgNode2D"]
-modulate = Color( 1, 1, 1, 0.462745 )
-position = Vector2( 1312, -1760 )
-texture = SubResource( 22 )
-
-[node name="Cp6" type="Sprite" parent="BgNode2D"]
-modulate = Color( 1, 1, 1, 0.462745 )
-position = Vector2( -736, -1760 )
-scale = Vector2( -1, 1 )
-texture = SubResource( 22 )
-
-[node name="BgNode2D2" type="Node2D" parent="."]
-visible = false
-modulate = Color( 1, 1, 1, 0.498039 )
+[node name="BgNode2D3" type="Node2D" parent="."]
 position = Vector2( 81, 0 )
 rotation = 1.5708
 scale = Vector2( 0.5, 0.5 )
 z_index = -1
 
-[node name="Cp1" type="Sprite" parent="BgNode2D2"]
-position = Vector2( 288, 288 )
-texture = SubResource( 22 )
-
-[node name="Cp2" type="Sprite" parent="BgNode2D2"]
-position = Vector2( -736, 288 )
-rotation = -3.14159
-scale = Vector2( 1, -1 )
-texture = SubResource( 22 )
-
-[node name="Cp3" type="Sprite" parent="BgNode2D2"]
-position = Vector2( 288, -736 )
-scale = Vector2( 1, -1 )
-texture = SubResource( 22 )
-
-[node name="Cp4" type="Sprite" parent="BgNode2D2"]
-position = Vector2( -736, -736 )
-rotation = -3.14159
-texture = SubResource( 22 )
-
-[node name="Cp5" type="Sprite" parent="BgNode2D2"]
-modulate = Color( 1, 1, 1, 0.462745 )
-position = Vector2( 288.004, -1760 )
-texture = SubResource( 22 )
-
-[node name="Cp6" type="Sprite" parent="BgNode2D2"]
-modulate = Color( 1, 1, 1, 0.462745 )
-position = Vector2( -736, -1760 )
-rotation = -3.14159
-scale = Vector2( 1, -1 )
-texture = SubResource( 22 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="BgNode2D2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BgNode2D3"]
 autoplay = "BgAnim"
-anims/BgAnim = SubResource( 21 )
+anims/BgAnim = SubResource( 23 )
 
-[node name="Map0" type="TileMap" parent="." groups=["wall"]]
-visible = false
-light_mask = 0
-position = Vector2( 432, 112 )
-tile_set = SubResource( 2 )
-cell_size = Vector2( 16, 16 )
-show_collision = true
-collision_friction = 0.0
-format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 1, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
-random_maze = false
-result_max = 10
+[node name="20250813170735" type="Sprite" parent="BgNode2D3"]
+position = Vector2( -376.998, 527.003 )
+rotation = -1.5708
+scale = Vector2( 1.6, 1.6 )
+z_index = -2
+texture = ExtResource( 19 )
 
-[node name="pickOps" type="Node2D" parent="Map0"]
-modulate = Color( 1, 1, 1, 0.313726 )
-
-[node name="pickNums" type="Node2D" parent="Map0"]
-
-[node name="door" parent="Map0" instance=ExtResource( 2 )]
-position = Vector2( 201, 8 )
-
-[node name="oneway" type="KinematicBody2D" parent="Map0"]
-position = Vector2( 2, 184 )
-rotation = 1.5708
-
-[node name="sprite" type="Sprite" parent="Map0/oneway"]
-scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map0/oneway"]
-position = Vector2( 0.0629883, -0.149994 )
-shape = SubResource( 19 )
-one_way_collision = true
-
-[node name="overLay" type="Node2D" parent="Map0"]
+[node name="20250813170736" type="Sprite" parent="BgNode2D3"]
+position = Vector2( 2957, 526.991 )
+rotation = -1.5708
+scale = Vector2( 1.6, -1.6 )
+z_index = -2
+texture = ExtResource( 19 )
 
 [node name="Map1" type="TileMap" parent="." groups=["walls"]]
 light_mask = 0
@@ -267,7 +159,7 @@ show_collision = true
 collision_friction = 0.0
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
+script = ExtResource( 1 )
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map1"]
@@ -275,7 +167,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map1"]
 
-[node name="door" parent="Map1" instance=ExtResource( 2 )]
+[node name="door" parent="Map1" instance=ExtResource( 16 )]
 position = Vector2( 201, 8 )
 
 [node name="overLay" type="Node2D" parent="Map1"]
@@ -288,7 +180,7 @@ tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 1, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
+script = ExtResource( 1 )
 start = Vector2( 12, 13 )
 goal = Vector2( 1, 1 )
 
@@ -297,7 +189,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map2"]
 
-[node name="door" parent="Map2" instance=ExtResource( 2 )]
+[node name="door" parent="Map2" instance=ExtResource( 16 )]
 position = Vector2( 8, 24 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map2"]
@@ -306,7 +198,7 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map2/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map2/oneway"]
 position = Vector2( 0.0629883, 4.20001 )
@@ -323,17 +215,16 @@ tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 1, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
+script = ExtResource( 1 )
 start = Vector2( 13, 1 )
 goal = Vector2( 7, 1 )
-number_of_operators = 2
 
 [node name="pickOps" type="Node2D" parent="Map3"]
 modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map3"]
 
-[node name="door" parent="Map3" instance=ExtResource( 2 )]
+[node name="door" parent="Map3" instance=ExtResource( 16 )]
 position = Vector2( 120, 8 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map3"]
@@ -343,14 +234,14 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map3/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map3/oneway"]
 position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
 
-[node name="stone" parent="Map3" instance=ExtResource( 10 )]
+[node name="stone" parent="Map3" instance=ExtResource( 15 )]
 position = Vector2( 72, 136 )
 
 [node name="overLay" type="Node2D" parent="Map3"]
@@ -363,7 +254,7 @@ tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 1, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
+script = ExtResource( 1 )
 start = Vector2( 7, 13 )
 goal = Vector2( 7, 1 )
 number_of_operators = 2
@@ -374,7 +265,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map4"]
 
-[node name="door" parent="Map4" instance=ExtResource( 2 )]
+[node name="door" parent="Map4" instance=ExtResource( 16 )]
 position = Vector2( 120, 8 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map4"]
@@ -383,7 +274,7 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map4/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map4/oneway"]
 position = Vector2( 0.0629883, 0.200012 )
@@ -401,7 +292,7 @@ cell_size = Vector2( 16, 16 )
 show_collision = true
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 1, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
+script = ExtResource( 1 )
 start = Vector2( 7, 13 )
 goal = Vector2( 13, 7 )
 number_of_operators = 2
@@ -412,7 +303,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map5"]
 
-[node name="door" parent="Map5" instance=ExtResource( 2 )]
+[node name="door" parent="Map5" instance=ExtResource( 16 )]
 position = Vector2( 232, 120 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map5"]
@@ -421,7 +312,7 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map5/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map5/oneway"]
 position = Vector2( 0.0629883, 0.200012 )
@@ -438,7 +329,7 @@ tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 1, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
+script = ExtResource( 1 )
 start = Vector2( 1, 7 )
 goal = Vector2( 13, 13 )
 number_of_operators = 2
@@ -449,7 +340,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map6"]
 
-[node name="door" parent="Map6" instance=ExtResource( 2 )]
+[node name="door" parent="Map6" instance=ExtResource( 16 )]
 position = Vector2( 232, 216 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map6"]
@@ -459,7 +350,7 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map6/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map6/oneway"]
 position = Vector2( 0.0629883, 0.200012 )
@@ -476,10 +367,10 @@ tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 1, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
+script = ExtResource( 1 )
 start = Vector2( 1, 7 )
 goal = Vector2( 13, 1 )
-number_of_operators = 3
+number_of_operators = 2
 result_max = 100
 
 [node name="pickOps" type="Node2D" parent="Map7"]
@@ -487,7 +378,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map7"]
 
-[node name="door" parent="Map7" instance=ExtResource( 2 )]
+[node name="door" parent="Map7" instance=ExtResource( 16 )]
 position = Vector2( 232, 24 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map7"]
@@ -497,7 +388,7 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map7/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map7/oneway"]
 position = Vector2( 0.0629883, 0.200012 )
@@ -514,7 +405,7 @@ tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 1, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 1, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 13 )
+script = ExtResource( 1 )
 start = Vector2( 1, 1 )
 goal = Vector2( 1, 13 )
 number_of_operators = 3
@@ -525,7 +416,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map8"]
 
-[node name="door" parent="Map8" instance=ExtResource( 2 )]
+[node name="door" parent="Map8" instance=ExtResource( 16 )]
 position = Vector2( 24, 232 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map8"]
@@ -535,7 +426,7 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map8/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map8/oneway"]
 position = Vector2( 0.0629883, 0.200012 )
@@ -551,10 +442,11 @@ position = Vector2( 448, -448 )
 tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 1, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0, 1245228, 0, 0 )
-script = ExtResource( 13 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 1, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 1, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
+script = ExtResource( 1 )
 start = Vector2( 1, 1 )
 goal = Vector2( 14, 11 )
+number_of_operators = 3
 result_max = 100
 
 [node name="pickOps" type="Node2D" parent="Map9"]
@@ -562,7 +454,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="pickNums" type="Node2D" parent="Map9"]
 
-[node name="door" parent="Map9" instance=ExtResource( 2 )]
+[node name="door" parent="Map9" instance=ExtResource( 16 )]
 position = Vector2( 232, 184 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map9"]
@@ -572,7 +464,7 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map9/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map9/oneway"]
 position = Vector2( 0.0629883, 0.200012 )
@@ -589,8 +481,8 @@ cell_size = Vector2( 16, 16 )
 show_collision = true
 collision_friction = 0.0
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393230, 0, 0, 458766, 0, 0, 524288, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
-script = ExtResource( 18 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393230, 0, 0, 458766, 0, 0, 524288, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0, 4390868, 0, 0 )
+script = ExtResource( 5 )
 
 [node name="pickOps" type="Node2D" parent="BossMap"]
 modulate = Color( 1, 1, 1, 0.313726 )
@@ -603,7 +495,7 @@ rotation = 1.5708
 
 [node name="sprite" type="Sprite" parent="BossMap/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossMap/oneway"]
 position = Vector2( 0.0629883, -0.149994 )
@@ -628,7 +520,7 @@ z_index = -1
 
 [node name="sprite" type="Sprite" parent="None/oneway"]
 scale = Vector2( 1, 0.3 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="None/oneway"]
 position = Vector2( 0.0629883, 0.200012 )
@@ -639,16 +531,16 @@ one_way_collision = true
 
 [node name="actors" type="Node2D" parent="."]
 
-[node name="actor" parent="actors" instance=ExtResource( 5 )]
+[node name="actor" parent="actors" instance=ExtResource( 13 )]
 position = Vector2( -40, -40 )
 
-[node name="actor2" parent="actors" instance=ExtResource( 5 )]
+[node name="actor2" parent="actors" instance=ExtResource( 13 )]
 position = Vector2( 88, -40 )
 
-[node name="sensor" parent="actors" instance=ExtResource( 8 )]
+[node name="sensor" parent="actors" instance=ExtResource( 17 )]
 position = Vector2( -200, 216 )
 
-[node name="actor3" parent="actors" instance=ExtResource( 17 )]
+[node name="actor3" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( 88, 120 )
 
 [node name="doors" type="Node2D" parent="."]
@@ -670,10 +562,10 @@ align = 1
 valign = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 11 )
+stream = ExtResource( 10 )
 
-[node name="player" parent="." groups=["player"] instance=ExtResource( 9 )]
-position = Vector2( 473, -423 )
+[node name="player" parent="." groups=["player"] instance=ExtResource( 4 )]
+position = Vector2( 33, 208 )
 collision_layer = 18
 collision_mask = 3
 
@@ -718,7 +610,7 @@ script = SubResource( 17 )
 
 [node name="Numpanel" type="Sprite" parent="player/Camera2D"]
 position = Vector2( -167.977, -114.955 )
-texture = ExtResource( 12 )
+texture = ExtResource( 7 )
 
 [node name="TargetLabel" type="Label" parent="player/Camera2D/Numpanel"]
 anchor_left = 0.5
@@ -732,7 +624,7 @@ margin_bottom = -1.0
 text = "000"
 align = 1
 valign = 1
-script = ExtResource( 14 )
+script = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="player"]
 visible = false
@@ -758,16 +650,20 @@ color = Color( 0.164706, 0.521569, 0.152941, 1 )
 energy = 13.23
 
 [node name="TaskFactory" type="Node2D" parent="."]
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
 z_index = -1
-texture = ExtResource( 15 )
+texture = ExtResource( 11 )
+
+[node name="MonsterArea2D" parent="." instance=ExtResource( 18 )]
+position = Vector2( 262, 184 )
 
 [node name="BossGlobalTransform" type="Node2D" parent="."]
 position = Vector2( 1034, -264 )
 
-[node name="boss" parent="BossGlobalTransform" instance=ExtResource( 3 )]
+[node name="boss" parent="BossGlobalTransform" instance=ExtResource( 12 )]
+solution = 20
 
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]

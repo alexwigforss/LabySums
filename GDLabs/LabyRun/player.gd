@@ -86,6 +86,9 @@ func _physics_process(delta):
 			strength = 0
 			recent_op = null
 			reset_strength_fire()
+	elif fire and not is_boss_lvl:
+		print('CLICK')
+
 	
 	if stop:
 		sprite.stop()

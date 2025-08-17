@@ -2,7 +2,8 @@ extends Node2D
 
 var _current_level
 export var number_of_segments = 9
-var current_segment_id = 1
+# may not be export later but right now so i dont have to play through whole level to test level change.
+export var current_segment_id = 9
 onready var emitting_actor = get_node("/root/colworld/player")
 onready var boss_node = get_node("/root/colworld/BossGlobalTransform/boss")
 
@@ -36,9 +37,10 @@ func _on_ResetSegment_pressed():
 	print("Reset Segment Button Pressed!")
 	reset_segment()
 
-# TODO Get BossMap here if out of maps
+# Get BossMap here if out of maps
 func update_current_segment():
 	current_segment_id +=1
+	print("Entered Map ", current_segment_id)
 	if current_segment_id < number_of_segments:
 		_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
 	elif current_segment_id == number_of_segments:
@@ -55,7 +57,7 @@ func _on_door_nomatch(nr):
 
 func _on_door_match(_nr):
 	print("On door match")
-	var previous = get_node("/root/colworld/Map"+ str(current_segment_id-1))  # Ersätt "SiblingNodeName" med det faktiska namnet
+	var previous = get_node("/root/colworld/Map"+ str(current_segment_id-1))
 	if previous is Node2D:
 		previous.modulate.a = 0.5  # Ändrar alpha-värdet till 0.5
 	_current_level = get_node("/root/colworld/Map" + str(current_segment_id))
