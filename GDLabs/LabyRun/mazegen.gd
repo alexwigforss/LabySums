@@ -7,7 +7,7 @@ export var debug_print_route = false
 export var debug_draw_routes = false
 export var verbose = false
 export var debug_print_binary = false
-
+export var quick_fix = false
 
 export var random_maze = true
 export var start = Vector2(1,13)
@@ -131,6 +131,8 @@ func _ready():
 
 	randomize_maze() if random_maze else no_random_maze()
 	assemble_route(-1,0)
+
+	print(self.name, "Ready" )
 	var temp_dir = start_directions_int[1]
 	var i = 1
 
@@ -167,6 +169,8 @@ func _ready():
 
 func random_picks():
 	var depth = 1
+	if quick_fix:
+		depth = 2
 	var num = true
 	var num_index = 0
 	var op_index = 0
@@ -299,6 +303,9 @@ func _draw():
 		var colors = [Color.cyan, Color.magenta, Color.yellow, Color.orange, Color.purple, Color.red, Color.blue, Color.pink, Color.cornsilk, Color.darkblue]
 		var color_count = colors.size()
 		var size = 6.0
+
+		draw_arc((start_pos * 16) + shift, size, 0, 2 * PI, 64, Color.green, 2.0)
+		draw_arc((goal * 16) + shift, size, 0, 2 * PI, 64, Color.red, 2.0)
 	
 		# Loop through all routes and draw them with different colors
 		for route_index in range(routes.size()):

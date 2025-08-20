@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=2]
@@ -7,14 +7,12 @@
 [ext_resource path="res://actors/enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/obstacle.png" type="Texture" id=6]
 [ext_resource path="res://sprites/transparent.png" type="Texture" id=7]
-[ext_resource path="res://sensor.tscn" type="PackedScene" id=8]
 [ext_resource path="res://player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/PushBox.tscn" type="PackedScene" id=10]
 [ext_resource path="res://sounds/andra.mp3" type="AudioStream" id=11]
 [ext_resource path="res://paths/numpanel.svg" type="Texture" id=12]
 [ext_resource path="res://mazegen.gd" type="Script" id=13]
 [ext_resource path="res://getGoalNr.gd" type="Script" id=14]
-[ext_resource path="res://circle.png" type="Texture" id=15]
 [ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=17]
 [ext_resource path="res://BossMap.gd" type="Script" id=18]
 
@@ -639,17 +637,14 @@ one_way_collision = true
 
 [node name="actors" type="Node2D" parent="."]
 
-[node name="actor" parent="actors" instance=ExtResource( 5 )]
+[node name="actor1" parent="actors" instance=ExtResource( 5 )]
 position = Vector2( -40, -40 )
 
 [node name="actor2" parent="actors" instance=ExtResource( 5 )]
 position = Vector2( 88, -40 )
 
-[node name="sensor" parent="actors" instance=ExtResource( 8 )]
-position = Vector2( -200, 216 )
-
 [node name="actor3" parent="actors" instance=ExtResource( 17 )]
-position = Vector2( 88, 120 )
+position = Vector2( -200, -391 )
 
 [node name="doors" type="Node2D" parent="."]
 
@@ -759,10 +754,6 @@ energy = 13.23
 
 [node name="TaskFactory" type="Node2D" parent="."]
 script = ExtResource( 4 )
-
-[node name="Sprite" type="Sprite" parent="."]
-z_index = -1
-texture = ExtResource( 15 )
 
 [node name="BossGlobalTransform" type="Node2D" parent="."]
 position = Vector2( 1034, -264 )
