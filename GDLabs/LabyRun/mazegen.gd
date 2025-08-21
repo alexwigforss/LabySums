@@ -142,7 +142,8 @@ func _ready():
 	#while i < len(routes):
 	while i < 20:
 	# TODO Add Exception Handling
-		assemble_route(start_directions_int[i],i)
+		if i < len(routes):
+			assemble_route(start_directions_int[i],i)
 		i += 1
 		
 	routes = pop_sublists_with_length_one(routes)
