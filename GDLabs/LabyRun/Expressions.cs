@@ -20,7 +20,17 @@ public class Expression
 		epsArr = Eps.ToArray();
 	}
 
-	private static Queue<Ep> GenerateExpression(int lvl, bool forcePositive = true)
+	public Expression(int amountOfOps, bool positive, bool additives)
+	{
+		if (additives)
+		{
+			GD.Print("GENERATING ADDITIVE QUESTION");
+			eps = GenerateExpression(amountOfOps, positive, true);
+		}
+		epsArr = Eps.ToArray();
+	}
+
+	private static Queue<Ep> GenerateExpression(int lvl, bool forcePositive = true, bool forceAddSub = false)
 	{
 		int sumSoFar = 0;
 		Queue<Ep> expression = new Queue<Ep>();
@@ -32,7 +42,14 @@ public class Expression
 			{
 				if (i % 2 != 0) // even
 				{
-					expression.Enqueue(new Op(ref sumSoFar, ref prevChar));
+					if (forceAddSub)
+					{
+						expression.Enqueue(new Op(ref sumSoFar, ref prevChar, true));
+					}
+					else
+					{
+						expression.Enqueue(new Op(ref sumSoFar, ref prevChar));						
+					}
 				}
 				else if (i % 2 == 0) // odd
 				{
@@ -220,6 +237,10 @@ internal class Op : Ep
 	{
 		Sign = RandomSign(ref sumSoFar, out prevChar);
 	}
+	public Op(ref int sumSoFar, ref char? prevChar, bool additive = true)
+	{
+		Sign = RandomAddSub(ref sumSoFar, out prevChar);
+	}
 	private static char RandomSign(ref int sumSoFar, out char? pC)
 	{
 		char s;
@@ -230,6 +251,15 @@ internal class Op : Ep
 		pC = s;
 		return s;
 	}
+
+	private static char RandomAddSub(ref int sumSoFar, out char? pC)
+	{
+		char s;
+		s = signs[rand.Next(2)];
+		pC = s;
+		return s;
+	}
+
 
 	public override string ToString()
 	{

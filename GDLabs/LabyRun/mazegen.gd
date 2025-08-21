@@ -8,7 +8,7 @@ export var debug_draw_routes = false
 export var verbose = false
 export var debug_print_binary = false
 export var quick_fix = false
-
+export var additives_only = false
 export var random_maze = true
 export var start = Vector2(1,13)
 var start_pos
@@ -117,8 +117,11 @@ func _ready():
 	start_pos = start
 	var csharp_node = get_node("../TaskFactory")
 	var door_node = get_node("door")
-	while solution > result_max:	
-		csharp_node.createExpression(number_of_operators);
+	while solution > result_max:
+		if additives_only:
+			csharp_node.createAdditiveExpression(number_of_operators);
+		else:
+			csharp_node.createExpression(number_of_operators);
 		nums = csharp_node.getNums();
 		ops = csharp_node.getSigns();
 		solution = csharp_node.getSolution();
