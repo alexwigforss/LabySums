@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Kinematic Character"
-run/main_scene="res://maze.tscn"
+run/main_scene="res://maps/maze_1.tscn"
 config/icon="res://icon.png"
 
 [autoload]

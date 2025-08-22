@@ -10,8 +10,14 @@ public class TaskFactory : Node2D
 	{
 		expression = new Expression(nrOfOperators, true);
 	}
+	static void createAdditiveExpression(int nrOfOperators)
+	{
+		GD.Print("CREATING ADDITIVE QUESTION");
+		expression = new Expression(nrOfOperators, true, true);
+	}
 	
-	static int charToNum(char c){
+	static int charToNum(char c)
+	{
 		switch (c)
 		{
 			case '+':
@@ -68,7 +74,29 @@ public class TaskFactory : Node2D
 		return result;
 	}
 	
-	static int getSolution(){
+	static int[] getAdditiveSigns()
+	{
+		int[] result = new int[(expression.getLength() + 1) / 2 - 1];
+		if (expression == null)
+		{
+			throw new InvalidOperationException("Expression cannot be null!");
+		}
+		else
+		{
+			int j = 0;
+			for (int i = 1; i < result.Length + 1; i++)
+			{
+				Console.Write("Index: " + i + " ");
+				Ep ent = expression.epsArr[i + j++];
+				Console.WriteLine(ent + " " + ent.GetType());
+				result[i - 1] = charToNum(ent.Sign);
+			}
+		}
+		return result;
+	}
+
+	static int getSolution()
+	{
 		return expression.Calculate();
 	}
 	
