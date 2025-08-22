@@ -31,11 +31,16 @@ func reset_segment():
 		_current_level.position.x + 8 + (_current_level.start_pos.x * 16),
 		_current_level.position.y + 8 + (_current_level.start_pos.y * 16)
 		)
-	
+	# TODO Reset all enemies positions
+
+func reset_enemys():
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.reset_to_start()
 
 func _on_ResetSegment_pressed():
 	print("Reset Segment Button Pressed!")
 	reset_segment()
+	reset_enemys()
 
 # Get BossMap here if out of maps
 func update_current_segment():
