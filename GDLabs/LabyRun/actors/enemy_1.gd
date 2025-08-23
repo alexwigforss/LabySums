@@ -42,30 +42,37 @@ func _ready():
 	
 	
 func _on_body_entered(body, direction, index):
-	if body.is_in_group("walls") or "Map" in body.name:
+	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name:
 		free_sensors[index] = false
 		if debug_hits:
 			get_node("Area" + direction.capitalize() + "/Highlight").visible = true
 		_sight_state_changed(true, index)
+	else:
+		if debug_hits:
+			print("Ignored body ", body.name, " Entered on ", direction)
 
 
 func _on_body_exited(body, direction, index):
-	if body.is_in_group("walls") or "Map" in body.name:
+	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name:#RigidBodyDoor
 		free_sensors[index] = true
 		if debug_hits:
 			get_node("Area" + direction.capitalize() + "/Highlight").visible = false
 		#print("Exited on", direction, " with ", body.name)
 		_sight_state_changed(false, index)
+	else:
+		if debug_hits:
+			print("Ignored body ", body.name, " Exited on ", direction)
 
 
 func _sight_state_changed(entered, d_num):
-	# print("STATE HAS CHANGED TO ", entered, " ON ", dir_labels[d_num])
 	if entered:
 		free_sensors[d_num] = false
 		return
 	elif not entered:
 		free_sensors[d_num] = true
 		state_has_changed = true
+	if debug_hits:
+		print("STATE HAS CHANGED TO ", entered, " ON ", dir_labels[d_num])
 	
 
 func _next_direction_from_sensors(sensors):

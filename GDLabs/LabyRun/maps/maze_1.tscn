@@ -593,6 +593,7 @@ position = Vector2( 344, -552 )
 
 [node name="actor8" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( 664, -552 )
+debug_hits = true
 
 [node name="actor9" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( 664, -424 )

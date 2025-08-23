@@ -20,10 +20,10 @@ position = Vector2( -1.19209e-07, 1.19209e-07 )
 scale = Vector2( 1.25, 1.25 )
 shape = SubResource( 17 )
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="RigidBodyDoor" type="RigidBody2D" parent="."]
 mode = 1
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="RigidBodyDoor"]
 visible = false
 shape = SubResource( 17 )
 
