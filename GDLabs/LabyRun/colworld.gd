@@ -3,7 +3,7 @@ extends Node2D
 var _current_level
 export var number_of_segments = 9
 # may not be export later but right now so i dont have to play through whole level to test level change.
-export var current_segment_id = 9
+export var current_segment_id = 1
 onready var emitting_actor = get_node("/root/colworld/player")
 onready var boss_node = get_node("/root/colworld/BossGlobalTransform/boss")
 
