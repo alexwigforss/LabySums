@@ -584,7 +584,7 @@ debug_hits = true
 debug_print = true
 
 [node name="actor10" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -136, -392 )
+position = Vector2( -248, -392 )
 debug_hits = true
 debug_print = true
 

@@ -1,232 +1,201 @@
 extends KinematicBody2D
-const GRAVITY = 0.0 # pixels/second/second
 
-# Angle in degrees towards either side that the player can consider "floor"
-const FLOOR_ANGLE_TOLERANCE = 40
-const WALK_FORCE = 600
-const WALK_MIN_SPEED = 10
-const WALK_MAX_SPEED = 25
-const STOP_FORCE = 1300
+# --- CONSTANTS ---
+const WALK_FORCE      := 600
+const WALK_MIN_SPEED  := 10
+const WALK_MAX_SPEED  := 25
+const STOP_FORCE      := 1300
+const INERTIA         := 100
 
-const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second
-const SLIDE_STOP_MIN_TRAVEL = 1.0 # one pixel
+# Directions (index mapping)
+const LEFT   := 0
+const UP     := 1
+const RIGHT  := 2
+const DOWN   := 3
+const DIR_LABELS := ["left", "up", "right", "down"]
 
-var velocity = Vector2()
-var strength = 0
-var inertia = 100
-var dir = 0
-var current_dir = -1
-var dir_labels = ['left','up','right','down']
+# --- VARIABLES ---
+var velocity: Vector2 = Vector2.ZERO
+var current_dir: int = -1  # current movement direction (0–3, or -1 for none)
 
-var dirs = [true,false,false,false]
-var sensor_hits := [0, 0, 0, 0]  # how many walls each sensor overlaps
-var free_sensors := [true, true, true, true]  # derived from sensor_hits
+# Sensor system
+var sensor_hits := [0, 0, 0, 0]     # counters of overlapping walls
+var free_sensors := [true, true, true, true]  # derived from hits
 
+# State
+var dirs := [true, false, false, false]   # active direction vector (like LEFT/UP/RIGHT/DOWN flags)
+var start_position: Vector2
+var state_has_changed := false
+var first_frame := true
 
+# Debug
+export var debug_hits := false
+export var debug_print := false
+
+# --- SIGNALS ---
 signal player_hit
-var start_position := Vector2.ZERO
-var first_frame = true
-var state_has_changed = false
-export var debug_hits = false
-export var debug_print = false
 
-func _ready():
+
+# --- READY ---
+func _ready() -> void:
 	add_to_group("enemies")
 	start_position = position
 	
-	# TODO Implement on_exited
-	$AreaLeft.connect("body_entered", self, "_on_body_entered", ["left",0])
-	$AreaUp.connect("body_entered", self, "_on_body_entered", ["up",1])
-	$AreaRight.connect("body_entered", self, "_on_body_entered", ["right",2])
-	$AreaDown.connect("body_entered", self, "_on_body_entered", ["down",3])
+	# Connect all 4 sensor areas dynamically
+	var directions = {"Left": LEFT, "Up": UP, "Right": RIGHT, "Down": DOWN}
+	for name in directions.keys():
+		var idx = directions[name]
+		var area = get_node("Area" + name)
+		area.connect("body_entered", self, "_on_body_entered", [name.to_lower(), idx])
+		area.connect("body_exited", self, "_on_body_exited", [name.to_lower(), idx])
 
-	$AreaLeft.connect("body_exited", self, "_on_body_exited", ["left",0])
-	$AreaUp.connect("body_exited", self, "_on_body_exited", ["up",1])
-	$AreaRight.connect("body_exited", self, "_on_body_exited", ["right",2])
-	$AreaDown.connect("body_exited", self, "_on_body_exited", ["down",3])
-	
-	
-# func _on_body_entered(body, direction, index):
-# 	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name:
-# 		free_sensors[index] = false
-# 		if debug_hits:
-# 			get_node("Area" + direction.capitalize() + "/Highlight").visible = true
-# 		_sight_state_changed(true, index)
-# 	else:
-# 		if debug_print:
-# 			print("Ignored body ", body.name, " Entered on ", direction)
 
-func _on_body_entered(body, direction, index):
-	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name or "monster" in body.name:
+# --- SENSOR HANDLING ---
+func _on_body_entered(body, direction: String, index: int) -> void:
+	if _is_wall_like(body):
 		sensor_hits[index] += 1
 		free_sensors[index] = sensor_hits[index] == 0
+		
 		if debug_hits:
 			get_node("Area" + direction.capitalize() + "/Highlight").visible = true
+		
 		_sight_state_changed(true, index)
 
-
-# func _on_body_exited(body, direction, index):
-# 	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name:#RigidBodyDoor
-# 		free_sensors[index] = true
-# 		if debug_hits:
-# 			get_node("Area" + direction.capitalize() + "/Highlight").visible = false
-# 		#print("Exited on", direction, " with ", body.name)
-# 		_sight_state_changed(false, index)
-# 	else:
-# 		if debug_print:
-# 			print("Ignored body ", body.name, " Exited on ", direction)
-
-func _on_body_exited(body, direction, index):
-	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name or "monster" in body.name:
+func _on_body_exited(body, direction: String, index: int) -> void:
+	if _is_wall_like(body):
 		sensor_hits[index] = max(sensor_hits[index] - 1, 0)
 		free_sensors[index] = sensor_hits[index] == 0
+		
 		if debug_hits:
 			get_node("Area" + direction.capitalize() + "/Highlight").visible = false
+		
 		_sight_state_changed(false, index)
 
-
-func _sight_state_changed(entered, d_num):
-	if entered:
-		free_sensors[d_num] = false
-		return
-	elif not entered:
-		free_sensors[d_num] = true
+func _sight_state_changed(entered: bool, dir_index: int) -> void:
+	free_sensors[dir_index] = not entered
+	if not entered:
 		state_has_changed = true
-	if debug_print:
-		print("STATE HAS CHANGED TO ", entered, " ON ", dir_labels[d_num])
 	
+	if debug_print:
+		print("STATE CHANGED:", DIR_LABELS[dir_index], " is free:", free_sensors[dir_index])
 
-func _next_direction_from_sensors(sensors):
-	var available = []
+
+# --- DIRECTION CHOICE ---
+func _next_direction_from_sensors(sensors: Array) -> void:
+	var available := []
 	for i in range(sensors.size()):
 		if sensors[i]:
 			available.append(i)
-	
-	if available.size() == 0:
-		print(self.name, " NO AVAILABLE DIRECTIONS! STUCK!")
+
+	if available.empty():
+		print(name, " STUCK: no free directions")
 		dirs = [false, false, false, false]
 		current_dir = -1
 		return
-	
-	var dir = available[randi() % available.size()]
 
-	
-	# Prevent immediate reversal (optional)
-	if dir == (current_dir + 2) % 4:
-		if available.size() > 1:
-			available.erase(dir)
-			dir = available[randi() % available.size()]
-	
-	#print("FROM DIR:", dir_labels[current_dir], " TO DIR:", dir_labels[dir], " FROM SENSORS:", sensors)
+	var dir: int = -1
+
+	# --- 50/50 chance to continue straight ---
+	if current_dir >= 0 and sensors[current_dir] and available.size() > 1:
+		if randi() % 2 == 0:
+			# Continue straight
+			dir = current_dir
+		else:
+			# Pick another direction randomly (excluding current)
+			var options := available.duplicate()
+			options.erase(current_dir)
+			dir = options[randi() % options.size()]
+	else:
+		# Otherwise pick randomly from available
+		dir = available[randi() % available.size()]
+
+	# --- Avoid immediate reversal if alternatives exist ---
+	var reverse: int = (current_dir + 2) % 4
+	if dir == reverse and available.size() > 1:
+		available.erase(reverse)
+		dir = available[randi() % available.size()]
+
+	# Apply chosen direction
 	current_dir = dir
-	dirs = [dir == 0, dir == 1, dir == 2, dir == 3]
+	dirs = [dir == LEFT, dir == UP, dir == RIGHT, dir == DOWN]
 
-func _next_direction():
-	dir += 1
-	if dir >= 4:
-		dir = 0
-	if dir == 0:
-		dirs = [true,false,false,false]
-		return 
-	if dir == 1:
-		dirs = [false,true,false,false]
-		return 
-	if dir == 2:
-		dirs = [false,false,true,false]
-		return 
-	if dir == 3:
-		dirs = [false,false,false,true]
-		return 
+	if debug_print:
+		print("Direction changed to:", DIR_LABELS[dir], " Free:", sensors)
 
-func _next_random_direction():
-	dir = randi() % 4
-	if dir == 0:
-		dirs = [true,false,false,false]
-		return 
-	if dir == 1:
-		dirs = [false,true,false,false]
-		return 
-	if dir == 2:
-		dirs = [false,false,true,false]
-		return 
-	if dir == 3:
-		dirs = [false,false,false,true]
-		return 
 
-func _physics_process(delta):
-	var force = Vector2(0, 0)
+# --- PHYSICS ---
+func _physics_process(delta: float) -> void:
+	var force := Vector2.ZERO
+	var stop := true
 	
-	var walk_left = dirs[0]
-	var walk_up = dirs[1]
-	var walk_right = dirs[2]
-	var walk_down = dirs[3]
-	
-	var stop = true
-	
-	if walk_left:
-		if velocity.x <= WALK_MIN_SPEED and velocity.x > -WALK_MAX_SPEED:
+	# Apply directional movement forces
+	if dirs[LEFT] and velocity.x > -WALK_MAX_SPEED:
+		if velocity.x <= WALK_MIN_SPEED: 
 			force.x -= WALK_FORCE
 			stop = false
-	if walk_right:
-		if velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED:
+	if dirs[RIGHT] and velocity.x < WALK_MAX_SPEED:
+		if velocity.x >= -WALK_MIN_SPEED: 
 			force.x += WALK_FORCE
 			stop = false
-	if walk_up:
-		if velocity.y <= WALK_MIN_SPEED and velocity.y > -WALK_MAX_SPEED:
+	if dirs[UP] and velocity.y > -WALK_MAX_SPEED:
+		if velocity.y <= WALK_MIN_SPEED: 
 			force.y -= WALK_FORCE
 			stop = false
-	if walk_down:
-		if velocity.y >= -WALK_MIN_SPEED and velocity.y < WALK_MAX_SPEED:
+	if dirs[DOWN] and velocity.y < WALK_MAX_SPEED:
+		if velocity.y >= -WALK_MIN_SPEED: 
 			force.y += WALK_FORCE
 			stop = false
 	
+	# Apply braking when no force applied
 	if stop:
-		var vsign = sign(velocity.x)
-		var yvsign = sign(velocity.y)
-		var vlen = abs(velocity.x)
-		var yvlen = abs(velocity.y)
-		
-		vlen -= STOP_FORCE * delta
-		yvlen -= STOP_FORCE * delta
-		if vlen < 0:
-			vlen = 0
-		if yvlen < 0:
-			yvlen = 0
-		
-		velocity.x = vlen * vsign
-		velocity.y = yvlen * yvsign
+		velocity = _apply_brake(velocity, delta)
 	
+	# Integrate motion
 	velocity += force * delta	
-	velocity = move_and_slide(velocity, Vector2(0, 0), false, 4, PI/4, false)
+	velocity = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
 
-	if (velocity.x == 0 && velocity.y == 0 ) or state_has_changed:
-		#_next_direction()
-		# _next_random_direction()
+	# Check if stuck or sensor state changed
+	if (velocity == Vector2.ZERO) or state_has_changed:
 		_next_direction_from_sensors(free_sensors)
 		state_has_changed = false
-		if debug_print:
-			print(self.name, " Velocity.Zero or State Has Changed.")
 
+	# Push objects with inertia
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
 		if collision.collider.is_in_group("object"):
-			collision.collider.apply_central_impulse(-collision.normal * inertia)
-	#print("")
+			collision.collider.apply_central_impulse(-collision.normal * INERTIA)
+	
+	# Debug: print initial state
 	if first_frame:
-		print("Initial state: ", free_sensors)
+		print("Initial free sensors:", free_sensors)
 		first_frame = false
-		
 
 
-func reset_to_start():
+# --- HELPERS ---
+func _apply_brake(v: Vector2, delta: float) -> Vector2:
+	var x_sign = sign(v.x)
+	var y_sign = sign(v.y)
+	var x_mag = max(abs(v.x) - STOP_FORCE * delta, 0)
+	var y_mag = max(abs(v.y) - STOP_FORCE * delta, 0)
+	return Vector2(x_mag * x_sign, y_mag * y_sign)
+
+func _is_wall_like(body: Node) -> bool:
+	return (
+		body.is_in_group("walls") or
+		"Map" in body.name or
+		"oneway" in body.name or
+		"RigidBodyDoor" in body.name or
+		"monster" in body.name
+	)
+
+
+# --- RESET & PLAYER COLLISION ---
+func reset_to_start() -> void:
 	position = start_position
-	velocity = Vector2.ZERO  # optional: stop any current motion
+	velocity = Vector2.ZERO
 
-
-func _on_Area2D_body_entered(body):
+func _on_Area2D_body_entered(body) -> void:
 	if body.is_in_group("player"):
-		print("Spelaren träffad av fiende!")
+		print("Player hit by enemy!")
 		emit_signal("player_hit")
 		reset_to_start()
-
-	# print("Actor entered", body)
