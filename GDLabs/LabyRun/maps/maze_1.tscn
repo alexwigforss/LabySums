@@ -123,7 +123,7 @@ extents = Vector2( 7.49995, 7.5 )
 [node name="colworld" type="Node2D"]
 script = ExtResource( 6 )
 number_of_segments = 10
-current_segment_id = 1
+current_segment_id = 4
 
 [node name="BgNode2D3" type="Node2D" parent="."]
 visible = false
@@ -173,7 +173,7 @@ z_index = -2
 texture = ExtResource( 19 )
 
 [node name="20250813170735" type="Sprite" parent="BgNode2D4/ParallaxBackground/ParallaxLayer"]
-position = Vector2( -182.501, -187.5 )
+position = Vector2( -181, -176 )
 scale = Vector2( 0.8, 0.8 )
 z_index = -2
 texture = ExtResource( 19 )
@@ -575,9 +575,18 @@ position = Vector2( -40, -40 )
 
 [node name="actor3" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( -168, -392 )
+debug_hits = true
+debug_print = true
 
 [node name="actor4" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( -168, -616 )
+debug_hits = true
+debug_print = true
+
+[node name="actor10" parent="actors" instance=ExtResource( 14 )]
+position = Vector2( -136, -392 )
+debug_hits = true
+debug_print = true
 
 [node name="actor5" parent="actors" instance=ExtResource( 13 )]
 position = Vector2( 120, -648 )
@@ -618,7 +627,7 @@ stream = ExtResource( 10 )
 autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 4 )]
-position = Vector2( 24, 217 )
+position = Vector2( -104, -231 )
 collision_layer = 18
 collision_mask = 3
 

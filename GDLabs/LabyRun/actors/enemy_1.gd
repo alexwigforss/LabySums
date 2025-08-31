@@ -17,13 +17,18 @@ var inertia = 100
 var dir = 0
 var current_dir = -1
 var dir_labels = ['left','up','right','down']
+
 var dirs = [true,false,false,false]
-var free_sensors = [true,true,true,true]
+var sensor_hits := [0, 0, 0, 0]  # how many walls each sensor overlaps
+var free_sensors := [true, true, true, true]  # derived from sensor_hits
+
+
 signal player_hit
 var start_position := Vector2.ZERO
 var first_frame = true
 var state_has_changed = false
 export var debug_hits = false
+export var debug_print = false
 
 func _ready():
 	add_to_group("enemies")
@@ -41,27 +46,43 @@ func _ready():
 	$AreaDown.connect("body_exited", self, "_on_body_exited", ["down",3])
 	
 	
+# func _on_body_entered(body, direction, index):
+# 	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name:
+# 		free_sensors[index] = false
+# 		if debug_hits:
+# 			get_node("Area" + direction.capitalize() + "/Highlight").visible = true
+# 		_sight_state_changed(true, index)
+# 	else:
+# 		if debug_print:
+# 			print("Ignored body ", body.name, " Entered on ", direction)
+
 func _on_body_entered(body, direction, index):
-	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name:
-		free_sensors[index] = false
+	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name or "monster" in body.name:
+		sensor_hits[index] += 1
+		free_sensors[index] = sensor_hits[index] == 0
 		if debug_hits:
 			get_node("Area" + direction.capitalize() + "/Highlight").visible = true
 		_sight_state_changed(true, index)
-	else:
-		if debug_hits:
-			print("Ignored body ", body.name, " Entered on ", direction)
 
+
+# func _on_body_exited(body, direction, index):
+# 	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name:#RigidBodyDoor
+# 		free_sensors[index] = true
+# 		if debug_hits:
+# 			get_node("Area" + direction.capitalize() + "/Highlight").visible = false
+# 		#print("Exited on", direction, " with ", body.name)
+# 		_sight_state_changed(false, index)
+# 	else:
+# 		if debug_print:
+# 			print("Ignored body ", body.name, " Exited on ", direction)
 
 func _on_body_exited(body, direction, index):
-	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name:#RigidBodyDoor
-		free_sensors[index] = true
+	if body.is_in_group("walls") or "Map" in body.name or "oneway" in body.name or "RigidBodyDoor" in body.name or "monster" in body.name:
+		sensor_hits[index] = max(sensor_hits[index] - 1, 0)
+		free_sensors[index] = sensor_hits[index] == 0
 		if debug_hits:
 			get_node("Area" + direction.capitalize() + "/Highlight").visible = false
-		#print("Exited on", direction, " with ", body.name)
 		_sight_state_changed(false, index)
-	else:
-		if debug_hits:
-			print("Ignored body ", body.name, " Exited on ", direction)
 
 
 func _sight_state_changed(entered, d_num):
@@ -71,7 +92,7 @@ func _sight_state_changed(entered, d_num):
 	elif not entered:
 		free_sensors[d_num] = true
 		state_has_changed = true
-	if debug_hits:
+	if debug_print:
 		print("STATE HAS CHANGED TO ", entered, " ON ", dir_labels[d_num])
 	
 
@@ -82,7 +103,7 @@ func _next_direction_from_sensors(sensors):
 			available.append(i)
 	
 	if available.size() == 0:
-		print("NO AVAILABLE DIRECTIONS! STUCK!")
+		print(self.name, " NO AVAILABLE DIRECTIONS! STUCK!")
 		dirs = [false, false, false, false]
 		current_dir = -1
 		return
@@ -183,6 +204,8 @@ func _physics_process(delta):
 		# _next_random_direction()
 		_next_direction_from_sensors(free_sensors)
 		state_has_changed = false
+		if debug_print:
+			print(self.name, " Velocity.Zero or State Has Changed.")
 
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
