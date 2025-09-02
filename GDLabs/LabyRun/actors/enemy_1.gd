@@ -36,6 +36,8 @@ export var error_print := false
 # --- SIGNALS ---
 signal player_hit
 
+var time_since_last_turn: float = 0.0
+const TURN_COOLDOWN: float = 0.5 # Time in seconds to prevent new turns
 
 # --- READY ---
 func _ready() -> void:
@@ -90,24 +92,33 @@ func _sight_state_changed(entered: bool, dir_index: int) -> void:
 # --- DIRECTION CHOICE ---
 func _next_direction_from_sensors(sensors: Array) -> void:
 	var available := []
+	var forward_and_turn := []
+
+	var reverse_dir: int = -1
+	if current_dir != -1:
+		reverse_dir = (current_dir + 2) % 4
+
+	# Separate available directions into "forward/turn" and "reverse"
 	for i in range(sensors.size()):
 		if sensors[i]:
-			available.append(i)
+			if i == reverse_dir:
+				available.append(i) # This is a last resort
+			else:
+				forward_and_turn.append(i)
 
-	if available.empty():
-		print(name, " STUCK: no free directions")
-		dirs = [false, false, false, false]
-		current_dir = -1
-		return
+	# Prioritize non-reverse directions
+	var options: Array = forward_and_turn
+	if options.empty():
+		# If no forward/turn options exist, consider the reverse direction
+		options = available
+		if options.empty():
+			print(name, " STUCK: no free directions")
+			dirs = [false, false, false, false]
+			current_dir = -1
+			return
 
-	# Choose randomly from all available directions
-	var dir: int = available[randi() % available.size()]
-
-	# Avoid immediate reversal if alternatives exist
-	var reverse: int = (current_dir + 2) % 4
-	if dir == reverse and available.size() > 1:
-		available.erase(reverse)
-		dir = available[randi() % available.size()]
+	# Choose randomly from the prioritized options
+	var dir: int = options[randi() % options.size()]
 
 	# Apply chosen direction
 	current_dir = dir
@@ -116,8 +127,14 @@ func _next_direction_from_sensors(sensors: Array) -> void:
 	if debug_print:
 		print("Direction changed to:", DIR_LABELS[dir], " Free:", sensors)
 
-
 # --- PHYSICS ---
+# --- PHYSICS ---
+#func _physics_process(delta: float) -> void:
+	# ... (existing code for forces and braking)
+	
+	# Push objects with inertia
+	# ... (rest of your physics process)
+
 func _physics_process(delta: float) -> void:
 	var force := Vector2.ZERO
 	var stop := true
@@ -144,14 +161,28 @@ func _physics_process(delta: float) -> void:
 	if stop:
 		velocity = _apply_brake(velocity, delta)
 	
+	# # Integrate motion
+	# velocity += force * delta	
+	# velocity = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
+
+	# # Check if stuck or sensor state changed
+	# if (velocity == Vector2.ZERO) or state_has_changed:
+	# 	_next_direction_from_sensors(free_sensors)
+	# 	state_has_changed = false
+	# Update time since last turn
+	time_since_last_turn += delta
+
 	# Integrate motion
-	velocity += force * delta	
+	velocity += force * delta   
 	velocity = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
 
-	# Check if stuck or sensor state changed
-	if (velocity == Vector2.ZERO) or state_has_changed:
+	# Check if stuck or sensor state changed AND the turn cooldown is over
+	if (velocity == Vector2.ZERO and time_since_last_turn >= TURN_COOLDOWN) or \
+		(state_has_changed and time_since_last_turn >= TURN_COOLDOWN):
 		_next_direction_from_sensors(free_sensors)
 		state_has_changed = false
+		time_since_last_turn = 0.0 # Reset cooldown after a turn
+		
 
 	# Push objects with inertia
 	for i in get_slide_count():
@@ -163,9 +194,11 @@ func _physics_process(delta: float) -> void:
 	if first_frame:
 		print("Initial free sensors:", free_sensors)
 		first_frame = false
-	
+
+
 func is_zero_approx_vec(v: Vector2, tolerance: float = 0.00001) -> bool:
 	return v.length_squared() < tolerance * tolerance
+
 
 # --- HELPERS ---
 func _apply_brake(v: Vector2, delta: float) -> Vector2:
@@ -174,6 +207,7 @@ func _apply_brake(v: Vector2, delta: float) -> Vector2:
 	var x_mag = max(abs(v.x) - STOP_FORCE * delta, 0)
 	var y_mag = max(abs(v.y) - STOP_FORCE * delta, 0)
 	return Vector2(x_mag * x_sign, y_mag * y_sign)
+
 
 func _is_wall_like(body: Node) -> bool:
 	return (
@@ -189,6 +223,7 @@ func _is_wall_like(body: Node) -> bool:
 func reset_to_start() -> void:
 	position = start_position
 	velocity = Vector2.ZERO
+
 
 func _on_Area2D_body_entered(body) -> void:
 	if body.is_in_group("player"):
