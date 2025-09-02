@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/door.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 8, 8 )
+extents = Vector2( 7.2, 7.2 )
 
 [node name="door" type="Area2D" groups=["doors"]]
 modulate = Color( 0.980392, 0.878431, 0.317647, 1 )
@@ -19,6 +19,7 @@ texture = ExtResource( 1 )
 position = Vector2( -1.19209e-07, 1.19209e-07 )
 scale = Vector2( 1.25, 1.25 )
 shape = SubResource( 17 )
+one_way_collision_margin = 0.4
 
 [node name="RigidBodyDoor" type="RigidBody2D" parent="."]
 mode = 1

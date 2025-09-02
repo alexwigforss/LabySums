@@ -73,9 +73,15 @@ func _on_body_exited(body, direction: String, index: int) -> void:
 		_sight_state_changed(false, index)
 
 func _sight_state_changed(entered: bool, dir_index: int) -> void:
-	free_sensors[dir_index] = not entered
-	if not entered:
-		state_has_changed = true
+	if entered:
+		# A wall has entered the sensor, so this direction is no longer free.
+		free_sensors[dir_index] = false
+	else:
+		# A wall has exited, but we should only consider this direction free
+		# if there are no other walls currently in the sensor area.
+		free_sensors[dir_index] = sensor_hits[dir_index] == 0
+
+	state_has_changed = true
 	
 	if debug_print:
 		print("STATE CHANGED:", DIR_LABELS[dir_index], " is free:", free_sensors[dir_index])
@@ -94,23 +100,10 @@ func _next_direction_from_sensors(sensors: Array) -> void:
 		current_dir = -1
 		return
 
-	var dir: int = -1
+	# Choose randomly from all available directions
+	var dir: int = available[randi() % available.size()]
 
-	# --- 50/50 chance to continue straight ---
-	if current_dir >= 0 and sensors[current_dir] and available.size() > 1:
-		if randi() % 2 == 0:
-			# Continue straight
-			dir = current_dir
-		else:
-			# Pick another direction randomly (excluding current)
-			var options := available.duplicate()
-			options.erase(current_dir)
-			dir = options[randi() % options.size()]
-	else:
-		# Otherwise pick randomly from available
-		dir = available[randi() % available.size()]
-
-	# --- Avoid immediate reversal if alternatives exist ---
+	# Avoid immediate reversal if alternatives exist
 	var reverse: int = (current_dir + 2) % 4
 	if dir == reverse and available.size() > 1:
 		available.erase(reverse)
@@ -171,8 +164,6 @@ func _physics_process(delta: float) -> void:
 		print("Initial free sensors:", free_sensors)
 		first_frame = false
 	
-	print(velocity)
-
 func is_zero_approx_vec(v: Vector2, tolerance: float = 0.00001) -> bool:
 	return v.length_squared() < tolerance * tolerance
 
