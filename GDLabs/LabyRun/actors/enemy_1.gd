@@ -31,6 +31,7 @@ var first_frame := true
 # Debug
 export var debug_hits := false
 export var debug_print := false
+export var error_print := false
 
 # --- SIGNALS ---
 signal player_hit
@@ -169,7 +170,11 @@ func _physics_process(delta: float) -> void:
 	if first_frame:
 		print("Initial free sensors:", free_sensors)
 		first_frame = false
+	
+	print(velocity)
 
+func is_zero_approx_vec(v: Vector2, tolerance: float = 0.00001) -> bool:
+	return v.length_squared() < tolerance * tolerance
 
 # --- HELPERS ---
 func _apply_brake(v: Vector2, delta: float) -> Vector2:
@@ -184,7 +189,7 @@ func _is_wall_like(body: Node) -> bool:
 		body.is_in_group("walls") or
 		"Map" in body.name or
 		"oneway" in body.name or
-		"RigidBodyDoor" in body.name or
+		"door" in body.name or
 		"monster" in body.name
 	)
 

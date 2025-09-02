@@ -574,19 +574,13 @@ position = Vector2( 56, -168 )
 position = Vector2( -40, -40 )
 
 [node name="actor3" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -168, -392 )
-debug_hits = true
-debug_print = true
+position = Vector2( -88, -232 )
 
 [node name="actor4" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( -168, -616 )
-debug_hits = true
-debug_print = true
 
 [node name="actor10" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( -248, -392 )
-debug_hits = true
-debug_print = true
 
 [node name="actor5" parent="actors" instance=ExtResource( 13 )]
 position = Vector2( 120, -648 )
@@ -627,7 +621,7 @@ stream = ExtResource( 10 )
 autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 4 )]
-position = Vector2( -104, -231 )
+position = Vector2( -40, -231 )
 collision_layer = 18
 collision_mask = 3
 
