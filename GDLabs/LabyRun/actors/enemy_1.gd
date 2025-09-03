@@ -1,16 +1,14 @@
 extends KinematicBody2D
 
 # --- CONSTANTS ---
-const WALK_FORCE      := 600
+const WALK_FORCE      := 300
 const WALK_MIN_SPEED  := 10
 const WALK_MAX_SPEED  := 25
-# const WALK_MIN_SPEED  := 10
-# const WALK_MAX_SPEED  := 25
-const STOP_FORCE      := 1300
+const STOP_FORCE      := 600
 const INERTIA         := 100
 
 #const TURN_COOLDOWN: float = 1.0 # Time in seconds to prevent new turns
-const TURN_COOLDOWN: float = 0.25 # Time in seconds to prevent new turns
+const TURN_COOLDOWN: float = 0.50 # Time in seconds to prevent new turns
 
 
 # Directions (index mapping)
