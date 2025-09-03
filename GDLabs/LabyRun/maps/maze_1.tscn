@@ -582,7 +582,7 @@ debug_print = true
 position = Vector2( -168, -616 )
 
 [node name="actor10" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -248, -392 )
+position = Vector2( -200, -392 )
 
 [node name="actor5" parent="actors" instance=ExtResource( 13 )]
 position = Vector2( 120, -648 )

@@ -4,8 +4,14 @@ extends KinematicBody2D
 const WALK_FORCE      := 600
 const WALK_MIN_SPEED  := 10
 const WALK_MAX_SPEED  := 25
+# const WALK_MIN_SPEED  := 10
+# const WALK_MAX_SPEED  := 25
 const STOP_FORCE      := 1300
 const INERTIA         := 100
+
+#const TURN_COOLDOWN: float = 1.0 # Time in seconds to prevent new turns
+const TURN_COOLDOWN: float = 0.25 # Time in seconds to prevent new turns
+
 
 # Directions (index mapping)
 const LEFT   := 0
@@ -37,7 +43,6 @@ export var error_print := false
 signal player_hit
 
 var time_since_last_turn: float = 0.0
-const TURN_COOLDOWN: float = 0.5 # Time in seconds to prevent new turns
 
 # --- READY ---
 func _ready() -> void:
@@ -54,25 +59,49 @@ func _ready() -> void:
 
 
 # --- SENSOR HANDLING ---
+# func _on_body_entered(body, direction: String, index: int) -> void:
+# 	if _is_wall_like(body):
+# 		sensor_hits[index] += 1
+# 		free_sensors[index] = sensor_hits[index] == 0
+		
+# 		if debug_hits:
+# 			get_node("Area" + direction.capitalize() + "/Highlight").visible = true
+		
+# 		_sight_state_changed(true, index)
+
+	
+# func _on_body_exited(body, direction: String, index: int) -> void:
+# 	if _is_wall_like(body):
+# 		sensor_hits[index] = max(sensor_hits[index] - 1, 0)
+# 		free_sensors[index] = sensor_hits[index] == 0
+		
+# 		if debug_hits:
+# 			get_node("Area" + direction.capitalize() + "/Highlight").visible = false
+		
+# 		_sight_state_changed(false, index)
+
 func _on_body_entered(body, direction: String, index: int) -> void:
 	if _is_wall_like(body):
 		sensor_hits[index] += 1
-		free_sensors[index] = sensor_hits[index] == 0
-		
+		_sight_state_changed(true, index)
+
 		if debug_hits:
 			get_node("Area" + direction.capitalize() + "/Highlight").visible = true
-		
-		_sight_state_changed(true, index)
+
+
+	if _is_actor_like(body):
+		# Apply a long cooldown after colliding with another actor.
+		time_since_last_turn = -2.0 # A negative number makes the cooldown longer.
+		# This prevents immediate reversal after a touch.
 
 func _on_body_exited(body, direction: String, index: int) -> void:
 	if _is_wall_like(body):
 		sensor_hits[index] = max(sensor_hits[index] - 1, 0)
-		free_sensors[index] = sensor_hits[index] == 0
-		
+		_sight_state_changed(false, index)
+
 		if debug_hits:
 			get_node("Area" + direction.capitalize() + "/Highlight").visible = false
-		
-		_sight_state_changed(false, index)
+
 
 func _sight_state_changed(entered: bool, dir_index: int) -> void:
 	if entered:
@@ -128,13 +157,6 @@ func _next_direction_from_sensors(sensors: Array) -> void:
 		print("Direction changed to:", DIR_LABELS[dir], " Free:", sensors)
 
 # --- PHYSICS ---
-# --- PHYSICS ---
-#func _physics_process(delta: float) -> void:
-	# ... (existing code for forces and braking)
-	
-	# Push objects with inertia
-	# ... (rest of your physics process)
-
 func _physics_process(delta: float) -> void:
 	var force := Vector2.ZERO
 	var stop := true
@@ -161,28 +183,42 @@ func _physics_process(delta: float) -> void:
 	if stop:
 		velocity = _apply_brake(velocity, delta)
 	
-	# # Integrate motion
-	# velocity += force * delta	
-	# velocity = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
-
-	# # Check if stuck or sensor state changed
-	# if (velocity == Vector2.ZERO) or state_has_changed:
-	# 	_next_direction_from_sensors(free_sensors)
-	# 	state_has_changed = false
-	# Update time since last turn
 	time_since_last_turn += delta
 
 	# Integrate motion
 	velocity += force * delta   
 	velocity = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
-
-	# Check if stuck or sensor state changed AND the turn cooldown is over
-	if (velocity == Vector2.ZERO and time_since_last_turn >= TURN_COOLDOWN) or \
+	
+	# Check if a new direction is needed, considering the long actor cooldown.
+	if (velocity == Vector2.ZERO) or \
 		(state_has_changed and time_since_last_turn >= TURN_COOLDOWN):
 		_next_direction_from_sensors(free_sensors)
 		state_has_changed = false
 		time_since_last_turn = 0.0 # Reset cooldown after a turn
-		
+
+
+	# Integrate motion
+	velocity += force * delta
+	# var prev_velocity = velocity
+	velocity = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
+	
+	# Check for Actor-to-Actor collision
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision.collider.is_in_group("enemies"):
+			# Break the oscillation with a small random impulse
+			var push_direction = collision.normal.rotated(rand_range(-PI/8, PI/8))
+			velocity = push_direction * (WALK_MAX_SPEED * 1.5)
+			state_has_changed = true # Force a new direction choice after the push
+			time_since_last_turn = 0.0
+			return # Exit the function to prevent further movement logic this frame
+	
+	# Check if stuck or sensor state changed AND the turn cooldown is over
+	if (is_zero_approx_vec(velocity) and time_since_last_turn >= TURN_COOLDOWN) or \
+	   (state_has_changed and time_since_last_turn >= TURN_COOLDOWN):
+		_next_direction_from_sensors(free_sensors)
+		state_has_changed = false
+		time_since_last_turn = 0.0 # Reset cooldown after a turn
 
 	# Push objects with inertia
 	for i in get_slide_count():
@@ -194,7 +230,6 @@ func _physics_process(delta: float) -> void:
 	if first_frame:
 		print("Initial free sensors:", free_sensors)
 		first_frame = false
-
 
 func is_zero_approx_vec(v: Vector2, tolerance: float = 0.00001) -> bool:
 	return v.length_squared() < tolerance * tolerance
@@ -214,10 +249,11 @@ func _is_wall_like(body: Node) -> bool:
 		body.is_in_group("walls") or
 		"Map" in body.name or
 		"oneway" in body.name or
-		"door" in body.name or
-		"monster" in body.name
+		"door" in body.name
 	)
 
+func _is_actor_like(body: Node) -> bool:
+	return body.is_in_group("enemies") and self.name != body.name
 
 # --- RESET & PLAYER COLLISION ---
 func reset_to_start() -> void:
