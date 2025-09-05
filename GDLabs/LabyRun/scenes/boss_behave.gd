@@ -82,6 +82,10 @@ func decrese_hp(value):
 	label.text = str(solution)
 	if solution == 0:
 		var global = get_node("/root/Global")
+		# var music = get_node("/root/AudioStreamPlayer")
+		# Attempt to call function 'stop' in base 'null instance' on a null instance.
+		# music.stop()
+
 		global.next_maze_index += 1
 		var path = "res://maps/maze_" + str(global.next_maze_index) + ".tscn"
 		var err = get_tree().change_scene(path)

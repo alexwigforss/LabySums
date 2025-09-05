@@ -3,7 +3,7 @@ extends Node2D
 var _current_level
 export var number_of_segments = 9
 # may not be export later but right now so i dont have to play through whole level to test level change.
-export var current_segment_id = 9
+export var current_segment_id = 1
 onready var emitting_actor = get_node("/root/colworld/player")
 onready var boss_node = get_node("/root/colworld/BossGlobalTransform/boss")
 
@@ -31,11 +31,16 @@ func reset_segment():
 		_current_level.position.x + 8 + (_current_level.start_pos.x * 16),
 		_current_level.position.y + 8 + (_current_level.start_pos.y * 16)
 		)
-	
+	# TODO Reset all enemies positions
+
+func reset_enemys():
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.reset_to_start()
 
 func _on_ResetSegment_pressed():
 	print("Reset Segment Button Pressed!")
 	reset_segment()
+	reset_enemys()
 
 # Get BossMap here if out of maps
 func update_current_segment():

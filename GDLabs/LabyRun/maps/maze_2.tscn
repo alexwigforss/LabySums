@@ -632,6 +632,7 @@ valign = 1
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
+autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 11 )]
 position = Vector2( 120.977, 215.955 )
