@@ -7,8 +7,7 @@ const WALK_MAX_SPEED  := 25
 const STOP_FORCE      := 600
 const INERTIA         := 100
 
-#const TURN_COOLDOWN: float = 1.0 # Time in seconds to prevent new turns
-const TURN_COOLDOWN: float = 0.50 # Time in seconds to prevent new turns
+const TURN_COOLDOWN: float = 0.75 # Time in seconds to prevent new turns
 
 
 # Directions (index mapping)
@@ -58,7 +57,10 @@ func _ready() -> void:
 
 func _on_body_entered(body, direction: String, index: int) -> void:
 	if _is_actor_like(body):
-		print("A C T O R")
+		# Reverse immediately when another enemy enters the sensor
+		_reverse_direction()
+		if debug_print:
+			print(name, "reversed direction due to", body.name)
 
 	elif _is_wall_like(body):
 		sensor_hits[index] += 1
@@ -93,8 +95,29 @@ func _sight_state_changed(entered: bool, dir_index: int) -> void:
 		print("STATE CHANGED:", DIR_LABELS[dir_index], " is free:", free_sensors[dir_index])
 
 
-func _reverse_direction():
-	pass
+func _reverse_direction() -> void:
+	if current_dir == -1:
+		return # no movement to reverse
+	
+	var reverse_dir = (current_dir + 2) % 4
+	current_dir = reverse_dir
+	dirs = [reverse_dir == LEFT, reverse_dir == UP, reverse_dir == RIGHT, reverse_dir == DOWN]
+	state_has_changed = true
+	time_since_last_turn = 0.0
+	# Optional: give a small nudge so the move_and_slide resolves collision
+	velocity = _dir_to_vector(reverse_dir) * WALK_MIN_SPEED
+
+func _dir_to_vector(d: int) -> Vector2:
+	if d == LEFT:
+		return Vector2(-1, 0)
+	if d == RIGHT:
+		return Vector2(1, 0)
+	if d == UP:
+		return Vector2(0, -1)
+	if d == DOWN:
+		return Vector2(0, 1)
+	return Vector2.ZERO
+
 
 # --- DIRECTION CHOICE ---
 func _next_direction_from_sensors(sensors: Array) -> void:
@@ -167,6 +190,10 @@ func _physics_process(delta: float) -> void:
 	velocity += force * delta
 	# var prev_velocity = velocity
 	velocity = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
+
+	# After move_and_slide, loop over all collisions.
+	# If the collider is in "enemies", apply a bounce impulse away from the collision normal.
+	# Randomize slightly so they don’t mirror each other perfectly (avoids oscillation).
 	
 	# Check if stuck or sensor state changed AND the turn cooldown is over
 	if (is_zero_approx_vec(velocity) and time_since_last_turn >= TURN_COOLDOWN) or \
@@ -174,12 +201,8 @@ func _physics_process(delta: float) -> void:
 		_next_direction_from_sensors(free_sensors)
 		state_has_changed = false
 		time_since_last_turn = 0.0 # Reset cooldown after a turn
+		print("STANDING STILL")
 
-	# Push objects with inertia
-	for i in get_slide_count():
-		var collision = get_slide_collision(i)
-		if collision.collider.is_in_group("object"):
-			collision.collider.apply_central_impulse(-collision.normal * INERTIA)
 	
 	# Debug: print initial state
 	if first_frame:
