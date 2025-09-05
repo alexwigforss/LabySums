@@ -173,7 +173,7 @@ z_index = -2
 texture = ExtResource( 19 )
 
 [node name="20250813170735" type="Sprite" parent="BgNode2D4/ParallaxBackground/ParallaxLayer"]
-position = Vector2( -181, -176 )
+position = Vector2( -178, -184 )
 scale = Vector2( 0.8, 0.8 )
 z_index = -2
 texture = ExtResource( 19 )
@@ -258,7 +258,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 [node name="pickNums" type="Node2D" parent="Map3"]
 
 [node name="door" parent="Map3" instance=ExtResource( 16 )]
-position = Vector2( 120, 24 )
+position = Vector2( 120, 8 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map3"]
 position = Vector2( 238, 24 )
@@ -303,7 +303,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 position = Vector2( 120, 8 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map4"]
-position = Vector2( 120, 238 )
+position = Vector2( 120, 227 )
 z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map4/oneway"]
@@ -311,7 +311,7 @@ scale = Vector2( 1, 0.3 )
 texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map4/oneway"]
-position = Vector2( 0.0629883, 5.20001 )
+position = Vector2( 0.0629883, -0.799988 )
 shape = SubResource( 19 )
 one_way_collision = true
 
@@ -577,21 +577,21 @@ position = Vector2( 56, -168 )
 position = Vector2( -40, -40 )
 
 [node name="actor3" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -72, -232 )
+position = Vector2( -72, -360 )
 debug_hits = true
 debug_print = true
 
 [node name="actor11" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -200, -232 )
+position = Vector2( -200, -424 )
 
 [node name="actor12" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -200, -264 )
+position = Vector2( -104, -232 )
 
 [node name="actor13" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -104, -264 )
+position = Vector2( -136, -232 )
 
 [node name="actor10" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -136, -232 )
+position = Vector2( -136, -424 )
 
 [node name="actor4" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( -168, -616 )
