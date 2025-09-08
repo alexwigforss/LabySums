@@ -193,8 +193,9 @@ func random_picks():
 				instance_pick(x, y, ops[op_index])
 				op_index += 1
 				num = true
+
 		depth += 1
-		
+
 
 func instance_pick(px,py,op):
 	px*=16

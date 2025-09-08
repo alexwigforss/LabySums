@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://mazegen.gd" type="Script" id=1]
 [ext_resource path="res://getGoalNr.gd" type="Script" id=2]
@@ -13,6 +13,10 @@
 [ext_resource path="res://player.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=13]
+[ext_resource path="res://actors/enemy.tscn" type="PackedScene" id=14]
+[ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scenes/PushBox.tscn" type="PackedScene" id=16]
+[ext_resource path="res://actors/enemy_2.tscn" type="PackedScene" id=17]
 
 [sub_resource type="StreamTexture" id=22]
 flags = 4
@@ -124,7 +128,7 @@ extents = Vector2( 7.49995, 7.5 )
 [node name="colworld" type="Node2D"]
 script = ExtResource( 5 )
 number_of_segments = 11
-current_segment_id = 1
+current_segment_id = 5
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -225,9 +229,10 @@ collision_friction = 0.0
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, -1073741824, 0, 393224, -1073741824, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, -1073741824, 0, 524296, -1073741824, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
 script = ExtResource( 1 )
-quick_fix = true
-start = Vector2( 7, 13 )
+debug_print_init = true
+debug_draw_routes = true
 goal = Vector2( 1, 1 )
+number_of_operators = 2
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map1"]
@@ -237,6 +242,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map1" instance=ExtResource( 12 )]
 position = Vector2( 25, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map1"]
 position = Vector2( 24, 3 )
@@ -265,6 +271,7 @@ script = ExtResource( 1 )
 quick_fix = true
 start = Vector2( 6, 13 )
 goal = Vector2( 3, 1 )
+number_of_operators = 2
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map2"]
@@ -274,9 +281,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map2" instance=ExtResource( 12 )]
 position = Vector2( 56, 9 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map2"]
-position = Vector2( 56, 14 )
+position = Vector2( 56, 3 )
 
 [node name="sprite" type="Sprite" parent="Map2/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -297,11 +305,11 @@ cell_size = Vector2( 16, 16 )
 show_collision = true
 collision_friction = 0.0
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262149, 0, 0, 262153, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327684, 0, 0, 327685, 0, 0, 327689, 0, 0, 327690, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589828, 0, 0, 589829, 0, 0, 589833, 0, 0, 589834, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655365, 0, 0, 655369, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786437, 0, 0, 786439, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 1, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 1, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
 script = ExtResource( 1 )
-debug_draw_routes = true
 start = Vector2( 8, 13 )
 goal = Vector2( 10, 1 )
+number_of_operators = 2
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map3"]
@@ -311,9 +319,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map3" instance=ExtResource( 12 )]
 position = Vector2( 168, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map3"]
-position = Vector2( 168, 14 )
+position = Vector2( 168, 3 )
 
 [node name="sprite" type="Sprite" parent="Map3/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -338,6 +347,7 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 script = ExtResource( 1 )
 start = Vector2( 4, 13 )
 goal = Vector2( 10, 1 )
+number_of_operators = 2
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map4"]
@@ -347,9 +357,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map4" instance=ExtResource( 12 )]
 position = Vector2( 168, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map4"]
-position = Vector2( 168, 14 )
+position = Vector2( 168, 3 )
 
 [node name="sprite" type="Sprite" parent="Map4/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -361,6 +372,12 @@ shape = SubResource( 19 )
 one_way_collision = true
 
 [node name="overLay" type="Node2D" parent="Map4"]
+
+[node name="stone" parent="Map4" instance=ExtResource( 16 )]
+position = Vector2( 56, 56 )
+
+[node name="stone2" parent="Map4" instance=ExtResource( 16 )]
+position = Vector2( 184, 184 )
 
 [node name="Map5" type="TileMap" parent="." groups=["wall"]]
 light_mask = 0
@@ -374,6 +391,7 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 script = ExtResource( 1 )
 start = Vector2( 5, 13 )
 goal = Vector2( 9, 1 )
+number_of_operators = 2
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map5"]
@@ -383,9 +401,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map5" instance=ExtResource( 12 )]
 position = Vector2( 152, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map5"]
-position = Vector2( 152, 14 )
+position = Vector2( 152, 3 )
 
 [node name="sprite" type="Sprite" parent="Map5/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -410,6 +429,7 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 
 script = ExtResource( 1 )
 start = Vector2( 9, 13 )
 goal = Vector2( 3, 1 )
+number_of_operators = 3
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map6"]
@@ -419,9 +439,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map6" instance=ExtResource( 12 )]
 position = Vector2( 56, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map6"]
-position = Vector2( 57, 15 )
+position = Vector2( 56, 3 )
 
 [node name="sprite" type="Sprite" parent="Map6/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -442,10 +463,12 @@ cell_size = Vector2( 16, 16 )
 show_collision = true
 collision_friction = 0.0
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, -1073741824, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, -1073741824, 0, 262148, -1073741824, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, -1073741824, 0, 393220, -1073741824, 0, 393222, -1073741824, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, -1073741824, 0, 524292, -1073741824, 0, 524294, -1073741824, 0, 524296, -1073741824, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, -1073741824, 0, 655364, -1073741824, 0, 655366, -1073741824, 0, 655368, -1073741824, 0, 655370, -1073741824, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, -1073741824, 0, 786436, -1073741824, 0, 786438, -1073741824, 0, 786440, -1073741824, 0, 786442, -1073741824, 0, 786444, -1073741824, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 1, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, -1073741824, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, -1073741824, 0, 262148, -1073741824, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, -1073741824, 0, 393220, -1073741824, 0, 393222, -1073741824, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, -1073741824, 0, 524292, -1073741824, 0, 524294, -1073741824, 0, 524296, -1073741824, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 589840, 0, 0, 589841, 0, 0, 589842, 0, 0, 589843, 0, 0, 589844, 0, 0, 589845, 0, 0, 655360, 0, 0, 655362, -1073741824, 0, 655364, -1073741824, 0, 655366, -1073741824, 0, 655368, -1073741824, 0, 655370, -1073741824, 0, 655374, 0, 0, 655376, 0, 0, 655381, 0, 0, 720896, 0, 0, 720910, 0, 0, 720912, 0, 0, 720917, 0, 0, 786432, 0, 0, 786434, -1073741824, 0, 786436, -1073741824, 0, 786438, -1073741824, 0, 786440, -1073741824, 0, 786442, -1073741824, 0, 786444, -1073741824, 0, 786446, 0, 0, 786448, 0, 0, 786453, 0, 0, 851968, 0, 0, 851982, 0, 0, 851984, 0, 0, 851985, 0, 0, 851986, 0, 0, 851987, 0, 0, 851988, 0, 0, 851989, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 1, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
 script = ExtResource( 1 )
+random_maze = false
 start = Vector2( 3, 13 )
 goal = Vector2( 10, 1 )
+number_of_operators = 3
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map7"]
@@ -455,9 +478,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map7" instance=ExtResource( 12 )]
 position = Vector2( 168, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map7"]
-position = Vector2( 168, 14 )
+position = Vector2( 168, 3 )
 
 [node name="sprite" type="Sprite" parent="Map7/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -482,6 +506,7 @@ tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 
 script = ExtResource( 1 )
 start = Vector2( 10, 13 )
 goal = Vector2( 7, 1 )
+number_of_operators = 3
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map8"]
@@ -491,9 +516,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map8" instance=ExtResource( 12 )]
 position = Vector2( 120, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map8"]
-position = Vector2( 121, 14 )
+position = Vector2( 120, 3 )
 
 [node name="sprite" type="Sprite" parent="Map8/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -519,6 +545,7 @@ script = ExtResource( 1 )
 start_dir = 1
 start = Vector2( 7, 13 )
 goal = Vector2( 7, 1 )
+number_of_operators = 3
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map9"]
@@ -528,9 +555,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map9" instance=ExtResource( 12 )]
 position = Vector2( 120, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map9"]
-position = Vector2( 120, 14 )
+position = Vector2( 120, 3 )
 
 [node name="sprite" type="Sprite" parent="Map9/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -555,6 +583,7 @@ tile_data = PoolIntArray( -1376251, 0, 0, -1376249, 0, 0, -1310715, 0, 0, -13107
 script = ExtResource( 1 )
 start = Vector2( 7, 13 )
 goal = Vector2( 7, 1 )
+number_of_operators = 3
 result_max = 10
 
 [node name="pickOps" type="Node2D" parent="Map10"]
@@ -564,9 +593,10 @@ modulate = Color( 1, 1, 1, 0.313726 )
 
 [node name="door" parent="Map10" instance=ExtResource( 12 )]
 position = Vector2( 120, 8 )
+z_index = 1
 
 [node name="oneway" type="KinematicBody2D" parent="Map10"]
-position = Vector2( 120, 14 )
+position = Vector2( 120, 2 )
 
 [node name="sprite" type="Sprite" parent="Map10/oneway"]
 scale = Vector2( 1, 0.3 )
@@ -612,6 +642,43 @@ one_way_collision = true
 
 [node name="actors" type="Node2D" parent="."]
 
+[node name="actor" parent="actors" instance=ExtResource( 14 )]
+position = Vector2( 216, 24 )
+
+[node name="actor2" parent="actors" instance=ExtResource( 14 )]
+position = Vector2( 136, -8 )
+
+[node name="monster_3" parent="actors" instance=ExtResource( 15 )]
+position = Vector2( -56, -200 )
+
+[node name="monster_1" parent="actors" instance=ExtResource( 15 )]
+position = Vector2( -104, -392 )
+
+[node name="monster_2" parent="actors" instance=ExtResource( 15 )]
+position = Vector2( 32, -392 )
+
+[node name="monster_4" parent="actors" instance=ExtResource( 15 )]
+position = Vector2( 56, -552 )
+
+[node name="actor3" parent="actors" instance=ExtResource( 14 )]
+position = Vector2( 72, -840 )
+
+[node name="monster_5" parent="actors" instance=ExtResource( 15 )]
+position = Vector2( 200, -840 )
+
+[node name="monster_6" parent="actors" instance=ExtResource( 15 )]
+position = Vector2( 200, -1064 )
+
+[node name="monster_7" parent="actors" instance=ExtResource( 15 )]
+position = Vector2( 72, -1064 )
+
+[node name="monster_8" parent="actors" instance=ExtResource( 15 )]
+position = Vector2( 72, -1288 )
+
+[node name="actor4" parent="actors" instance=ExtResource( 17 )]
+position = Vector2( 312, -1160 )
+speed = 100.0
+
 [node name="doors" type="Node2D" parent="."]
 
 [node name="youwin" type="Label" parent="."]
@@ -635,7 +702,7 @@ stream = ExtResource( 9 )
 autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 11 )]
-position = Vector2( 120.977, 215.955 )
+position = Vector2( 168.977, -1128.04 )
 collision_layer = 18
 collision_mask = 3
 
@@ -727,6 +794,7 @@ script = ExtResource( 3 )
 position = Vector2( 122, -2472 )
 
 [node name="boss" parent="BossGlobalTransform" instance=ExtResource( 13 )]
+solution = 50
 
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]

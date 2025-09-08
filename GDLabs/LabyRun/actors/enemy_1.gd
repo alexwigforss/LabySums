@@ -201,11 +201,11 @@ func _physics_process(delta: float) -> void:
 		_next_direction_from_sensors(free_sensors)
 		state_has_changed = false
 		time_since_last_turn = 0.0 # Reset cooldown after a turn
-		print("STANDING STILL")
+		# print("STANDING STILL")
 
 	
 	# Debug: print initial state
-	if first_frame:
+	if first_frame and debug_print:
 		print("Initial free sensors:", free_sensors)
 		first_frame = false
 
@@ -223,11 +223,13 @@ func _apply_brake(v: Vector2, delta: float) -> Vector2:
 
 
 func _is_wall_like(body: Node) -> bool:
+	if error_print:
+		print(body.name)
 	return (
 		body.is_in_group("walls") or
 		"Map" in body.name or
 		"oneway" in body.name or
-		"door" in body.name
+		"RigidBodyDoor" in body.name
 	)
 
 func _is_door(body: Node) -> bool:
