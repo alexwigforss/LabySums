@@ -248,6 +248,6 @@ func reset_to_start() -> void:
 
 func _on_Area2D_body_entered(body) -> void:
 	if body.is_in_group("player"):
-		print("Player hit by enemy!")
+		print("Player hit by enemy_1 !")
 		emit_signal("player_hit")
 		reset_to_start()
