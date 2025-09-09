@@ -84,7 +84,7 @@ func assemble_binary_map(array):
 			# is for blocking the route-finder from leaving its segment
 			# if used for player navigation we might want to exclude it
 			# to avoid blocking on entering new segment
-			if get_cell(x, y) in [0,1]:
+			if get_cell(x, y) in [0,1,2]:
 				grid[y][x] = true
 			y += 1
 		x += 1
@@ -230,7 +230,7 @@ func pop_sublists_with_length_one(lists):
 
 
 func look(pos, gofrom, d):
-	if not get_cell(gofrom.x + directions[pos].x, gofrom.y  + directions[pos].y) in [0, 1]:
+	if not get_cell(gofrom.x + directions[pos].x, gofrom.y  + directions[pos].y) in [0, 1, 2]:
 		if not gofrom + directions[pos] in routes[0]:
 			routes += [[gofrom + directions[pos]]]
 			start_directions.append(directions[pos])
@@ -263,12 +263,12 @@ func assemble_route(dir,rout_index):
 			if not get_cell(goto.x, goto.y) in [0,1]:
 				var lookback = (dir - 2) % 4
 				look(lookback, gofrom,(dir - 2) % 4)
-			if get_cell(goto.x, goto.y) in [0, 1]:
+			if get_cell(goto.x, goto.y) in [0, 1, 2]:
 				dir = (dir - 2) % 4
 				current_direction = directions[dir]
 				goto = gofrom + current_direction
 		
-		if not get_cell(goto.x, goto.y) in [0, 1]:
+		if not get_cell(goto.x, goto.y) in [0, 1, 2]:
 			# Kollar vänster
 			var turnleft = (dir - 1) % 4
 			if look(turnleft,gofrom,(dir - 1) % 4):
@@ -329,7 +329,7 @@ func next_direction(_dir):
 func no_possible_steps(_pos):
 	var nps = 0
 	for step in directions:
-		if not get_cell(_pos.x + step.x,_pos.y + step.y) in [0, 1]:
+		if not get_cell(_pos.x + step.x,_pos.y + step.y) in [0, 1, 2]:
 			nps += 1
 	return nps
 
