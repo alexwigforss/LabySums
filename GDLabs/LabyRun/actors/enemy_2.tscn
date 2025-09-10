@@ -9,7 +9,7 @@ extents = Vector2( 7, 7 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 9, 9 )
 
-[node name="actor" type="KinematicBody2D"]
+[node name="monster_2" type="KinematicBody2D"]
 collision/safe_margin = 1.0
 script = ExtResource( 2 )
 

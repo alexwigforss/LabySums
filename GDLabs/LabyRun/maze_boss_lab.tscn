@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://colworld.gd" type="Script" id=1]
 [ext_resource path="res://mazegen.gd" type="Script" id=2]
@@ -15,7 +15,10 @@
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=13]
 [ext_resource path="res://player.tscn" type="PackedScene" id=14]
 [ext_resource path="res://sprites/obstacle_grey.png" type="Texture" id=15]
+[ext_resource path="res://actors/enemy_2.tscn" type="PackedScene" id=16]
 [ext_resource path="res://actors/enemy_1.tscn" type="PackedScene" id=17]
+[ext_resource path="res://actors/enemy.tscn" type="PackedScene" id=18]
+[ext_resource path="res://actors/enemy_3.tscn" type="PackedScene" id=19]
 
 [sub_resource type="StreamTexture" id=22]
 flags = 4
@@ -162,6 +165,7 @@ script = ExtResource( 1 )
 number_of_segments = 2
 
 [node name="BgNode2D" type="Node2D" parent="."]
+visible = false
 position = Vector2( 200, 0 )
 scale = Vector2( 0.5, 0.5 )
 z_index = -1
@@ -197,6 +201,7 @@ scale = Vector2( -1, 1 )
 texture = SubResource( 22 )
 
 [node name="BgNode2D2" type="Node2D" parent="."]
+visible = false
 modulate = Color( 1, 1, 1, 0.498039 )
 position = Vector2( 81, 0 )
 rotation = 1.5708
@@ -246,10 +251,8 @@ tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 collision_friction = 0.0
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 27, 2, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 2, 0, 131076, 2, 0, 131078, 2, 0, 131080, 2, 0, 131082, 2, 0, 131084, 2, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 2, 0, 262148, 2, 0, 262150, 2, 0, 262152, 2, 0, 262154, 2, 0, 262156, 2, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 2, 0, 393220, 2, 0, 393222, 2, 0, 393224, 2, 0, 393226, 2, 0, 393228, 2, 0, 393230, 0, 0, 458752, 0, 0, 524288, 0, 0, 524290, 2, 0, 524292, 2, 0, 524294, 2, 0, 524296, 2, 0, 524298, 2, 0, 524300, 2, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 2, 0, 655364, 2, 0, 655366, 2, 0, 655368, 2, 0, 655370, 2, 0, 655372, 2, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 2, 0, 786436, 2, 0, 786438, 2, 0, 786440, 2, 0, 786442, 2, 0, 786444, 2, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 27, 2, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 2, 0, 131076, 2, 0, 131082, 2, 0, 131084, 2, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 2, 0, 262148, 2, 0, 262154, 2, 0, 262156, 2, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 2, 0, 393220, 2, 0, 393222, 2, 0, 393224, 2, 0, 393226, 2, 0, 393228, 2, 0, 393230, 0, 0, 458752, 0, 0, 524288, 0, 0, 524290, 2, 0, 524292, 2, 0, 524294, 2, 0, 524296, 2, 0, 524298, 2, 0, 524300, 2, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 2, 0, 655364, 2, 0, 655366, 2, 0, 655368, 2, 0, 655370, 2, 0, 655372, 2, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 2, 0, 786436, 2, 0, 786438, 2, 0, 786440, 2, 0, 786442, 2, 0, 786444, 2, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
 script = ExtResource( 2 )
-debug_print_binary = true
-debug_print_numerical = true
 start = Vector2( 7, 13 )
 goal = Vector2( 13, 7 )
 result_max = 10
@@ -276,6 +279,11 @@ shape = SubResource( 19 )
 one_way_collision = true
 
 [node name="overLay" type="Node2D" parent="Map1"]
+
+[node name="Node2D" type="Node2D" parent="Map1"]
+position = Vector2( 8, 8 )
+
+[node name="actor2" parent="Map1/Node2D" instance=ExtResource( 16 )]
 
 [node name="BossMap" type="TileMap" parent="." groups=["wall"]]
 light_mask = 0
@@ -309,8 +317,14 @@ one_way_collision = true
 
 [node name="actors" type="Node2D" parent="."]
 
+[node name="actor" parent="actors" instance=ExtResource( 18 )]
+position = Vector2( -72, 216 )
+
 [node name="actor3" parent="actors" instance=ExtResource( 17 )]
-position = Vector2( -144, 120 )
+position = Vector2( 216, 120 )
+
+[node name="monster_1" parent="actors" instance=ExtResource( 19 )]
+position = Vector2( -112, 56 )
 
 [node name="doors" type="Node2D" parent="."]
 
