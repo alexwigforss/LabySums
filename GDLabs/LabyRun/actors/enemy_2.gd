@@ -2,6 +2,7 @@ extends KinematicBody2D
 var start_position: Vector2
 # Editable speed
 export var speed := 40.0
+export var debug_print = false
 # Current velocity (diagonal at 45°)
 var velocity := Vector2.ZERO
 onready var segment = get_node("../..")
@@ -66,7 +67,8 @@ func _physics_process(delta):
 	# velocity = move_and_slide(velocity)
 	grid_y = round(position.y / 16)
 	grid_x = round(position.x / 16)
-	print("Position_y: ", position.y, " Step_Y:", grid_y, " Is over: ", segment.numerical_map[grid_y][grid_x])
+	if debug_print:
+		print("Position_y: ", position.y, " Step_Y:", grid_y, " Is over: ", segment.numerical_map[grid_y][grid_x])
 
 
 func count_steps_to_next_turn(direction):
@@ -79,6 +81,7 @@ func reset_to_start() -> void:
 
 func _on_Area2D_body_entered(body) -> void:
 	if body.is_in_group("player"):
-		print("Player hit by enemy_1 !")
+		if debug_print:
+			print("Player hit by enemy_1 !")
 		emit_signal("player_hit")
 		reset_to_start()
