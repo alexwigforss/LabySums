@@ -31,8 +31,6 @@ var start_position: Vector2
 var state_has_changed := false
 var first_frame := true
 
-
-export var chose = 1
 # Debug
 export var debug_hits := false
 export var debug_print := false
@@ -123,35 +121,41 @@ func _dir_to_vector(d: int) -> Vector2:
 
 # --- DIRECTION CHOICE ---
 func _next_direction_from_sensors(sensors: Array) -> void:
+	var available := []
+	var forward_and_turn := []
+
 	var reverse_dir: int = -1
 	if current_dir != -1:
 		reverse_dir = (current_dir + 2) % 4
 
-	# If no current direction, pick the first free one
-	if current_dir == -1:
-		for i in range(sensors.size()):
-			if sensors[i]:
-				current_dir = i
-				break
-	else:
-		# Always try turning "right" relative to current direction
-		# (e.g., if going UP, try RIGHT next)
-		for offset in range(1, 5): # check right, straight, left, reverse
-			var candidate = (current_dir + offset) % 4
-			if sensors[candidate]:
-				current_dir = candidate
-				break
+	# Separate available directions into "forward/turn" and "reverse"
+	for i in range(sensors.size()):
+		if sensors[i]:
+			if i == reverse_dir:
+				available.append(i) # This is a last resort
+			else:
+				forward_and_turn.append(i)
+
+	# Prioritize non-reverse directions
+	var options: Array = forward_and_turn
+	if options.empty():
+		# If no forward/turn options exist, consider the reverse direction
+		options = available
+		if options.empty():
+			print(name, " STUCK: no free directions")
+			dirs = [false, false, false, false]
+			current_dir = -1
+			return
+
+	# Choose randomly from the prioritized options
+	var dir: int = options[randi() % options.size()]
 
 	# Apply chosen direction
-	dirs = [
-		current_dir == LEFT,
-		current_dir == UP,
-		current_dir == RIGHT,
-		current_dir == DOWN
-	]
+	current_dir = dir
+	dirs = [dir == LEFT, dir == UP, dir == RIGHT, dir == DOWN]
 
 	if debug_print:
-		print("Direction changed to:", DIR_LABELS[current_dir], " Free:", sensors)
+		print("Direction changed to:", DIR_LABELS[dir], " Free:", sensors)
 
 # --- PHYSICS ---
 func _physics_process(delta: float) -> void:
@@ -198,6 +202,11 @@ func _physics_process(delta: float) -> void:
 		state_has_changed = false
 		time_since_last_turn = 0.0 # Reset cooldown after a turn
 		# print("STANDING STILL")
+
+	# Rotate only the sprite, not the whole body
+	if velocity.length() > 0.1:
+		var angle = velocity.angle()
+		$sprite.rotation += angle
 
 	
 	# Debug: print initial state

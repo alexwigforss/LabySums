@@ -24,6 +24,8 @@ signal player_hit
 
 func _ready():
 	_init()
+	add_to_group("enemies")
+
 	#print(segment.numerical_map)
 
 func _init():

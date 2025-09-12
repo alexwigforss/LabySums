@@ -256,7 +256,6 @@ collision_friction = 0.0
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 27, 2, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 2, 0, 131076, 2, 0, 131082, 2, 0, 131084, 2, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 2, 0, 262148, 2, 0, 262154, 2, 0, 262156, 2, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 2, 0, 393220, 2, 0, 393222, 2, 0, 393224, 2, 0, 393226, 2, 0, 393228, 2, 0, 393230, 0, 0, 458752, 0, 0, 524288, 0, 0, 524290, 2, 0, 524292, 2, 0, 524294, 2, 0, 524296, 2, 0, 524298, 2, 0, 524300, 2, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 2, 0, 655364, 2, 0, 655366, 2, 0, 655368, 2, 0, 655370, 2, 0, 655372, 2, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 2, 0, 786436, 2, 0, 786438, 2, 0, 786440, 2, 0, 786442, 2, 0, 786444, 2, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
 script = ExtResource( 2 )
-random_maze = false
 start = Vector2( 7, 13 )
 goal = Vector2( 13, 7 )
 result_max = 10
@@ -325,16 +324,17 @@ one_way_collision = true
 position = Vector2( 48, 216 )
 
 [node name="actor3" parent="actors" instance=ExtResource( 17 )]
-position = Vector2( 80, 120 )
+position = Vector2( 96, 200 )
 
 [node name="monster_1" parent="actors" instance=ExtResource( 19 )]
-position = Vector2( 56, 56 )
+position = Vector2( 56, 57 )
 
 [node name="Wheel" parent="actors" instance=ExtResource( 20 )]
-position = Vector2( 40, 112 )
+position = Vector2( 48, 152 )
+randomize_turns = false
 
 [node name="monster_2" parent="actors" instance=ExtResource( 22 )]
-position = Vector2( -104, 152 )
+position = Vector2( 128, 200 )
 debug_hits = true
 
 [node name="doors" type="Node2D" parent="."]
@@ -460,7 +460,7 @@ position = Vector2( 122, 120 )
 [node name="boss" parent="BossGlobalTransform" instance=ExtResource( 7 )]
 
 [node name="RigidBody2D" parent="." instance=ExtResource( 21 )]
-position = Vector2( 48, 151 )
+position = Vector2( 24, 184 )
 
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
