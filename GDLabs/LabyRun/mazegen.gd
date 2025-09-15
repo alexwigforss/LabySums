@@ -5,6 +5,7 @@ export var start_dir = 0
 export var debug_print_init = false
 export var debug_print_route = false
 export var debug_draw_routes = false
+export var debug_draw_num = true
 export var verbose = false
 
 export var debug_print_binary = false
@@ -409,6 +410,23 @@ func _draw():
 			var color = colors[route_index % color_count]
 			for e in routes[route_index]:
 				draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, color, 0.5)
+	if debug_draw_num:
+		var color = Color.blueviolet
+		var x = 0
+		var y = 0
+		for e_y in numerical_map:
+			for e_x in e_y:
+				if e_x < 2:
+					draw_arc(Vector2(8 + x * 16, 8 + y * 16), 2.0, 0, 2 * PI, 64, color, 0.5)
+				elif e_x == 2:
+					draw_arc(Vector2(8 + x * 16, 8 + y * 16), 2.0, 0, 2 * PI, 64, color, 0.5)
+				elif e_x == 3:
+					draw_arc(Vector2(8 + x * 16, 8 + y * 16), 6.0, 0, 2 * PI, 64, color, 0.5)
+				elif e_x == 4:
+					draw_arc(Vector2(8 + x * 16, 8 + y * 16), 8.0, 0, 2 * PI, 64, color, 0.5)
+				x += 1
+			y += 1
+			x = 0
 
 
 func next_direction(_dir):
