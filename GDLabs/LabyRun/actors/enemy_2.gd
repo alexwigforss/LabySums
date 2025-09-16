@@ -6,6 +6,7 @@ export var speed = 20.0
 # The startposition quantified to the grid
 export var start_pos_ind = Vector2(1,1)
 export var debug_print = false
+export var move = true
 
 var velocity := Vector2.ZERO
 onready var segment = get_node("../..")
@@ -63,8 +64,36 @@ func change_direction(new_direction: String) -> void:
 	velocity = new_velocity.normalized() * speed
 	pause_count = pause_time
 
-func look_ahead(dir,pos):
-	pass
+func look_around():
+	var dir = 0
+	return dir
+	
+# Look ahead in curent direction will path is straight and not dead end
+func look_ahead(dir,pos):#mby dir hold be a direction vector
+	var i = 0
+	var done = false
+	while not done:
+		if dir == 'down':
+			if look_at_tile(pos.y+i,pos.x) > -1:
+				i += 1
+			else:
+				done = true
+		elif dir == 'right':
+			if look_at_tile(pos.y,pos.x + i) > -1:
+				i += 1
+			else:
+				done = true
+		elif dir =='up':
+			if look_at_tile(pos.y-i,pos.x) > -1:
+				i += 1
+			else:
+				done = true
+		elif dir =='left':
+			if look_at_tile(pos.y,pos.x - i) > -1:
+				i += 1
+			else:
+				done = true
+	return i - 1
 
 func look_at_tile(y,x):
 	return segment.numerical_map[y][x]
@@ -73,8 +102,9 @@ func _physics_process(delta):
 	if pause_count > 0.0:
 		pause_count -= delta
 		return
-	
-	velocity = move_and_slide(velocity)
+	if move:
+		velocity = move_and_slide(velocity)
+
 	match direction:
 		"down":
 			if position.y >= (start_pos_ind.y + steps_index) * 16:
@@ -92,14 +122,18 @@ func _physics_process(delta):
 			if position.x <= (start_pos_ind.x - steps_index) * 16:
 				get_next_direction()
 				change_direction(direction)
+
 	# print("Y : ", round(position.y / 16),"  X: ", round(position.x / 16))	
 	if first_frame:
-		print("At tile 0,0 number is: ", look_at_tile(0,0))
-		print("At tile 1,1 number is: ", look_at_tile(1,1))
-		print("At tile 2,2 number is: ", look_at_tile(2,2))
-		print("At tile 3,3 number is: ", look_at_tile(3,3))
+		# print("At tile 0,0 number is: ", look_at_tile(0,0))
+		# print("At tile 1,1 number is: ", look_at_tile(1,1))
+		# print("At tile 2,2 number is: ", look_at_tile(2,2))
+		# print("At tile 3,3 number is: ", look_at_tile(3,3))
 		print("StartPos = ", start_pos_ind)
-		
+		print(look_ahead("down",start_pos_ind))		
+		print(look_ahead("right",start_pos_ind))		
+		print(look_ahead("up",start_pos_ind))		
+		print(look_ahead("left",start_pos_ind))		
 		first_frame = false
 
 
@@ -126,3 +160,26 @@ func _on_Area2D_body_entered(body) -> void:
 			print("Player hit by enemy_1 !")
 		emit_signal("player_hit")
 		reset_to_start()
+
+# Proposal for "Simplifiing" reach check
+#
+#var direction_data = {
+#	"down":  { "axis": "y", "sign":  1 },
+#	"up":    { "axis": "y", "sign": -1 },
+#	"right": { "axis": "x", "sign":  1 },
+#	"left":  { "axis": "x", "sign": -1 },
+#}
+#
+#func check_direction():
+#	var data = direction_data[direction]
+#	var axis = data.axis
+#	var sign = data.sign
+#
+#	var pos_val = position[axis]
+#	var start_val = start_pos_ind[axis]
+#	var target = (start_val + sign * steps_index) * 16
+#
+#	# Compare based on sign
+#	if (sign == 1 and pos_val >= target) or (sign == -1 and pos_val <= target):
+#		get_next_direction()
+#		change_direction(direction)
