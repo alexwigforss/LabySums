@@ -17,11 +17,11 @@ var pause_time := 1.0
 
 var index = 0
 var position_index
-var directions = ['down','right','up','left']
+export var directions = ['down','right','up','left']
+export var steps = [6,6,6,6]
 
 var direction_labels = ['down','right','up','left']
 var direction_nums = [1, 1, -1, -1]
-var steps = [6,6,6,6]
 var steps_index = steps [index]
 
 var first_frame = true
@@ -36,11 +36,11 @@ func _ready():
 
 # _init() is used implicit in _ready()
 func my_init():
-	start_position = position
 	velocity = Vector2.ZERO
 	position = Vector2(start_pos_ind.y * 16, start_pos_ind.x * 16)
+	start_position = position
 	position_index = Vector2(start_pos_ind.y, start_pos_ind.x)
-	# start_position = position
+	steps_index = steps [index]
 	change_direction(directions[index])
 	velocity = velocity.normalized() * speed
 	direction = directions[index]
@@ -64,10 +64,17 @@ func change_direction(new_direction: String) -> void:
 	velocity = new_velocity.normalized() * speed
 	pause_count = pause_time
 
-func look_around():
-	var dir = 0
-	return dir
-	
+func look_around(pos):
+	var i = 0
+	# ['down','right','up','left']
+	var availible_directions = [false,false,false,false]
+	var v_dirs = [Vector2(1,0),Vector2(0,1),Vector2(-1,0),Vector2(0,-1)]
+	for e in v_dirs:
+		if look_at_tile(pos.y + e.y,pos.x + e.x) > -1:
+			availible_directions[i] = true
+		i += 1
+	return availible_directions
+
 # Look ahead in curent direction will path is straight and not dead end
 func look_ahead(dir,pos):#mby dir hold be a direction vector
 	var i = 0
@@ -123,17 +130,25 @@ func _physics_process(delta):
 				get_next_direction()
 				change_direction(direction)
 
-	# print("Y : ", round(position.y / 16),"  X: ", round(position.x / 16))	
-	if first_frame:
+	# print("Y : ", round(position.y / 16),"  X: ", round(position.x / 16))
+	# Qiuk fix to make shure that numerical map is loaded in scene
+	if first_frame and debug_print:
+
+		## Lazy test of look_at
 		# print("At tile 0,0 number is: ", look_at_tile(0,0))
 		# print("At tile 1,1 number is: ", look_at_tile(1,1))
 		# print("At tile 2,2 number is: ", look_at_tile(2,2))
 		# print("At tile 3,3 number is: ", look_at_tile(3,3))
-		print("StartPos = ", start_pos_ind)
-		print(look_ahead("down",start_pos_ind))		
-		print(look_ahead("right",start_pos_ind))		
-		print(look_ahead("up",start_pos_ind))		
-		print(look_ahead("left",start_pos_ind))		
+
+		## Lazy test look_ahead
+		# print("StartPos = ", start_pos_ind)
+		# print(look_ahead("down",start_pos_ind))		
+		# print(look_ahead("right",start_pos_ind))		
+		# print(look_ahead("up",start_pos_ind))		
+		# print(look_ahead("left",start_pos_ind))
+
+		# Lazy test look_around
+		print("Available Directions", look_around(start_pos_ind))
 		first_frame = false
 
 
