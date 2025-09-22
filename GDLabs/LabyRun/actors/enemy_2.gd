@@ -6,6 +6,7 @@ var start_position: Vector2
 export var speed = 20.0
 # The startposition quantified to the grid
 export var start_pos_ind = Vector2(1,1)
+var pos_ind = start_pos_ind
 export var debug_print = false
 export var move = true
 export var static = true
@@ -32,20 +33,27 @@ var first_frame = true
 # --- SIGNALS ---
 signal player_hit
 
-# BUG Stop moving after a couple mof moves
 
 func _ready():
 	my_init()
 	add_to_group("enemies")
 
+
 func my_init():
 	velocity = Vector2.ZERO
-	position = Vector2(start_pos_ind.y * 16, start_pos_ind.x * 16)
+	pos_ind = start_pos_ind
+	position = Vector2(pos_ind.x * 16, pos_ind.y * 16)  # consistent ordering
+	
+	# snap to exact grid in case of float drift
+	position.x = round(position.x)
+	position.y = round(position.y)
+	
 	start_position = position
+	index = 0
 	if static:
-		steps_index = steps [index]
+		steps_index = steps[index]
 		change_direction(directions[index])
-	velocity = velocity.normalized() * speed
+	
 	pause_count = 0.0
 
 
@@ -59,20 +67,6 @@ func look_around(pos: Vector2):
 		if look_at_tile(new_y, new_x) > -1:
 			availible_directions.append(direction_labels[i])
 	return availible_directions
-
-
-# func look_around(pos):
-# 	var i = 0
-# 	# ['down','right','up','left']
-# 	var availible_directions = []
-# 	var v_dirs = [Vector2(1,0),Vector2(0,1),Vector2(-1,0),Vector2(0,-1)]
-# 	for e in v_dirs:
-# 		# print("Looking at ", pos.y + e.y," ", pos.x + e.x)
-# 		if look_at_tile(pos.y + e.y, pos.x + e.x) > -1:
-# 			availible_directions.append(direction_labels[i])
-# 		i += 1
-# 	print("Looked around returning: ", availible_directions)
-# 	return availible_directions
 
 
 # Look ahead in curent direction until path is straight and not dead end
@@ -102,9 +96,11 @@ func look_ahead(dir,pos):#mby dir shold be a direction vector
 	print("Looked ahead: ", ahead_string, " Returning: ", i - 1)
 	return i - 1
 
+
 func look_at_tile(y,x):
 	# print("Looking at: ",y ," ",x , " = ", segment.numerical_map[y][x])
 	return segment.numerical_map[y][x]
+
 
 func _physics_process(delta):
 
@@ -120,21 +116,6 @@ func _physics_process(delta):
 		print("Reference to Numerical Representation:")
 		print(segment.numerical_map)
 
-		## Lazy test of look_at
-		# print("At tile 0,0 number is: ", look_at_tile(0,0))
-		# print("At tile 1,1 number is: ", look_at_tile(1,1))
-		# print("At tile 2,2 number is: ", look_at_tile(2,2))
-		# print("At tile 3,3 number is: ", look_at_tile(3,3))
-
-		## Lazy test look_ahead
-		# print("StartPos = ", start_pos_ind)
-		# print(look_ahead("down",start_pos_ind))		
-		# print(look_ahead("right",start_pos_ind))		
-		# print(look_ahead("up",start_pos_ind))		
-		# print(look_ahead("left",start_pos_ind))
-
-		# Lazy test look_around
-		# print("Available Directions ", look_around(start_pos_ind))
 
 	if first_frame:
 		if not static:
@@ -148,19 +129,19 @@ func _physics_process(delta):
 	if not first_frame and static and move:
 		match direction:
 			"down":
-				if position.y >= (start_pos_ind.y + steps_index) * 16:
+				if position.y >= (pos_ind.y + steps_index) * 16:
 					get_next_direction()
 					change_direction(direction)
 			"right":
-				if position.x >= (start_pos_ind.x + steps_index) * 16:
+				if position.x >= (pos_ind.x + steps_index) * 16:
 					get_next_direction()
 					change_direction(direction)
 			"up":
-				if position.y <= (start_pos_ind.y - steps_index) * 16:
+				if position.y <= (pos_ind.y - steps_index) * 16:
 					get_next_direction()
 					change_direction(direction)
 			"left":
-				if position.x <= (start_pos_ind.x - steps_index) * 16:
+				if position.x <= (pos_ind.x - steps_index) * 16:
 					get_next_direction()
 					change_direction(direction)
 
@@ -169,22 +150,22 @@ func _physics_process(delta):
 
 		match direction:
 			"down":
-				if position.y >= (start_pos_ind.y + steps_index) * 16 - tolerance:
+				if position.y >= (pos_ind.y + steps_index) * 16 - tolerance:
 					get_random_direction()
 					change_direction(direction)
 			"right":
-				if position.x >= (start_pos_ind.x + steps_index) * 16 - tolerance:
+				if position.x >= (pos_ind.x + steps_index) * 16 - tolerance:
 					get_random_direction()
 					change_direction(direction)
 			"up":
-				if position.y <= (start_pos_ind.y - steps_index) * 16 + tolerance:
+				if position.y <= (pos_ind.y - steps_index) * 16 + tolerance:
 					get_random_direction()
 					change_direction(direction)
 			"left":
-				if position.x <= (start_pos_ind.x - steps_index) * 16 + tolerance:
+				if position.x <= (pos_ind.x - steps_index) * 16 + tolerance:
 					get_random_direction()
 					change_direction(direction)
-		#print("STEP: ", step_count, " FRAME: ", frame_count, " DIRECTION: ", direction, " POS_IND: ", start_pos_ind, " STEPS INDEX: " , steps_index)
+		#print("STEP: ", step_count, " FRAME: ", frame_count, " DIRECTION: ", direction, " POS_IND: ", pos_ind, " STEPS INDEX: " , steps_index)
 		frame_count += 1
 
 
@@ -206,28 +187,23 @@ func change_direction(new_direction: String) -> void:
 	
 	velocity = new_velocity.normalized() * speed
 	pause_count = pause_time
-
-	# print()
-	# print("STEP: ", step_count)
 	step_count += 1
 
 
 func get_random_direction():
 	# DEBUG GOING FROM AND GOING TO
-	print("Startpos WAS: ", start_pos_ind)
-	start_pos_ind.y = round(position.y / 16)
-	start_pos_ind.x = round(position.x / 16)
-	print("Startpos IS: ", start_pos_ind)
-	#var available = look_around(Vector2(start_pos_ind.y,start_pos_ind.x))
-	var available = look_around(start_pos_ind)
-
+	print("Startpos WAS: ", pos_ind)
+	pos_ind.y = round(position.y / 16)
+	pos_ind.x = round(position.x / 16)
+	print("Startpos IS: ", pos_ind)
+	var available = look_around(pos_ind)
 	var no_available = len(available)
 
 	randomize()
 	direction = available[randi() % no_available]
 	print(no_available, " Available directions: ", available, " Chosed: ", direction)
 
-	steps_index = look_ahead(direction, start_pos_ind)
+	steps_index = look_ahead(direction, pos_ind)
 	print("STEP_INDEX: ", steps_index)
 		
 	if debug_print:
@@ -241,14 +217,22 @@ func get_next_direction():
 	direction = directions[index]
 	steps_index = steps[index]
 	
-	start_pos_ind.y = round(position.y / 16)
-	start_pos_ind.x = round(position.x / 16)
+	pos_ind.y = round(position.y / 16)
+	pos_ind.x = round(position.x / 16)
 	
 	if debug_print:
-		print("New Startpos set: ", start_pos_ind, " Got direction ", index, " ", direction)
+		print("New Startpos set: ", pos_ind, " Got direction ", index, " ", direction)
 
 func reset_to_start() -> void:
 	my_init()
+	position.x = round(position.x)
+	position.y = round(position.y)
+	
+	if not static:
+		steps_index = 0
+		get_random_direction()
+		change_direction(direction)
+
 
 func _on_Area2D_body_entered(body) -> void:
 	if body.is_in_group("player"):

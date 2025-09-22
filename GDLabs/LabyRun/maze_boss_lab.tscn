@@ -290,11 +290,12 @@ position = Vector2( 8, 8 )
 [node name="monster_2" parent="Map1/Node2D" instance=ExtResource( 16 )]
 collision_layer = 64
 collision_mask = 128
-speed = 63.0
+speed = 32.0
+start_pos_ind = Vector2( 5, 5 )
 debug_print = true
 static = false
-directions = [ "right", "right", "left", "left" ]
-steps = [ 1, 1, 1, 1 ]
+directions = [ "right", "down", "left", "up" ]
+steps = [ 2, 2, 2, 2 ]
 
 [node name="BossMap" type="TileMap" parent="." groups=["wall"]]
 light_mask = 0
