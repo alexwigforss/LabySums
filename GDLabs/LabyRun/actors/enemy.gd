@@ -37,14 +37,14 @@ func _next_random_direction():
 	dirs = _get_direction(dir)
 
 
-func _get_direction(dir):
-	if dir == 0:
+func _get_direction(d):
+	if d == 0:
 		return [true,false,false,false]
-	if dir == 1:
+	if d == 1:
 		return [false,true,false,false]
-	if dir == 2:
+	if d == 2:
 		return [false,false,true,false] 
-	if dir == 3:
+	if d == 3:
 		return [false,false,false,true]
 
 
