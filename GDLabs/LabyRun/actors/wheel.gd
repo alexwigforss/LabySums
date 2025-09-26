@@ -3,9 +3,10 @@
 extends KinematicBody2D
 
 export (int) var speed = 20
-export (float) var rotation_speed = 2
+export (float) var rotation_speed
 export (bool) var randomize_turns = true
 export var sensing = false
+export var clock_wise = true
 var velocity = Vector2()
 
 # Möjliga riktningar i clockwise ordning
@@ -21,11 +22,32 @@ const LEFT   := 0
 const UP     := 1
 const RIGHT  := 2
 const DOWN   := 3
+
 const DIR_LABELS := ["left", "up", "right", "down"]
+
+
+# Clockwise / counter-clockwise transitions
+const CLOCKWISE_TURNS = {
+	DOWN: RIGHT,
+	RIGHT: UP,
+	UP: LEFT,
+	LEFT: DOWN
+}
+
+const COUNTER_TURNS = {
+	DOWN: LEFT,
+	LEFT: UP,
+	UP: RIGHT,
+	RIGHT: DOWN
+}
 
 var current_dir_index = 0
 
 func _ready():
+	if clock_wise:
+		rotation_speed = 2.0
+	else:
+		rotation_speed = -2.0
 	# Starta med nedåt (index 0)
 	velocity = directions[current_dir_index] * speed
 	
@@ -85,9 +107,6 @@ func _physics_process(delta):
 		if collision.collider.is_in_group("wall") or collision.collider.is_in_group("player")or collision.collider.is_in_group("enemies"):
 			_choose_new_direction()
 
-func get_new_direction():
-	velocity = directions[current_dir_index] * speed
-
 
 func _choose_new_direction():
 	if randomize_turns:
@@ -103,35 +122,18 @@ func _choose_new_direction():
 				current_dir_index = 0  # DOWN
 			else:
 				current_dir_index = 2  # UP
+
 	else:
-		# Gå till nästa riktning i listan (clockwise)
-		current_dir_index = (current_dir_index + 1) % directions.size()
-	# print("New direction = ", current_dir_index, " ", DIR_LABELS[current_dir_index])
+		# Deterministic rotation: clockwise or counter-clockwise
+		if clock_wise: # and previus direction is down
+			current_dir_index = (current_dir_index + 1) % directions.size()
+		elif clock_wise: # and previus direction is up
+			current_dir_index = (current_dir_index + 1) % directions.size()
+		# ... and so on ...
+		else: 
+			current_dir_index = (current_dir_index - 1 + directions.size()) % directions.size()
+
+	print("New direction = ", current_dir_index, " ", DIR_LABELS[current_dir_index])
 
 	# Uppdatera velocity baserat på den nya riktningen
 	velocity = directions[current_dir_index] * speed
-
-
-# extends KinematicBody2D
-
-# export (int) var speed = 20
-# export (float) var rotation_speed = 2
-
-# var velocity = Vector2()
-
-# func _ready():
-# 	velocity = Vector2(speed, 0)
-
-# func _physics_process(delta):
-# 	# Snurra hjulet alltid
-# 	rotation += rotation_speed * delta
-
-# 	# Försök flytta hjulet
-# 	var collision = move_and_collide(velocity * delta)
-
-# 	if collision:
-# 		# Bara vänd om ifall vi träffar en vägg
-# 		if collision.collider.is_in_group("wall") or collision.collider.is_in_group("player"):
-# 			rotation_speed = -rotation_speed
-# 			speed = -speed
-# 			velocity = Vector2(speed, 0)
