@@ -89,11 +89,13 @@ func look_ahead(dir,pos):#mby dir shold be a direction vector
 			i += 1
 			ahead_string += str(l_num)
 			if i > 1 and l_num > 2:
-				print("Found Four-Way: ", ahead_string, " Returning: ", i - 1)			
+				if debug_print:
+					print("Found Four-Way: ", ahead_string, " Returning: ", i - 1)			
 				done = true
 		else:
 			done = true
-	print("Looked ahead: ", ahead_string, " Returning: ", i - 1)
+	if debug_print:
+		print("Looked ahead: ", ahead_string, " Returning: ", i - 1)
 	return i - 1
 
 
@@ -122,7 +124,8 @@ func _physics_process(delta):
 			steps_index = 0
 			get_random_direction()
 			change_direction(direction)
-			print("First frame direction is: ", direction)
+			if debug_print:
+				print("First frame direction is: ", direction)
 
 		first_frame = false
 
@@ -192,19 +195,23 @@ func change_direction(new_direction: String) -> void:
 
 func get_random_direction():
 	# DEBUG GOING FROM AND GOING TO
-	print("Startpos WAS: ", pos_ind)
+	if debug_print:
+		print("Startpos WAS: ", pos_ind)
 	pos_ind.y = round(position.y / 16)
 	pos_ind.x = round(position.x / 16)
-	print("Startpos IS: ", pos_ind)
+	if debug_print:
+		print("Startpos IS: ", pos_ind)
 	var available = look_around(pos_ind)
 	var no_available = len(available)
 
 	randomize()
 	direction = available[randi() % no_available]
-	print(no_available, " Available directions: ", available, " Chosed: ", direction)
+	if debug_print:
+		print(no_available, " Available directions: ", available, " Chosed: ", direction)
 
 	steps_index = look_ahead(direction, pos_ind)
-	print("STEP_INDEX: ", steps_index)
+	if debug_print:
+		print("STEP_INDEX: ", steps_index)
 		
 	if debug_print:
 		print("Got direction ", index, " ", direction)
