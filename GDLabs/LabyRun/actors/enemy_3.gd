@@ -27,10 +27,12 @@ func _ready() -> void:
 	# Connect signals from sensors
 	#$Area2D.connect("body_entered", self, "_on_main_sensor")
 
-	$AreaLeft.connect("body_entered", self, "_on_left_sensor")
+	var err = $AreaLeft.connect("body_entered", self, "_on_left_sensor")
 	$AreaRight.connect("body_entered", self, "_on_right_sensor")
 	$AreaUp.connect("body_entered", self, "_on_up_sensor")
 	$AreaDown.connect("body_entered", self, "_on_down_sensor")
+	if err != OK:
+		print("Connection failed! ", err)
 
 func _physics_process(delta: float) -> void:
 	# Just move straight in current velocity
