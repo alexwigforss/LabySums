@@ -91,7 +91,7 @@ func _physics_process(delta):
 
 	
 	if stop:
-		sprite.stop()
+		#sprite.stop()
 		var vsign = sign(velocity.x)
 		var yvsign = sign(velocity.y)
 		var vlen = abs(velocity.x)
@@ -106,8 +106,14 @@ func _physics_process(delta):
 		
 		velocity.x = vlen * vsign
 		velocity.y = yvlen * yvsign
+	#else:
+	#	sprite.play()
+	if velocity.length() > 0:
+		if not sprite.is_playing():
+			sprite.play()
 	else:
-		sprite.play()
+		sprite.stop()
+
 
 	# Integrate forces to velocity
 	velocity += force * delta	

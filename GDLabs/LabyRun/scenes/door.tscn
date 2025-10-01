@@ -19,7 +19,7 @@ texture = ExtResource( 1 )
 position = Vector2( -1.19209e-07, 1.19209e-07 )
 scale = Vector2( 1.25, 1.25 )
 shape = SubResource( 17 )
-one_way_collision_margin = 0.4
+one_way_collision_margin = 0.5
 
 [node name="RigidBodyDoor" type="RigidBody2D" parent="."]
 mode = 1
@@ -29,10 +29,10 @@ visible = false
 shape = SubResource( 17 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = -9.0
-margin_top = -7.0
-margin_right = 10.0
-margin_bottom = 11.0
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 9.0
 text = "0"
 align = 1
 valign = 1

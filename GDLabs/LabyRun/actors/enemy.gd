@@ -29,33 +29,24 @@ func _next_direction():
 	dir += 1
 	if dir >= 4:
 		dir = 0
-	if dir == 0:
-		dirs = [true,false,false,false]
-		return 
-	if dir == 1:
-		dirs = [false,true,false,false]
-		return 
-	if dir == 2:
-		dirs = [false,false,true,false]
-		return 
-	if dir == 3:
-		dirs = [false,false,false,true]
-		return 
+		dirs = _get_direction(dir)
+
 
 func _next_random_direction():
 	dir = randi() % 4
-	if dir == 0:
-		dirs = [true,false,false,false]
-		return 
-	if dir == 1:
-		dirs = [false,true,false,false]
-		return 
-	if dir == 2:
-		dirs = [false,false,true,false]
-		return 
-	if dir == 3:
-		dirs = [false,false,false,true]
-		return 
+	dirs = _get_direction(dir)
+
+
+func _get_direction(d):
+	if d == 0:
+		return [true,false,false,false]
+	if d == 1:
+		return [false,true,false,false]
+	if d == 2:
+		return [false,false,true,false] 
+	if d == 3:
+		return [false,false,false,true]
+
 
 func _physics_process(delta):
 	var force = Vector2(0, 0)

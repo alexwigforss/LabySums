@@ -71,7 +71,7 @@ func _on_door_match(_nr):
 
 
 func _on_boss_body_entered(body):
-	print("Signal from boss")
+	#print("Signal from boss")
 	if not body.is_in_group("player"):
 		if body.is_in_group("wall"):
 			print("Boss entered wall")

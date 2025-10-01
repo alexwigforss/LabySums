@@ -203,6 +203,11 @@ func _physics_process(delta: float) -> void:
 		time_since_last_turn = 0.0 # Reset cooldown after a turn
 		# print("STANDING STILL")
 
+	# Rotate only the sprite, not the whole body
+	if velocity.length() > 0.1:
+		var angle = velocity.angle()
+		$sprite.rotation += angle
+
 	
 	# Debug: print initial state
 	if first_frame and debug_print:

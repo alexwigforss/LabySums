@@ -5,8 +5,12 @@ export var start_dir = 0
 export var debug_print_init = false
 export var debug_print_route = false
 export var debug_draw_routes = false
+export var debug_draw_num = true
 export var verbose = false
+
 export var debug_print_binary = false
+export var debug_print_numerical = false
+
 export var quick_fix = false
 export var additives_only = false
 export var random_maze = true
@@ -48,6 +52,7 @@ onready var overLay = get_node("overLay")
 
 
 var binary_map = []
+var numerical_map = []
 
 func init_binary_map(w,h):
 	var grid = []
@@ -60,8 +65,21 @@ func init_binary_map(w,h):
 		for x in range(grid_width):
 			row.append(false)
 		grid.append(row)
-
 	return grid
+
+func init_numerical_map(w,h):
+	var grid = []
+	var grid_width = w
+	var grid_height = h
+
+	# Fill the 2D array with false
+	for y in range(grid_height):
+		var row = []
+		for x in range(grid_width):
+			row.append(0)
+		grid.append(row)
+	return grid
+
 
 func print_2d_array(array):
 	print("Binary map for ", self)
@@ -74,6 +92,18 @@ func print_2d_array(array):
 			# line += "%-6s" % str(cell)
 		print(line)
 
+
+func print_2d_array_with_neg(array):
+	print("Formatted map with negatives marked for ", self)
+	for row in array:
+		var line = ""
+		for cell in row:
+			if int(cell) < 0:
+				line += " N"   # print an 'n' in the same 2-space slot
+			else:
+				line += "%2d" % int(cell)
+		print(line)
+
 func assemble_binary_map(array):
 	var x = 0
 	var y = 0
@@ -84,12 +114,65 @@ func assemble_binary_map(array):
 			# is for blocking the route-finder from leaving its segment
 			# if used for player navigation we might want to exclude it
 			# to avoid blocking on entering new segment
-			if get_cell(x, y) in [0,1]:
+			if get_cell(x, y) in [0,1,2]:
 				grid[y][x] = true
 			y += 1
 		x += 1
 		y = 0
 	return grid
+
+
+func count_neighbours(x,y,bin):
+	var c = 0
+	if bin[y-1][x] > -1:
+		c += 1
+	if bin[y+1][x] > -1:
+		c += 1
+	if bin[y][x-1] > -1:
+		c += 1
+	if bin[y][x+1] > -1:
+		c += 1
+		
+	if c == 1:
+		return 0
+	elif c == 2:
+		if (bin[y-1][x] > -1 and bin[y+1][x] > -1 ) or (bin[y][x-1] > -1 and bin[y][x+1] > -1 ):  
+			return 1
+		else:
+			return 2
+	else:
+		return c
+
+
+func assemble_numerical_map(num, bin):
+	# om endast en ledig granne == 0 (dead end)
+	# om två lediga grannar motstående == 1 (korridor)
+	# om två lediga grannar, ej motstående == 2 (corner)
+	# om tre lediga grannar, == 3 (t-cross)
+	# om fyra lediga grannar == 4 (cross)
+
+	# Walls and Zeros
+	var x = 0
+	var y = 0
+	for row in bin:
+		for col in row:
+			if get_cell(x, y) in [0,1,2]:
+				num[y][x] = -1
+			else:
+				num[y][x] = 0
+			y += 1
+		x += 1
+		y = 0
+	var i = 1
+	# counting round zeros
+	# TODO Make shure all walls is -1
+	for e_x in range(0,14):
+		for e_y in range(0,14):
+			if num[e_y][e_x] > -1:
+				num[e_y][e_x] = count_neighbours(e_x, e_y, num)
+	return num
+
+
 
 func get_expression(n,o):
 	var x = []
@@ -151,6 +234,8 @@ func _ready():
 	# TODO Fixa buggen att routes ibland inte räcker till för att rita ut all num och ops
 	# Kanske genom att söka från ett annat hörn ifall listan är för liten
 	# NOTE för närvarande verkar det funka så länge man inte har fler än tre operatorer
+	# NOTE Kanske kan den nya numreriska representationen användas till att konstruera en solidare
+	# 		RouteAsembler eller användas direkt till att distribuera pickops
 
 	# DIBOOGIENG
 	if debug_print_route:
@@ -166,8 +251,17 @@ func _ready():
 
 	binary_map = init_binary_map(15,15)
 	binary_map = assemble_binary_map(binary_map)
+	# Dependency, numerical need binary to return proper result
+	numerical_map = init_numerical_map(15,15)
+	numerical_map = assemble_numerical_map(binary_map, numerical_map)
+
+	
 	if debug_print_binary:
 		print_2d_array(binary_map)
+
+	if debug_print_numerical:
+		print_2d_array_with_neg(numerical_map)
+
 
 	random_picks()
 
@@ -193,8 +287,9 @@ func random_picks():
 				instance_pick(x, y, ops[op_index])
 				op_index += 1
 				num = true
+
 		depth += 1
-		
+
 
 func instance_pick(px,py,op):
 	px*=16
@@ -229,7 +324,7 @@ func pop_sublists_with_length_one(lists):
 
 
 func look(pos, gofrom, d):
-	if not get_cell(gofrom.x + directions[pos].x, gofrom.y  + directions[pos].y) in [0, 1]:
+	if not get_cell(gofrom.x + directions[pos].x, gofrom.y  + directions[pos].y) in [0, 1, 2]:
 		if not gofrom + directions[pos] in routes[0]:
 			routes += [[gofrom + directions[pos]]]
 			start_directions.append(directions[pos])
@@ -262,12 +357,12 @@ func assemble_route(dir,rout_index):
 			if not get_cell(goto.x, goto.y) in [0,1]:
 				var lookback = (dir - 2) % 4
 				look(lookback, gofrom,(dir - 2) % 4)
-			if get_cell(goto.x, goto.y) in [0, 1]:
+			if get_cell(goto.x, goto.y) in [0, 1, 2]:
 				dir = (dir - 2) % 4
 				current_direction = directions[dir]
 				goto = gofrom + current_direction
 		
-		if not get_cell(goto.x, goto.y) in [0, 1]:
+		if not get_cell(goto.x, goto.y) in [0, 1, 2]:
 			# Kollar vänster
 			var turnleft = (dir - 1) % 4
 			if look(turnleft,gofrom,(dir - 1) % 4):
@@ -317,6 +412,27 @@ func _draw():
 			for e in routes[route_index]:
 				draw_arc((e * 16) + shift, size, 0, 2 * PI, 64, color, 0.5)
 
+	if debug_draw_num:
+		var color_1 = Color.blueviolet
+		var color_2 = Color.blue
+		var color_3 = Color.magenta
+		var color_4 = Color.royalblue
+		var x = 0
+		var y = 0
+		for e_y in numerical_map:
+			for e_x in e_y:
+				if e_x < 2:
+					draw_arc(Vector2(8 + x * 16, 8 + y * 16), 2.0, 0, 2 * PI, 64, color_1, 0.5)
+				elif e_x == 2:
+					draw_arc(Vector2(8 + x * 16, 8 + y * 16), 4.0, 0, 2 * PI, 64, color_2, 0.5)
+				elif e_x == 3:
+					draw_arc(Vector2(8 + x * 16, 8 + y * 16), 6.0, 0, 2 * PI, 64, color_3, 0.5)
+				elif e_x == 4:
+					draw_arc(Vector2(8 + x * 16, 8 + y * 16), 8.0, 0, 2 * PI, 64, color_4, 0.5)
+				x += 1
+			y += 1
+			x = 0
+
 
 func next_direction(_dir):
 	if _dir < 3:
@@ -328,7 +444,7 @@ func next_direction(_dir):
 func no_possible_steps(_pos):
 	var nps = 0
 	for step in directions:
-		if not get_cell(_pos.x + step.x,_pos.y + step.y) in [0, 1]:
+		if not get_cell(_pos.x + step.x,_pos.y + step.y) in [0, 1, 2]:
 			nps += 1
 	return nps
 

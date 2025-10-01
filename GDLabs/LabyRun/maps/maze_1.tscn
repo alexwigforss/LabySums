@@ -123,7 +123,6 @@ extents = Vector2( 7.49995, 7.5 )
 [node name="colworld" type="Node2D"]
 script = ExtResource( 6 )
 number_of_segments = 10
-current_segment_id = 4
 
 [node name="BgNode2D3" type="Node2D" parent="."]
 visible = false
@@ -173,7 +172,7 @@ z_index = -2
 texture = ExtResource( 19 )
 
 [node name="20250813170735" type="Sprite" parent="BgNode2D4/ParallaxBackground/ParallaxLayer"]
-position = Vector2( -181, -176 )
+position = Vector2( -178, -184 )
 scale = Vector2( 0.8, 0.8 )
 z_index = -2
 texture = ExtResource( 19 )
@@ -182,7 +181,6 @@ texture = ExtResource( 19 )
 light_mask = 0
 tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
-show_collision = true
 collision_friction = 0.0
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
@@ -222,7 +220,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 position = Vector2( 8, 24 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map2"]
-position = Vector2( 200.063, 237.7 )
+position = Vector2( 200.063, 225.7 )
 z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map2/oneway"]
@@ -236,6 +234,9 @@ one_way_collision = true
 
 [node name="overLay" type="Node2D" parent="Map2"]
 
+[node name="actor1" parent="Map2" instance=ExtResource( 13 )]
+position = Vector2( 56, 56 )
+
 [node name="Map3" type="TileMap" parent="." groups=["wall"]]
 modulate = Color( 1, 1, 1, 0.627451 )
 light_mask = 0
@@ -243,11 +244,14 @@ position = Vector2( -224, -224 )
 tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 1, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 1, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 458766, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
 script = ExtResource( 1 )
 additives_only = true
 start = Vector2( 13, 1 )
 goal = Vector2( 7, 1 )
+
+[node name="RigidBody2D" parent="Map3" instance=ExtResource( 15 )]
+position = Vector2( 136, 24 )
 
 [node name="pickOps" type="Node2D" parent="Map3"]
 modulate = Color( 1, 1, 1, 0.313726 )
@@ -258,7 +262,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 position = Vector2( 120, 8 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map3"]
-position = Vector2( 238, 24 )
+position = Vector2( 227, 24 )
 rotation = -1.5708
 z_index = -1
 
@@ -270,9 +274,6 @@ texture = ExtResource( 9 )
 position = Vector2( 0.0629883, 0.200012 )
 shape = SubResource( 19 )
 one_way_collision = true
-
-[node name="stone" parent="Map3" instance=ExtResource( 15 )]
-position = Vector2( 72, 136 )
 
 [node name="overLay" type="Node2D" parent="Map3"]
 
@@ -300,7 +301,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 position = Vector2( 120, 8 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map4"]
-position = Vector2( 120, 238 )
+position = Vector2( 120, 227 )
 z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map4/oneway"]
@@ -308,7 +309,7 @@ scale = Vector2( 1, 0.3 )
 texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map4/oneway"]
-position = Vector2( 0.0629883, 0.200012 )
+position = Vector2( 0.0629883, -0.799988 )
 shape = SubResource( 19 )
 one_way_collision = true
 
@@ -320,7 +321,6 @@ light_mask = 0
 position = Vector2( -224, -672 )
 tile_set = SubResource( 2 )
 cell_size = Vector2( 16, 16 )
-show_collision = true
 format = 1
 tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65536, 0, 0, 65550, 0, 0, 131072, 0, 0, 131074, 0, 0, 131076, 0, 0, 131078, 0, 0, 131080, 0, 0, 131082, 0, 0, 131084, 0, 0, 131086, 0, 0, 196608, 0, 0, 196622, 0, 0, 262144, 0, 0, 262146, 0, 0, 262148, 0, 0, 262150, 0, 0, 262152, 0, 0, 262154, 0, 0, 262156, 0, 0, 262158, 0, 0, 327680, 0, 0, 327694, 0, 0, 393216, 0, 0, 393218, 0, 0, 393220, 0, 0, 393222, 0, 0, 393224, 0, 0, 393226, 0, 0, 393228, 0, 0, 393230, 0, 0, 458752, 0, 0, 524288, 0, 0, 524290, 0, 0, 524292, 0, 0, 524294, 0, 0, 524296, 0, 0, 524298, 0, 0, 524300, 0, 0, 524302, 0, 0, 589824, 0, 0, 589838, 0, 0, 655360, 0, 0, 655362, 0, 0, 655364, 0, 0, 655366, 0, 0, 655368, 0, 0, 655370, 0, 0, 655372, 0, 0, 655374, 0, 0, 720896, 0, 0, 720910, 0, 0, 786432, 0, 0, 786434, 0, 0, 786436, 0, 0, 786438, 0, 0, 786440, 0, 0, 786442, 0, 0, 786444, 0, 0, 786446, 0, 0, 851968, 0, 0, 851982, 0, 0, 917504, 0, 0, 917505, 0, 0, 917506, 0, 0, 917507, 0, 0, 917508, 0, 0, 917509, 0, 0, 917510, 0, 0, 917511, 1, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0 )
 script = ExtResource( 1 )
@@ -339,7 +339,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 position = Vector2( 232, 120 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map5"]
-position = Vector2( 120, 238 )
+position = Vector2( 120, 226 )
 z_index = -1
 
 [node name="sprite" type="Sprite" parent="Map5/oneway"]
@@ -377,7 +377,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 position = Vector2( 232, 216 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map6"]
-position = Vector2( 1, 120 )
+position = Vector2( 13, 120 )
 rotation = 1.5708
 z_index = -1
 
@@ -415,7 +415,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 position = Vector2( 232, 24 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map7"]
-position = Vector2( 2, 216 )
+position = Vector2( 14, 216 )
 rotation = 1.5708
 z_index = -1
 
@@ -454,7 +454,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 position = Vector2( 24, 232 )
 
 [node name="oneway" type="KinematicBody2D" parent="Map8"]
-position = Vector2( 2, 24 )
+position = Vector2( 14, 24 )
 rotation = 1.5708
 z_index = -1
 
@@ -525,7 +525,7 @@ modulate = Color( 1, 1, 1, 0.313726 )
 [node name="pickNums" type="Node2D" parent="BossMap"]
 
 [node name="oneway" type="KinematicBody2D" parent="BossMap"]
-position = Vector2( 2, 120 )
+position = Vector2( 13, 120 )
 rotation = 1.5708
 
 [node name="sprite" type="Sprite" parent="BossMap/oneway"]
@@ -567,16 +567,11 @@ one_way_collision = true
 
 [node name="actors" type="Node2D" parent="."]
 
-[node name="actor1" parent="actors" instance=ExtResource( 13 )]
-position = Vector2( 56, -168 )
-
 [node name="actor2" parent="actors" instance=ExtResource( 13 )]
 position = Vector2( -40, -40 )
 
 [node name="actor3" parent="actors" instance=ExtResource( 14 )]
-position = Vector2( -168, -424 )
-debug_hits = true
-debug_print = true
+position = Vector2( -72, -361 )
 
 [node name="actor4" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( -168, -616 )
@@ -592,7 +587,6 @@ position = Vector2( 344, -552 )
 
 [node name="actor8" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( 664, -552 )
-debug_hits = true
 
 [node name="actor9" parent="actors" instance=ExtResource( 14 )]
 position = Vector2( 664, -424 )
@@ -620,7 +614,7 @@ stream = ExtResource( 10 )
 autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 4 )]
-position = Vector2( -40, -231 )
+position = Vector2( 24, 217 )
 collision_layer = 18
 collision_mask = 3
 
