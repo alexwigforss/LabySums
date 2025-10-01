@@ -6,10 +6,12 @@ export (float) var rotation_speed := 2.0
 export (bool) var randomize_turns := true
 export (bool) var sensing := false
 export (bool) var clock_wise := true
+export (bool) var bounce := true
 
 var velocity := Vector2.ZERO
-var current_dir_index := 0
-var prev_direction := -1
+var current_dir_index := 1
+
+var blind = 0
 
 # Ordered directions (clockwise)
 var directions := [
@@ -18,6 +20,7 @@ var directions := [
 	Vector2.UP,     # 2
 	Vector2.LEFT    # 3
 ]
+
 
 const DIR_LABELS := ["down", "right", "up", "left"]
 
@@ -37,7 +40,7 @@ func _ready() -> void:
 			var area = get_node("Sensors/Area" + name)
 			area.connect("body_exited", self, "_on_body_exited", [name.to_lower(), idx])
 
-	_choose_new_direction()
+	# _choose_new_direction()
 
 
 func _physics_process(delta: float) -> void:
@@ -50,28 +53,6 @@ func _physics_process(delta: float) -> void:
 		var col: Node = collision.collider
 		if col.is_in_group("wall") or col.is_in_group("player") or col.is_in_group("enemies"):
 			_choose_new_direction()
-
-
-func _on_body_exited(body: Node, direction: String, index: int) -> void:
-	if not _is_wall_like(body):
-		return
-
-	# Infer previous movement direction
-	if velocity.x > 0:
-		prev_direction = 3  # LEFT
-	elif velocity.x < 0:
-		prev_direction = 1  # RIGHT
-	elif velocity.y > 0:
-		prev_direction = 2  # UP
-	elif velocity.y < 0:
-		prev_direction = 0  # DOWN
-
-	if index != prev_direction:
-		_choose_new_direction()
-		velocity = directions[current_dir_index] * speed
-		print("DIR:", direction, " EXITED:", body.name, " VELOCITY:", velocity, " INDEX:", index)
-	else:
-		print("SKIPPED DIR:", direction, " EXITED:", body.name, " VELOCITY:", velocity, " INDEX:", index)
 
 
 func _is_wall_like(body: Node) -> bool:
@@ -94,13 +75,23 @@ func _choose_new_direction() -> void:
 	else:
 		# Deterministic clockwise/counter-clockwise
 		if clock_wise:
-			current_dir_index += 1
-			if current_dir_index >= directions.size():
-				current_dir_index = 0
+			right_turn(2)
 		else:
-			current_dir_index -= 1
-			if current_dir_index < 0:
-				current_dir_index = directions.size() - 1
-
-	print("New direction =", current_dir_index, DIR_LABELS[current_dir_index])
+			left_turn(2)
+	clock_wise =! clock_wise
+	# print("New direction = ", current_dir_index, DIR_LABELS[current_dir_index])
 	velocity = directions[current_dir_index] * speed
+
+func right_turn(r = 1):
+	while r > 0:
+		current_dir_index += 1
+		if current_dir_index >= directions.size():
+			current_dir_index = 0
+		r -= 1
+
+func left_turn(r = 1):
+	while r > 0:
+		current_dir_index -= 1
+		if current_dir_index < 0:
+			current_dir_index = directions.size() - 1
+		r -= 1
