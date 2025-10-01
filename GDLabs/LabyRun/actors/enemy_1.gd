@@ -45,7 +45,7 @@ var time_since_last_turn: float = 0.0
 func _ready() -> void:
 	add_to_group("enemies")
 	start_position = position
-	
+	$AnimationPlayer.play("walkright")
 	# Connect all 4 sensor areas dynamically
 	var directions = {"Left": LEFT, "Up": UP, "Right": RIGHT, "Down": DOWN}
 	for name in directions.keys():
@@ -153,6 +153,14 @@ func _next_direction_from_sensors(sensors: Array) -> void:
 	# Apply chosen direction
 	current_dir = dir
 	dirs = [dir == LEFT, dir == UP, dir == RIGHT, dir == DOWN]
+
+	if dir == 0:
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("walkleft")
+	elif dir == 2: 
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("walkright")
+
 
 	if debug_print:
 		print("Direction changed to:", DIR_LABELS[dir], " Free:", sensors)

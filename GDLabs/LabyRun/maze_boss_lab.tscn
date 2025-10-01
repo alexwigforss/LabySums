@@ -329,13 +329,13 @@ one_way_collision = true
 [node name="actors" type="Node2D" parent="."]
 
 [node name="actor" parent="actors" instance=ExtResource( 18 )]
-position = Vector2( 24, 56 )
+position = Vector2( 24, 152 )
 
 [node name="actor3" parent="actors" instance=ExtResource( 17 )]
-position = Vector2( 24, 216 )
+position = Vector2( 24, 88 )
 
 [node name="monster_1" parent="actors" instance=ExtResource( 19 )]
-position = Vector2( 24, 88 )
+position = Vector2( -104, 120 )
 
 [node name="Wheel" parent="actors" instance=ExtResource( 20 )]
 position = Vector2( -200, 40 )
