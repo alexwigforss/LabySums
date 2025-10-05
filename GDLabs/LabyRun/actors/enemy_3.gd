@@ -8,6 +8,9 @@ var velocity: Vector2 = Vector2.ZERO
 var stored_x = 0
 var stored_y = 0
 
+var turned_left = false
+var turned_right = true
+
 signal player_hit
 
 var dirs = [
@@ -24,21 +27,13 @@ func _ready() -> void:
 	# Start in one of four diagonal directions
 	velocity = dirs[randi() % dirs.size()].normalized() * speed
 
-	# Connect signals from sensors
-	#$Area2D.connect("body_entered", self, "_on_main_sensor")
-
-	var err = $AreaLeft.connect("body_entered", self, "_on_left_sensor")
-	$AreaRight.connect("body_entered", self, "_on_right_sensor")
-	$AreaUp.connect("body_entered", self, "_on_up_sensor")
-	$AreaDown.connect("body_entered", self, "_on_down_sensor")
-	if err != OK:
-		print("Connection failed! ", err)
+	$AnimationPlayer.play("walkleft")
+	print("HEJ PÅ DIG")
 
 func _physics_process(delta: float) -> void:
 	# Just move straight in current velocity
 	velocity = move_and_slide(velocity)
 
-	#const EPSILON := 0.0001
 	# Ensure constant speed
 	if velocity.length() != 0:
 		velocity = velocity.normalized() * speed
@@ -50,28 +45,21 @@ func _physics_process(delta: float) -> void:
 	elif velocity.x == 0 and velocity.y != 0:
 		var sign_x = (randi() % 2) * 2 - 1  # yields -1 or +1
 		velocity.x = sign_x * speed
+		if turned_left and velocity.x > 0:
+			$AnimationPlayer.stop()
+			$AnimationPlayer.play("walkright")
+			turned_left = false
+			turned_right = true
+		if turned_right and velocity.x < 0:
+			$AnimationPlayer.stop()
+			$AnimationPlayer.play("walkleft")
+			turned_right = false
+			turned_left = true
+
 
 	elif velocity.y == 0 and velocity.x != 0:
 		var sign_y = (randi() % 2) * 2 - 1
 		velocity.y = sign_y * speed
-
-
-# --- Sensor handlers ---
-func _on_left_sensor(body: Node) -> void:
-	if body.is_in_group("walls"):
-		velocity.x = abs(velocity.x)  # bounce right
-
-func _on_right_sensor(body: Node) -> void:
-	if body.is_in_group("walls"):
-		velocity.x = -abs(velocity.x) # bounce left
-
-func _on_up_sensor(body: Node) -> void:
-	if body.is_in_group("walls"):
-		velocity.y = abs(velocity.y)  # bounce down
-
-func _on_down_sensor(body: Node) -> void:
-	if body.is_in_group("walls"):
-		velocity.y = -abs(velocity.y) # bounce up
 
 func _is_actor_like(body: Node) -> bool:
 	return body.is_in_group("enemies") and self.name != body.name

@@ -23,7 +23,7 @@ var start_position := Vector2.ZERO
 func _ready():
 	add_to_group("enemies")
 	start_position = position
-	pass
+	$AnimationPlayer.play("walkright")
 	
 func _next_direction():
 	dir += 1
@@ -35,6 +35,12 @@ func _next_direction():
 func _next_random_direction():
 	dir = randi() % 4
 	dirs = _get_direction(dir)
+	if dir == 0:
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("walkleft")
+	elif dir == 2: 
+		$AnimationPlayer.stop()
+		$AnimationPlayer.play("walkright")
 
 
 func _get_direction(d):
