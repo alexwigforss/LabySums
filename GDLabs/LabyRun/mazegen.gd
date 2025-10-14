@@ -22,7 +22,7 @@ export var result_max = 20
 
 export var full_route = false
 
-export var even_distro = false
+export var no_routes = false
 
 var signs = ['+','-','*','/']
 var shift = Vector2(8,8)
@@ -63,9 +63,9 @@ func init_binary_map(w,h):
 	var grid_height = h
 
 	# Fill the 2D array with false
-	for y in range(grid_height):
+	for _y in range(grid_height):
 		var row = []
-		for x in range(grid_width):
+		for __x in range(grid_width):
 			row.append(false)
 		grid.append(row)
 	return grid
@@ -228,7 +228,8 @@ func _ready():
 	assemble_route(-1,0)
 
 	print(self.name, "Ready" )
-	var temp_dir = start_directions_int[1]
+	if not no_routes:
+		var temp_dir = start_directions_int[1]
 	var i = 1
 
 	#while i < len(routes):
@@ -273,11 +274,52 @@ func _ready():
 	if debug_print_numerical:
 		print_2d_array_with_neg(numerical_map)
 
-	random_picks()
+	if no_routes:
+		no_route_random_picks()
+	else:
+		random_picks()
 
 # TODO Imprement even disro
 # for each in num and ops
 # place at random position where not wall
+
+func no_route_random_picks():
+	var depth = 1
+	var num = true
+	var num_index = 0
+	var op_index = 0
+	var used_positions = []
+
+	while depth <= len(nums) + len(ops):
+		var x = 0
+		var y = 0
+		var tries = 0
+		# Find a unique, non-wall position
+		while true:
+			x = (randi() % 12) + 1
+			y = (randi() % 12) + 1
+			var pos = Vector2(x, y)
+			if numerical_map[y][x] >= 0 and not pos in used_positions:
+				break
+			tries += 1
+			if tries > 100: # Avoid infinite loop
+				print("FAILED TO PLACE PICKUP!")
+				break
+
+		used_positions.append(Vector2(x, y))
+
+		if num:
+			if num_index < nums.size():
+				instance_num(x, y, nums[num_index])
+				num_index += 1
+				num = false
+		else:
+			if op_index < ops.size():
+				instance_pick(x, y, ops[op_index])
+				op_index += 1
+				num = true
+
+		depth += 1
 
 func random_picks():
 	var depth = 1
