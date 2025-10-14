@@ -20,6 +20,9 @@ export var goal = Vector2(12,1)
 export var number_of_operators = 1
 export var result_max = 20
 
+export var full_route = false
+
+export var even_distro = false
 
 var signs = ['+','-','*','/']
 var shift = Vector2(8,8)
@@ -73,9 +76,9 @@ func init_numerical_map(w,h):
 	var grid_height = h
 
 	# Fill the 2D array with false
-	for y in range(grid_height):
+	for _y in range(grid_height):
 		var row = []
-		for x in range(grid_width):
+		for _x in range(grid_width):
 			row.append(0)
 		grid.append(row)
 	return grid
@@ -163,13 +166,19 @@ func assemble_numerical_map(num, bin):
 			y += 1
 		x += 1
 		y = 0
-	var i = 1
 	# counting round zeros
 	# TODO Make shure all walls is -1
 	for e_x in range(0,14):
 		for e_y in range(0,14):
 			if num[e_y][e_x] > -1:
 				num[e_y][e_x] = count_neighbours(e_x, e_y, num)
+
+	# TODO Implement dynamic size value
+	for e in range(0,14):
+		num[0][e] = -1
+		num[14][e] = -1
+		num[e][0] = -1
+		num[e][14] = -1
 	return num
 
 
@@ -223,13 +232,14 @@ func _ready():
 	var i = 1
 
 	#while i < len(routes):
-	while i < 20:
+	while i < 27:
 	# TODO Add Exception Handling
 		if i < len(routes):
 			assemble_route(start_directions_int[i],i)
 		i += 1
-		
-	routes = pop_sublists_with_length_one(routes)
+
+	if not full_route:	
+		routes = pop_sublists_with_length_one(routes)
 	
 	# TODO Fixa buggen att routes ibland inte räcker till för att rita ut all num och ops
 	# Kanske genom att söka från ett annat hörn ifall listan är för liten
@@ -244,10 +254,11 @@ func _ready():
 		print(start_directions)
 		print("Direction Ints:")
 		print(start_directions_int)
-		if verbose:
-			print("Verbose output of all routes:")
-			for r in routes:
-				print(r)
+		print("Length of routes: ", len(routes))
+		#if verbose:
+		#	print("Verbose output of all routes:")
+		#	for r in routes:
+		#		print(r)
 
 	binary_map = init_binary_map(15,15)
 	binary_map = assemble_binary_map(binary_map)
@@ -262,8 +273,11 @@ func _ready():
 	if debug_print_numerical:
 		print_2d_array_with_neg(numerical_map)
 
-
 	random_picks()
+
+# TODO Imprement even disro
+# for each in num and ops
+# place at random position where not wall
 
 func random_picks():
 	var depth = 1
@@ -326,6 +340,7 @@ func pop_sublists_with_length_one(lists):
 func look(pos, gofrom, d):
 	if not get_cell(gofrom.x + directions[pos].x, gofrom.y  + directions[pos].y) in [0, 1, 2]:
 		if not gofrom + directions[pos] in routes[0]:
+			# routes += [[gofrom]] 
 			routes += [[gofrom + directions[pos]]]
 			start_directions.append(directions[pos])
 			start_directions_int.append(d)
@@ -337,7 +352,9 @@ func is_pos_pressent(pos):
 		if pos in r:
 			return true
 	return false
-	
+
+# Another improvement could be to split up routes longer than ten
+# OR when found split
 func assemble_route(dir,rout_index):
 	var current_direction = directions[dir]
 	start = routes[rout_index][0]
@@ -365,9 +382,7 @@ func assemble_route(dir,rout_index):
 		if not get_cell(goto.x, goto.y) in [0, 1, 2]:
 			# Kollar vänster
 			var turnleft = (dir - 1) % 4
-			if look(turnleft,gofrom,(dir - 1) % 4):
-				pass
-				#foundSplit = true
+			look(turnleft,gofrom,(dir - 1) % 4)
 			# Kollar höger
 			var turnright = (dir + 1) % 4
 			if look(turnright,gofrom,(dir + 1) % 4):
@@ -378,11 +393,11 @@ func assemble_route(dir,rout_index):
 			goto = gofrom + current_direction
 			if is_pos_pressent(gofrom): # Om positionen redan lagrad
 				if debug_print_route and verbose:
-					print('Breaking because of hit SELF_OR_OTHER!')
+					print('Breaking because of hit SELF_OR_OTHER! INDEX: ', index)
 				break # BRYT
 			elif gofrom == goal:
 				if debug_print_route and verbose:
-					print('Breaking because of REACHING_GOAL!')
+					print('Breaking because of REACHING_GOAL! INDEX: ', index)
 				break
 			routes[rout_index].append(gofrom)
 
@@ -392,7 +407,7 @@ func assemble_route(dir,rout_index):
 				print('Breaking because of INDEX!')
 			break
 
-	current_direction = directions[dir]	
+	current_direction = directions[dir]
 
 
 func _draw():
