@@ -205,7 +205,10 @@ func get_random_direction():
 	var no_available = len(available)
 
 	randomize()
-	direction = available[randi() % no_available]
+	if no_available == 0:
+		print("Availible nr of directions = ZERO !!!")
+	else:
+		direction = available[randi() % no_available]
 	if debug_print:
 		print(no_available, " Available directions: ", available, " Chosed: ", direction)
 
