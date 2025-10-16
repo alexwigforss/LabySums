@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://mazegen.gd" type="Script" id=1]
 [ext_resource path="res://getGoalNr.gd" type="Script" id=2]
@@ -89,8 +89,6 @@ func _ready():
 
 [sub_resource type="RectangleShape2D" id=16]
 extents = Vector2( 7.49995, 7.5 )
-
-[sub_resource type="CameraTexture" id=18]
 
 [node name="colworld" type="Node2D"]
 script = ExtResource( 5 )
@@ -591,24 +589,6 @@ position = Vector2( 232, -1992 )
 [node name="monster_12" parent="actors" instance=ExtResource( 18 )]
 position = Vector2( 200, -2552 )
 
-[node name="doors" type="Node2D" parent="."]
-
-[node name="youwin" type="Label" parent="."]
-visible = false
-margin_left = 209.0
-margin_top = -110.0
-margin_right = 324.0
-margin_bottom = -20.0
-size_flags_horizontal = 2
-size_flags_vertical = 0
-text = "Sorry Numio
-Your number is
-in another Maze
-...
-"
-align = 1
-valign = 1
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 autoplay = true
@@ -691,13 +671,6 @@ align = 1
 [node name="PlayerCollShape" type="CollisionShape2D" parent="player/PlayerArea"]
 position = Vector2( -0.477049, -0.455002 )
 shape = SubResource( 16 )
-
-[node name="Light2D" type="Light2D" parent="."]
-modulate = Color( 0.152941, 0.788235, 0.729412, 1 )
-light_mask = 7
-texture = SubResource( 18 )
-color = Color( 0.164706, 0.521569, 0.152941, 1 )
-energy = 13.23
 
 [node name="TaskFactory" type="Node2D" parent="."]
 script = ExtResource( 3 )
