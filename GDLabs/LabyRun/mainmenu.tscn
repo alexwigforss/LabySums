@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/Nova_Round/NovaRound-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://sprites/menu_bgs/Cave_(102637069).jpeg" type="Texture" id=2]
 [ext_resource path="res://mainmenu.gd" type="Script" id=3]
 [ext_resource path="res://About.tscn" type="PackedScene" id=4]
+[ext_resource path="res://sounds/intro.wav" type="AudioStream" id=5]
 
 [sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 2 )
@@ -161,6 +162,10 @@ align = 2
 
 [node name="About" parent="." instance=ExtResource( 4 )]
 visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/AboutButton" to="." method="_on_AboutButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/AudioButton" to="." method="_on_AudioButton_pressed"]

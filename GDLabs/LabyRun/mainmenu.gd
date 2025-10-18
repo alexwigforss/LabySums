@@ -2,19 +2,25 @@ extends Control
 
 var start_map = 1
 var number_of_levels = 2
+var audio = true
+var continue_button_text = "CONTINUE"
+
 onready var continue_button = get_node("VBoxContainer/ContinueButton")
 onready var about_panel = get_node("About")
+onready var music = get_node("AudioStreamPlayer")
 
-var continue_button_text = "CONTINUE"
-func _ready():
-	pass
 
 func _on_AboutButton_pressed():
 	about_panel.show()
 
 
 func _on_AudioButton_pressed():
-	print("Hello Audio!")
+	if audio:
+		music.stop()
+		audio = false
+	else:
+		music.play()
+		audio = true
 
 
 func _on_ContinueButton_pressed():
