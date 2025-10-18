@@ -1,14 +1,20 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://fonts/Nova_Round/NovaRound-Regular.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://sprites/CP1.jpg" type="Texture" id=2]
+[ext_resource path="res://sprites/menu_bgs/Cave_(102637069).jpeg" type="Texture" id=2]
+[ext_resource path="res://mainmenu.gd" type="Script" id=3]
+[ext_resource path="res://About.tscn" type="PackedScene" id=4]
 
 [sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 2 )
-region_rect = Rect2( 0, 0, 1024, 1024 )
-expand_margin_right = 800.0
-expand_margin_bottom = 400.0
-modulate_color = Color( 0.588235, 0.588235, 0.588235, 1 )
+region_rect = Rect2( 0, 0, 2048, 1365 )
+expand_margin_left = 600.0
+expand_margin_right = 600.0
+expand_margin_top = 300.0
+expand_margin_bottom = 300.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+modulate_color = Color( 0.509804, 0.486275, 0.533333, 1 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 64
@@ -42,13 +48,16 @@ corner_radius_bottom_left = 10
 shadow_color = Color( 0.105882, 0.682353, 0.709804, 1 )
 shadow_size = 2
 
-[node name="Control" type="Control"]
+[node name="MainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 3 )
 
 [node name="Panel" type="Panel" parent="."]
-margin_right = 800.0
-margin_bottom = 600.0
+anchor_top = 0.041
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -24.6
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 3 )
@@ -76,7 +85,7 @@ margin_right = 115.0
 margin_bottom = 145.0
 custom_constants/separation = 18
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="AboutButton" type="Button" parent="VBoxContainer"]
 margin_right = 230.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
@@ -88,7 +97,7 @@ custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 2 )
 text = "ABOUT"
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="AudioButton" type="Button" parent="VBoxContainer"]
 margin_top = 49.0
 margin_right = 230.0
 margin_bottom = 80.0
@@ -101,7 +110,7 @@ custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 2 )
 text = "AUDIO"
 
-[node name="Button3" type="Button" parent="VBoxContainer"]
+[node name="ContinueButton" type="Button" parent="VBoxContainer"]
 margin_top = 98.0
 margin_right = 230.0
 margin_bottom = 129.0
@@ -114,7 +123,7 @@ custom_styles/pressed = SubResource( 5 )
 custom_styles/normal = SubResource( 2 )
 text = "CONTINUE"
 
-[node name="Button4" type="Button" parent="VBoxContainer"]
+[node name="StartButton" type="Button" parent="VBoxContainer"]
 margin_top = 147.0
 margin_right = 230.0
 margin_bottom = 178.0
@@ -147,3 +156,13 @@ margin_right = 700.0
 margin_bottom = 41.0
 text = "Ver: 0.0.0.1"
 align = 2
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="About" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[connection signal="pressed" from="VBoxContainer/AboutButton" to="." method="_on_AboutButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/AudioButton" to="." method="_on_AudioButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_ContinueButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
