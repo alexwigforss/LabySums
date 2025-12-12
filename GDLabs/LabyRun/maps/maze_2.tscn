@@ -100,6 +100,7 @@ position = Vector2( 16, -904 )
 motion_scale = Vector2( -0.1, -0.1 )
 
 [node name="001125-Babylon-Iraq-Img8019-2" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+modulate = Color( 1, 1, 1, 0.45098 )
 position = Vector2( 213, 144 )
 texture = ExtResource( 10 )
 
@@ -155,6 +156,7 @@ start = Vector2( 6, 13 )
 goal = Vector2( 3, 1 )
 number_of_operators = 2
 result_max = 10
+full_route = true
 no_routes = true
 
 [node name="pickOps" type="Node2D" parent="Map2"]
@@ -195,6 +197,7 @@ start = Vector2( 8, 13 )
 goal = Vector2( 10, 1 )
 number_of_operators = 2
 result_max = 10
+full_route = true
 no_routes = true
 
 [node name="pickOps" type="Node2D" parent="Map3"]

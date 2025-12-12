@@ -44,4 +44,3 @@ func _on_StartButton_pressed():
 		print('Failed to load next level ' + path)
 		return
 	print('Load next level ' + path)
-
