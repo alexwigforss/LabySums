@@ -1,7 +1,7 @@
 # LabySums
 **Ett pedagogiskt dungeon-crawl där matematik är vapnet och logik är vägen ut.**
 
-LabySums är ett passionsprojekt utvecklat i Godot 3 som föddes ur en vilja att göra mängdträning i matematik till något engagerande istället för repetitivt. Tanken är enkel: du navigerar en hjälte genom slumpmässigt genererade labyrinter i en top-down-vy, men istället för att bara fäktas med svärd måste du interagera med siffror och operatorer för att lösa pussel och besegra fiender.
+LabySums är ett passionsprojekt utvecklat i Godot 3 som föddes ur en vilja att göra mängdträning i matematik till något engagerande istället för repetitivt. Tanken är enkel: du navigerar en hjälte genom slumpmässigt genererade labyrinter i en top-down-vy, men istället för att fäktas med svärd måste du samla siffror och operatorer för att låsa upp dörrar.
 
 [![Se demovideon för LabySums på YouTube](https://img.youtube.com/vi/g8Zaws0kTo8/0.jpg)](https://youtu.be/g8Zaws0kTo8)
 
