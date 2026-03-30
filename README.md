@@ -3,6 +3,8 @@
 
 LabySums är ett passionsprojekt utvecklat i Godot 3 som föddes ur en vilja att göra mängdträning i matematik till något engagerande istället för repetitivt. Tanken är enkel: du navigerar en hjälte genom slumpmässigt genererade labyrinter i en top-down-vy, men istället för att bara fäktas med svärd måste du interagera med siffror och operatorer för att lösa pussel och besegra fiender.
 
+[![Se demovideon för LabySums på YouTube](https://img.youtube.com/vi/g8Zaws0kTo8/0.jpg)](https://youtu.be/g8Zaws0kTo8)
+
 ## 🛠 Tekniska utmaningar och arkitektur
 Under utvecklingens gång har fokus legat på att skapa ett system som är både skalbart och effektivt. Istället för att bara hårdkoda banor har jag arbetat med procedurell generering av labyrintsegment och uppgifter.
 
