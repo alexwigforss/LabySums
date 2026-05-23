@@ -600,7 +600,7 @@ stream = ExtResource( 9 )
 autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 11 )]
-position = Vector2( 24.977, 215.96 )
+position = Vector2( 40.977, -1128.04 )
 collision_layer = 18
 collision_mask = 3
 
