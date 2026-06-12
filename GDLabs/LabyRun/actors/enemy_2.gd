@@ -110,7 +110,8 @@ func _physics_process(delta):
 		pause_count -= delta
 		return
 	if move:
-		velocity = move_and_slide(velocity)
+		move_and_slide(velocity)
+		# velocity = move_and_slide(velocity)
 
 	# Qiuk fix to make shure that numerical map is loaded in scene
 	if first_frame and debug_print:

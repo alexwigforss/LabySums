@@ -28,7 +28,7 @@ func _ready() -> void:
 	velocity = dirs[randi() % dirs.size()].normalized() * speed
 
 	$AnimationPlayer.play("walkleft")
-	print("HEJ PÅ DIG")
+	# print("HEJ PÅ DIG")
 
 func _physics_process(delta: float) -> void:
 	# Just move straight in current velocity
@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.normalized() * speed
 		
 	if velocity.x == 0 and velocity.y == 0:
-		print("STANDING")
+		# print("STANDING")
 		velocity = dirs[randi() % dirs.size()].normalized() * speed
 	# --- safeguard: force diagonal motion ---
 	elif velocity.x == 0 and velocity.y != 0:
@@ -70,6 +70,6 @@ func reset_to_start() -> void:
 
 func _on_Area2D_body_entered(body) -> void:
 	if body.is_in_group("player"):
-		print("Player hit by enemy_3 !")
+		# print("Player hit by enemy_3 !")
 		emit_signal("player_hit")
 		reset_to_start()
