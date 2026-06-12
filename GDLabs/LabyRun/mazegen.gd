@@ -557,8 +557,11 @@ func clear_nums_and_ops():
 	for child in overLay.get_children():
 		child.free()
 
-	random_picks()
-
+	if no_routes:
+		no_route_random_picks()
+	else:
+		random_picks()
+		
 	for child in pickOps.get_children():
 		if child is PickOp:
 			print("It's a PickOp:", child)

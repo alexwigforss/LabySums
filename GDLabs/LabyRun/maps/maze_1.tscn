@@ -463,7 +463,6 @@ position = Vector2( 664, -424 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
-autoplay = true
 
 [node name="player" parent="." groups=["player"] instance=ExtResource( 4 )]
 position = Vector2( 25, 216 )

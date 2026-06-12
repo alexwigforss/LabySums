@@ -214,7 +214,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Debug: print initial state
 	if first_frame and debug_print:
-		print("Initial free sensors:", free_sensors)
+		# print("Initial free sensors:", free_sensors)
 		first_frame = false
 
 func is_zero_approx_vec(v: Vector2, tolerance: float = 0.00001) -> bool:
