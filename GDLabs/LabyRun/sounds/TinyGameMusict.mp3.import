@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/TinyGameMusict.mp3-a94824878660350ad33a8faeea1f343d.mp3str"
+
+[deps]
+
+source_file="res://sounds/TinyGameMusict.mp3"
+dest_files=[ "res://.import/TinyGameMusict.mp3-a94824878660350ad33a8faeea1f343d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
