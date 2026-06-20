@@ -91,7 +91,7 @@ extents = Vector2( 7.49995, 7.5 )
 script = ExtResource( 5 )
 number_of_segments = 3
 
-[node name="001125-Babylon-Iraq-Img8019-2" type="Sprite" parent="."]
+[node name="Background" type="Sprite" parent="."]
 modulate = Color( 0.67451, 0.67451, 0.67451, 1 )
 position = Vector2( 16, -904 )
 rotation = 3.14159
@@ -389,16 +389,17 @@ position = Vector2( 2004, -92 )
 position = Vector2( 280, 0 )
 
 [node name="Pos3" type="Node2D" parent="Targets"]
-position = Vector2( 280, -232 )
+position = Vector2( 512, -409 )
 
 [node name="Pos4" type="Node2D" parent="Targets"]
-position = Vector2( -35, -232 )
+position = Vector2( -179, -375 )
 
 [node name="Flock" type="Node2D" parent="."]
-position = Vector2( 2004, -92 )
+position = Vector2( 2159, -282 )
 scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 20 )
 bird_scene = ExtResource( 14 )
+idle = false
 
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
