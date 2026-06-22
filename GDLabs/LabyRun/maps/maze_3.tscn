@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://mazegen.gd" type="Script" id=1]
 [ext_resource path="res://getGoalNr.gd" type="Script" id=2]
@@ -13,9 +13,8 @@
 [ext_resource path="res://player.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/door.tscn" type="PackedScene" id=12]
 [ext_resource path="res://scenes/boss.tscn" type="PackedScene" id=13]
-[ext_resource path="res://bird_fly.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Flocksystem/Main.tscn" type="PackedScene" id=14]
 [ext_resource path="res://actors/enemy_3.tscn" type="PackedScene" id=18]
-[ext_resource path="res://maps/Flock2D.gd" type="Script" id=20]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
@@ -380,26 +379,10 @@ position = Vector2( 122, -2472 )
 [node name="boss" parent="BossGlobalTransform" instance=ExtResource( 13 )]
 solution = 50
 
-[node name="Targets" type="Node2D" parent="."]
-position = Vector2( 2004, -92 )
+[node name="Main" parent="." instance=ExtResource( 14 )]
 
-[node name="Pos1" type="Node2D" parent="Targets"]
-
-[node name="Pos2" type="Node2D" parent="Targets"]
-position = Vector2( 280, 0 )
-
-[node name="Pos3" type="Node2D" parent="Targets"]
-position = Vector2( 512, -409 )
-
-[node name="Pos4" type="Node2D" parent="Targets"]
-position = Vector2( -179, -375 )
-
-[node name="Flock" type="Node2D" parent="."]
-position = Vector2( 2159, -282 )
-scale = Vector2( 0.5, 0.5 )
-script = ExtResource( 20 )
-bird_scene = ExtResource( 14 )
-idle = false
+[node name="Pos" type="Node2D" parent="Main"]
+position = Vector2( 1969, -335 )
 
 [connection signal="pressed" from="player/Camera2D/ReloadButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="pressed" from="player/Camera2D/ResetSegmentButton" to="." method="_on_ResetSegment_pressed"]
