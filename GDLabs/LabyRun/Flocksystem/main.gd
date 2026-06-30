@@ -13,7 +13,7 @@ func _ready():
 	# Sätt framerate, helskärm och göm musen
 	Engine.target_fps = 32
 	# OS.window_fullscreen = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	# Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 	# Skapa flocken
 	for i in range(FLOCK_SIZE):

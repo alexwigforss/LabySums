@@ -1,6 +1,7 @@
 extends TileMap
 
-
+export var width = 15
+export var height = 15
 export var start_dir = 0
 export var debug_print_init = false
 export var debug_print_route = false
@@ -31,8 +32,8 @@ var directions = [Vector2(0,-1),Vector2(1,0),Vector2(0,1),Vector2(-1,0)]
 var start_directions = [directions[start_dir]]
 var start_directions_int = [start_dir]
 var probs = ['s']
-var route = [start]
-var routes = [route]
+var route = []
+var routes = []
 var nums = [6,2,2,3]
 var ops = [0,1,2]
 var _dirs = [-1,1]
@@ -107,21 +108,15 @@ func print_2d_array_with_neg(array):
 				line += "%2d" % int(cell)
 		print(line)
 
-func assemble_binary_map(array):
-	var x = 0
-	var y = 0
-	var grid = array
-	for row in grid:
-		for col in row:
-			# NOTE for now we include the "invisible" sprite 1 wich
-			# is for blocking the route-finder from leaving its segment
-			# if used for player navigation we might want to exclude it
-			# to avoid blocking on entering new segment
-			if get_cell(x, y) in [0,1,2]:
+func assemble_binary_map(grid):
+	# Loopa igenom varje koordinat baserat på labyrintens storlek
+	for y in range(height):
+		for x in range(width):
+			# Hämta cellen från TileMapen på rätt position
+			if get_cell(x, y) in [0, 1, 2]:
 				grid[y][x] = true
-			y += 1
-		x += 1
-		y = 0
+			else:
+				grid[y][x] = false # Det är bra att explicit sätta false om det är en gång
 	return grid
 
 
@@ -148,37 +143,29 @@ func count_neighbours(x,y,bin):
 
 
 func assemble_numerical_map(num, bin):
-	# om endast en ledig granne == 0 (dead end)
-	# om två lediga grannar motstående == 1 (korridor)
-	# om två lediga grannar, ej motstående == 2 (corner)
-	# om tre lediga grannar, == 3 (t-cross)
-	# om fyra lediga grannar == 4 (cross)
-
-	# Walls and Zeros
-	var x = 0
-	var y = 0
-	for row in bin:
-		for col in row:
-			if get_cell(x, y) in [0,1,2]:
+	# Återställ/Sätt väggar baserat på korrekta X och Y
+	for y in range(height):
+		for x in range(width):
+			if get_cell(x, y) in [0, 1, 2]:
 				num[y][x] = -1
 			else:
 				num[y][x] = 0
-			y += 1
-		x += 1
-		y = 0
-	# counting round zeros
-	# TODO Make shure all walls is -1
-	for e_x in range(0,14):
-		for e_y in range(0,14):
+
+	# Räkna grannar för tomma utrymmen (undvik kanterna så count_neighbours inte kraschar)
+	for e_x in range(1, width - 1):
+		for e_y in range(1, height - 1):
 			if num[e_y][e_x] > -1:
 				num[e_y][e_x] = count_neighbours(e_x, e_y, num)
 
-	# TODO Implement dynamic size value
-	for e in range(0,14):
-		num[0][e] = -1
-		num[14][e] = -1
-		num[e][0] = -1
-		num[e][14] = -1
+	# Sätt ytterväggar dynamiskt
+	for x in range(0, width):
+		num[0][x] = -1
+		num[height - 1][x] = -1
+
+	for y in range(0, height):
+		num[y][0] = -1
+		num[y][width - 1] = -1
+
 	return num
 
 
@@ -207,6 +194,12 @@ func get_expression_string(n,o):
 
 func _ready():
 	start_pos = start
+	# --- NYTT: Initiera rutterna dynamiskt här ---
+	route = [start]
+	routes = [route]
+	start_directions = [directions[start_dir]]
+	start_directions_int = [start_dir]
+	# ---------------------------------------------
 	var csharp_node = get_node("../TaskFactory")
 	var door_node = get_node("door")
 	while solution > result_max:
@@ -224,7 +217,7 @@ func _ready():
 
 	door_node.set_streangth(solution);
 
-	randomize_maze() if random_maze else no_random_maze()
+	randomize_maze(width, height) if random_maze else no_random_maze()
 	assemble_route(-1,0)
 
 	print(self.name, "Ready" )
@@ -261,10 +254,10 @@ func _ready():
 		#	for r in routes:
 		#		print(r)
 
-	binary_map = init_binary_map(15,15)
+	binary_map = init_binary_map(width,height)
 	binary_map = assemble_binary_map(binary_map)
 	# Dependency, numerical need binary to return proper result
-	numerical_map = init_numerical_map(15,15)
+	numerical_map = init_numerical_map(width,height)
 	numerical_map = assemble_numerical_map(binary_map, numerical_map)
 
 	
@@ -522,11 +515,11 @@ func no_random_maze():
 	return
 
 
-func randomize_maze():
+func randomize_maze(w,h):
 	var rx = 0
 	var ry = 0
-	for x in range(2,13,2):
-		for y in range(2,13,2):
+	for x in range(2, w - 2, 2):
+		for y in range(2, h - 2, 2):
 			if get_dir() == -1:
 				rx = get_dir()
 				ry = 0
