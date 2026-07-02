@@ -7,7 +7,7 @@ var door_nr
 
 
 func _ready():
-	current_segment = 1 # Starting at segment
+	current_segment = get_node("/root/colworld").current_segment_id # Starting at segment
 	for e in range(1,number_of_doors + 1):
 		door_nr = get_node("/root/colworld/Map" + str(e)).solution
 		doornums.append(door_nr)
