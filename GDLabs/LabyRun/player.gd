@@ -5,7 +5,7 @@ const GRAVITY = 0.0
 const FLOOR_ANGLE_TOLERANCE = 40
 const WALK_FORCE = 600
 const WALK_MIN_SPEED = 10
-const WALK_MAX_SPEED = 100
+const WALK_MAX_SPEED = 200
 const STOP_FORCE = 1300
 
 const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second

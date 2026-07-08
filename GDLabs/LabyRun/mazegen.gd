@@ -1,5 +1,6 @@
 extends TileMap
 
+export var assemble_route_depth = 27
 export var width = 15
 export var height = 15
 export var start_dir = 0
@@ -113,7 +114,7 @@ func assemble_binary_map(grid):
 	for y in range(height):
 		for x in range(width):
 			# Hämta cellen från TileMapen på rätt position
-			if get_cell(x, y) in [0, 1, 2]:
+			if get_cell(x, y) in [0, 1]:
 				grid[y][x] = true
 			else:
 				grid[y][x] = false # Det är bra att explicit sätta false om det är en gång
@@ -146,7 +147,7 @@ func assemble_numerical_map(num, bin):
 	# Återställ/Sätt väggar baserat på korrekta X och Y
 	for y in range(height):
 		for x in range(width):
-			if get_cell(x, y) in [0, 1, 2]:
+			if get_cell(x, y) in [0, 1]:
 				num[y][x] = -1
 			else:
 				num[y][x] = 0
@@ -226,7 +227,7 @@ func _ready():
 	var i = 1
 
 	#while i < len(routes):
-	while i < 27:
+	while i < assemble_route_depth:
 	# TODO Add Exception Handling
 		if i < len(routes):
 			assemble_route(start_directions_int[i],i)
@@ -271,6 +272,8 @@ func _ready():
 		no_route_random_picks()
 	else:
 		random_picks()
+
+	clear_reserved(width,height)
 
 # TODO Imprement even disro
 # for each in num and ops
@@ -409,7 +412,7 @@ func assemble_route(dir,rout_index):
 			if not get_cell(goto.x, goto.y) in [0,1]:
 				var lookback = (dir - 2) % 4
 				look(lookback, gofrom,(dir - 2) % 4)
-			if get_cell(goto.x, goto.y) in [0, 1, 2]:
+			if get_cell(goto.x, goto.y) in [0, 1]:
 				dir = (dir - 2) % 4
 				current_direction = directions[dir]
 				goto = gofrom + current_direction
@@ -526,10 +529,17 @@ func randomize_maze(w,h):
 			else:
 				rx = 0
 				ry = get_dir()
-			set_cell(x+rx,y+ry,0)
+			if(get_cell(x+rx,y+ry)!=2):
+				set_cell(x+rx,y+ry,0)
+
 	set_cell(goal.x,goal.y,-1)
 	set_cell(start.x,start.y,-1)
 
+func clear_reserved(w,h):
+	for x in range(1, w - 1):
+		for y in range(1, h - 1):
+			if get_cell(x,y) == 2:
+				set_cell(x,y,-1)
 
 func get_dir():
 	var random_dir = _dirs[randi() % _dirs.size()]
