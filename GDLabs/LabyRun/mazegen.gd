@@ -529,7 +529,9 @@ func randomize_maze(w,h):
 			else:
 				rx = 0
 				ry = get_dir()
-			if(get_cell(x+rx,y+ry)!=2):
+			if(get_cell(x+rx,y+ry) in [1,2]):
+				pass
+			else:
 				set_cell(x+rx,y+ry,0)
 
 	set_cell(goal.x,goal.y,-1)
