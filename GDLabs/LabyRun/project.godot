@@ -54,6 +54,7 @@ singletons=[  ]
 
 zoom=true
 autoload=false
+build=false
 
 [input]
 
