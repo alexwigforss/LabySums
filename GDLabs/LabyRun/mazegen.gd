@@ -236,12 +236,6 @@ func _ready():
 	if not full_route:	
 		routes = pop_sublists_with_length_one(routes)
 	
-	# TODO Fixa buggen att routes ibland inte räcker till för att rita ut all num och ops
-	# Kanske genom att söka från ett annat hörn ifall listan är för liten
-	# NOTE för närvarande verkar det funka så länge man inte har fler än tre operatorer
-	# NOTE Kanske kan den nya numreriska representationen användas till att konstruera en solidare
-	# 		RouteAsembler eller användas direkt till att distribuera pickops
-
 	# DIBOOGIENG
 	if debug_print_route:
 		print("Start direction is ", start_dir, " ", direction_labels[start_dir])
