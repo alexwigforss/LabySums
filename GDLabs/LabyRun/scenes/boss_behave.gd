@@ -2,6 +2,7 @@ extends Area2D
 
 onready var anim = $AnimationPlayer
 onready var anim_tree = $AnimationTree
+export var level = 1
 export var solution = 10
 export var speed = 25
 export var orbit_radius = 50.0
@@ -50,12 +51,10 @@ func _process(delta):
 	# elif t > 2.6:
 	# 	s = 1
 	movement.random_dots_circle(self, delta, orbit_radius)
-
 	movement.orbit_enemy(self, delta, orbit_radius, s)
 
 	# var t = movement.orbit_enemy(self, delta, orbit_radius, s)
-
-	# Hack untill implemented inside Square Movement
+	# Hack until implemented inside Square Movement
 	t += 1 * delta
 
 	if t <= 2.6:
@@ -82,9 +81,6 @@ func decrese_hp(value):
 	label.text = str(solution)
 	if solution == 0:
 		var global = get_node("/root/Global")
-		# var music = get_node("/root/AudioStreamPlayer")
-		# Attempt to call function 'stop' in base 'null instance' on a null instance.
-		# music.stop()
 
 		global.next_maze_index += 1
 		var path = "res://maps/maze_" + str(global.next_maze_index) + ".tscn"
